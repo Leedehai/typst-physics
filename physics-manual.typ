@@ -1,7 +1,7 @@
 // Copyright 2023 Leedehai
 // This document is shared under the Creative Commons BY-ND 4.0 license.
 
-#let version = 0.5
+#let version = 0.6
 
 #set page(
   numbering: "1/1",
@@ -22,25 +22,26 @@
 ]
 
 #align(center)[
-  Version #version, March 31, 2023\
-  Document updated: March 31, 2023
+  Version #version, April 2, 2023\
+  Document updated: April 2, 2023
 ]
 
 #set par(justify: true)
 
-*NOTE (2023-03-31):* #linkurl("Typst", "https://typst.app") is in beta and evolving, and this package evolves with it. Also, the package itself is under development and fine-tuning. As a result, no backward compatibility is guaranteed yet, until the major version becomes a positive number.
+*NOTE (2023-04-02):* #linkurl("Typst", "https://typst.app") is in beta and evolving, and this package evolves with it. Also, the package itself is under development and fine-tuning. While the major version stays 0, no backward compatibility is guaranteed.
 
 #outline(indent: true)
+#pagebreak(weak: true)
 
 = Introduction
 
 #v(1em)
 
-The `physics` package provides handy #linkurl("Typst", "https://typst.app") typesetting functions that make academic writing for physics simpler and faster by simplifying otherwise very complex expressions.
+#linkurl("Typst", "https://typst.app") is typesetting framework aiming to become the next generation alternative to LATEX. It excels in its friendly user experience and performance.
 
-This manual itself was generated using the Typst CLI and the `physics` package,
-so hopefully the manual source code is able to provide you with a sufficiently
-self evident demonstration of how this package shall be used.
+The `physics` package provides handy Typst typesetting functions that make academic writing for physics simpler and faster, by simplifying otherwise very complex and repetitive expressions in the domain of physics.
+
+This manual itself was generated using the Typst CLI and the `physics` package, so hopefully this document is able to provide you with a sufficiently self evident demonstration of how this package shall be used.
 
 = Using `physics`
 
@@ -78,16 +79,18 @@ self evident demonstration of how this package shall be used.
 
 #import "physics.typ": *
 
-#let builtin = text(fill:blue, "TBI")
+// Put the superscript *before* the symbol, in case there are symbols after it.
+#let builtin(symbol) = [#super(text(fill: blue, "Typst "))#symbol]
 
 #let hl(s) = {  // Highlight. Usage: hl("..."), hl(`...`)
-  show regex("#\(.+?\)|#\d+"): set text(blue)
-  show regex("\W\w:"): set text(red)  // Single letter
+  show regex("#\(.+?\)|#\d+"): set text(red)
+  show regex("\[|\]"): set text(red)
+  show regex("\w+:"): set text(blue)
   show regex(";"): set text(red, weight: "bold")
   s
 }
 
-Some symbols are already provided as a Typst built-in (#builtin). They are listed here just for completeness, as users coming from LATEX's `physics` package might not know they are already available in Typst out of box.
+Some symbols are already provided as a Typst built-in. They are listed here just for completeness with annotation like #builtin([`this`]), as users coming from LATEX might not know they are already available in Typst out of box.
 
 All symbols need to be used in *math mode* `$...$`.
 
@@ -101,15 +104,15 @@ All symbols need to be used in *math mode* `$...$`.
   stroke: none,
   [*Symbol*], [*Abbr.*], [*Example*], [*Notes*],
 
-  [`abs(`_content_`)`],
+  [#builtin([`abs(`_content_`)`])],
   [],
   [`abs(phi(x))`   #sym.arrow $abs(phi(x))$],
-  [absolute, #builtin],
+  [absolute],
 
-  [`norm(`_content_`)`],
+  [#builtin([`norm(`_content_`)`])],
   [],
   [`norm(phi(x))`   #sym.arrow $norm(phi(x))$],
-  [norm, #builtin],
+  [norm],
 
   [`order(`_content_`)`],
   [],
@@ -143,15 +146,15 @@ All symbols need to be used in *math mode* `$...$`.
 #v(1em)
 
 #table(
-  columns: (auto, 1fr, 6fr, 5fr),
+  columns: (5fr, 2fr, 6fr, 5fr),
   align: left,
   stroke: none,
   [*Symbol*], [*Abbr.*], [*Example*], [*Notes*],
 
-  [`vec`],
+  [#builtin([`vec`])],
   [],
   [`vec(1,2)` #sym.arrow $vec(1,2)$],
-  [column vector, #builtin],
+  [column vector],
 
   [`vecrow`],
   [],
@@ -164,7 +167,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`TT`],
   [],
   [`v^TT, A^TT` #sym.arrow $v^TT, A^TT$],
-  [transpose (same for matrices)],
+  [transpose],
 
   [`vectorbold(`_content_`)`],
   [`vb`],
@@ -199,16 +202,16 @@ All symbols need to be used in *math mode* `$...$`.
   [`laplacian`],
   [],
   [`diaer(u) = c^2 laplacian u` \ #sym.arrow $diaer(u) = c^2 laplacian u$],
-  [laplacian],
+  [Laplacian],
 
   [`dotproduct`],
-  [],
-  [`a dotproduct b` #sym.arrow $a dotproduct b$],
+  [`dprod`],
+  [`a dprod b` #sym.arrow $a dprod b$],
   [dot product],
 
   [`crossproduct`],
-  [],
-  [`a crossproduct b` #sym.arrow $a crossproduct b$],
+  [`cprod`],
+  [`a cprod b` #sym.arrow $a cprod b$],
   [cross product],
 )
 
@@ -217,7 +220,7 @@ All symbols need to be used in *math mode* `$...$`.
 #v(1em)
 
 #table(
-  columns: (auto, 1fr, 6fr, 5fr),
+  columns: (auto, auto, auto, auto),
   align: left,
   stroke: none,
   [*Symbol*], [*Abbr.*], [*Example*], [*Notes*],
@@ -225,12 +228,12 @@ All symbols need to be used in *math mode* `$...$`.
   [`TT`],
   [],
   [`v^TT, A^TT` #sym.arrow $v^TT, A^TT$],
-  [transpose (same for vectors)],
+  [transpose],
 
-  [`mat`],
+  [#builtin([`mat`])],
   [],
   [`mat(1,2;3,4)` #sym.arrow $mat(1,2;3,4)$],
-  [matrix, #builtin],
+  [matrix],
 
   [`matrixdet(`...`)`],
   [`mdet`],
@@ -258,18 +261,34 @@ All symbols need to be used in *math mode* `$...$`.
   [`identitymatrix(`...`)`],
   [`imat`],
   [
-    #hl(`imat(#2)`) #sym.arrow $imat(#2)$ \
-    #hl(`imat(#3,delim:"[")`) #sym.arrow $imat(#3,delim:"[")$
+    `imat(2)` #sym.arrow $imat(2)$ \
+    `imat(3,delim:"[")` #sym.arrow $imat(3,delim:"[")$
   ],
-  [identity matrix, *note:* Typst needs `#` to parse input as a number],
+  [identity matrix],
 
   [`zeromatrix(`...`)`],
   [`zmat`],
   [
-    #hl(`zmat(#2)`) #sym.arrow $zmat(#2)$ \
-    #hl(`zmat(#3,delim:"[")`) #sym.arrow $zmat(#3,delim:"[")$
+    `zmat(2)` #sym.arrow $zmat(2)$ \
+    `zmat(3,delim:"[")` #sym.arrow $zmat(3,delim:"[")$
   ],
-  [zero matrix, *note:* Typst needs `#` to parse input as a number],
+  [zero matrix],
+
+  [`jacobianmatrix(`...`)`],
+  [`jmat`],
+  [
+    #hl(`jmat(f_1,f_2;x,y)`) #sym.arrow $jmat(f_1,f_2;x,y)$ \
+    #hl(`jmat(f_1,f_2;x,y;delim:"[")`) \ #sym.arrow $jmat(f_1,f_2;x,y;delim:"[")$
+  ],
+  [Jacobian matrix],
+
+  [`hessianmatrix(`...`)`],
+  [`hmat`],
+  [
+    #hl(`hmat(f;x,y)`) #sym.arrow $hmat(f;x,y)$ \
+    #hl(`hmat(f;x,y;delim:"[")`) \ #sym.arrow $hmat(f;x,y;delim:"[")$
+  ],
+  [Hessian matrix],
 )
 
 == Dirac braket notations
@@ -301,7 +320,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`braket(`_a_, _b_`)`],
   [],
   [
-    `braket(u, v)` \ #sym.arrow $braket(u, v)$ \
+    `braket(u), braket(u, v)` \ #sym.arrow $braket(u), braket(u, v)$ \
     `braket(limits(sum)_(i=0)^n i, b)` \ #sym.arrow $braket(limits(sum)_(i=0)^n i, b)$
   ],
   [braket],
@@ -309,7 +328,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`ketbra(`_a_, _b_`)`],
   [],
   [
-    `ketbra(u, v)` \ #sym.arrow $ketbra(u, v)$ \
+    `ketbra(u), ketbra(u, v)` \ #sym.arrow $ketbra(u), ketbra(u, v)$ \
     `ketbra(limits(sum)_(i=0)^n i, b)` \ #sym.arrow $ketbra(limits(sum)_(i=0)^n i, b)$
   ],
   [ketbra],
@@ -343,7 +362,7 @@ All symbols need to be used in *math mode* `$...$`.
 
 #v(1em)
 
-Typst built-in (#builtin) math operators: #linkurl("source code", "https://github.com/typst/typst/blob/main/library/src/math/op.rs").
+Typst built-in math operators: #linkurl("source code", "https://github.com/typst/typst/blob/main/library/src/math/op.rs").
 
 #table(
   columns: (auto, auto),
@@ -372,22 +391,26 @@ Typst built-in (#builtin) math operators: #linkurl("source code", "https://githu
 )
 
 #table(
-  columns: (auto, auto, auto),
+  columns: (3fr, 3fr, 4fr),
   align: left,
   stroke: none,
   [*Expressions*], [*Results*], [*Notes*],
 
-  [`Pr(x)`],
+  [#builtin([`Pr(x)`])],
   [$Pr(x)$],
-  [probability, #builtin],
+  [probability],
 
-  [`exp x, log x, lg x, ln x`],
-  [$exp x, log x, lg x, ln x$],
-  [exponential and logarithmic, #builtin],
+  [#builtin([`exp x`])],
+  [$exp x$],
+  [exponential],
 
-  [`det A`],
+  [#builtin([`log x, lg x, ln x`])],
+  [$log x, lg x, ln x$],
+  [logarithmic],
+
+  [#builtin([`det A`])],
   [$det A$],
-  [matrix determinant, #builtin],
+  [matrix determinant],
 
   [`diag(-1,1,1,1)`],
   [$diag(-1,1,1,1)$],
@@ -435,7 +458,7 @@ Typst built-in (#builtin) math operators: #linkurl("source code", "https://githu
   [`differential(`...`)`],
   [`dd`],
   [
-    e.g. $dd(f), dd(x,y), dd(x,n:3), dd(x,y,p:and)$ \
+    e.g. $dd(f), dd(x,y), dd(x,3), dd(x,y,p:and)$ \
     See @differentials
   ],
   [differential],
@@ -448,6 +471,14 @@ Typst built-in (#builtin) math operators: #linkurl("source code", "https://githu
   ],
   [variation, shorthand of \ `dd(..., d: delta)`],
 
+  [`difference(`...`)`],
+  [],
+  [
+    `difference(f)` #sym.arrow $difference(f)$ \
+    `difference(x,y)` #sym.arrow $difference(x,y)$ \
+  ],
+  [difference, shorthand of \ `dd(..., d: Delta)`],
+
   [`derivative(`...`)`],
   [`dv`],
   [
@@ -459,7 +490,7 @@ Typst built-in (#builtin) math operators: #linkurl("source code", "https://githu
   [`partialderivative(`...`)`],
   [`pdv`],
   [
-    e.g. $pdv(,x), pdv(f,x), pdv(f,x,y,#2), pdv(f,x,y,#(2,3)), pdv(f,x,s:\/)$ \
+    e.g. $pdv(,x), pdv(f,x), pdv(f,x,y,2), pdv(f,x,y,[2,3]), pdv(f,x,s:\/)$ \
     See @partial-derivatives
   ],
   [partial derivative, could be mixed order],
@@ -470,17 +501,16 @@ Typst built-in (#builtin) math operators: #linkurl("source code", "https://githu
 #v(1em)
 
 Functions: `differential(`\*_args_, \*\*_kwargs_`)`, abbreviated as `dd(`...`)`.
-- positional _args_: the variable names,
+- positional _args_: the variable names, then at the last *optionally* followed by an order number e.g. `2`, or an order array e.g. `[2,3]`, `[k]`, `[m n, lambda+1]`.
 - named _kwargs_:
-  - `n`: an order number an order number array [default: `none`],
   - `d`: the differential symbol [default: `upright(d)`].
   - `p`: the product symbol connecting the components [default: `none`].
 
 *Order assignment algorithm:*
-- If there is no order number or order number array, all variables has order 1.
-- If there is an order number (not an array), then this order number is assigned to _every_ variable, e.g. `dd(x,y,n:2)` assigns $x <- 2, y <- 2$.
-- If there is an order number array, then the order numbers therein are assigned to the variables in order, e.g. `dd(f,x,y,n:(2,3))` assigns $x <- 2, y <- 3$.
-- If the order number array holds fewer numbers than the number of variables, then the orders of the remaining variables are 1, e.g. `dd(x,y,z,n:(2,3))` assigns $x <- 2, y <- 3, z <- 1$.
+- If there is no order number or order array, all variables has order 1.
+- If there is an order number (not an array), then this order number is assigned to _every_ variable, e.g. `dd(x,y,2)` assigns $x <- 2, y <- 2$.
+- If there is an order array, then the orders therein are assigned to the variables in order, e.g. `dd(f,x,y,[2,3])` assigns $x <- 2, y <- 3$.
+- If the order array holds fewer elements than the number of variables, then the orders of the remaining variables are 1, e.g. `dd(x,y,z,[2,3])` assigns $x <- 2, y <- 3, z <- 1$.
 - If a variable $x$ has order 1, it is rendered as $upright(d) x$ not $upright(d)^1 x$.
 
 #align(center, [*Examples*])
@@ -491,29 +521,37 @@ Functions: `differential(`\*_args_, \*\*_kwargs_`)`, abbreviated as `dd(`...`)`.
   column-gutter: 2em,
 
   [
-    *(1)* #hl(`dd(f), dd(x,y), dd(x,y,z,p:and)`) \
-    $ dd(f), dd(x,y), dd(x,y,z,p:and) $
+    *(1)* #hl(`dd(f), dd(x,y)`) \
+    $ dd(f), dd(x,y) $
   ],
   [
-    *(2)* #hl(`dd(phi,n:k,d:delta)`) \
-    $ dd(phi,n:k,d:delta) $
+    *(2)* #hl(`dd(x,3), dd(f,[k]), dd(f,[k],d:delta)`) \
+    $ dd(x,3), dd(f,[k]), dd(f,[k],d:delta) $
   ],
   [
-    *(3)* #hl(`dd(f,n:2), dd(vb(x),t,n:(3,))`) \
-    $ dd(f,n:2), dd(vb(x),t,n:(3,)) $
+    *(3)* #hl(`dd(f,2), dd(vb(x),t,[3,])`) \
+    $ dd(f,2), dd(vb(x),t,[3,]) $
   ],
   [
-    *(4)* #hl(`dd(x,y,n:(2,3)), dd(x,y,z,n:(2,3))`) \
-    $ dd(x,y,n:(2,3)), dd(x,y,z,n:(2,3)) $
+    *(4)* #hl(`dd(x,y,[2,3]), dd(x,y,z,[2,3])`) \
+    $ dd(x,y,[2,3]), dd(x,y,z,[2,3]) $
   ],
   [
-    *(5)* #hl(`dd(x, y, z, n: ((1,1),rho+1,n_1))`) \
-    $ dd(x, y, z, n: ((1,1),rho+1,n_1)) $
+    *(5)* #hl(`dd(x, y, z, [[1,1],rho+1,n_1])`) \
+    $ dd(x, y, z, [[1,1],rho+1,n_1]) $
   ],
   [
-    *(6)* #hl(`dd(x,y,d:Delta), dd(x,y,n:2,d:Delta)`) \
-    $ dd(x,y,d:Delta), dd(x,y,n:2,d:Delta) $
+    *(6)* #hl(`dd(x,y,d:Delta), dd(x,y,2,d:Delta)`) \
+    $ dd(x,y,d:Delta), dd(x,y,2,d:Delta) $
   ],
+  [
+    *(7)* #hl(`dd(t,x_1,x_2,x_3,p:and)`) \
+    $ dd(t,x_1,x_2,x_3,p:and) $
+  ],
+  [
+    *(7)* #hl(`dd(t,x_1,x_2,x_3,d:upright(D))`) \
+    $ dd(t,x_1,x_2,x_3,d:upright(D)) $
+  ]
 )
 
 === Ordinary derivatives <ordinary-derivatives>
@@ -522,7 +560,7 @@ Functions: `differential(`\*_args_, \*\*_kwargs_`)`, abbreviated as `dd(`...`)`.
 
 Function: `derivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `dv(`...`)`.
 - _f_: the function, which can be `#none` or omitted,
-- positional _args_: the variable name, *optionally* followed by an order number,
+- positional _args_: the variable name, then at the last *optionally* followed by an order number e.g. `2`,
 - named _kwargs_:
   - `d`: the differential symbol [default: `upright(d)`].
   - `s`: the "slash" separating the numerator and denominator [default: `none`], by default it produces the normal fraction form $dv(f,x)$. The most common non-default is `slash` or simply `\/`, so as to create a flat form $dv(f,x,s:\/)$ that fits inline.
@@ -537,35 +575,27 @@ Function: `derivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `dv(`...`)
   column-gutter: 2em,
 
   [
-    *(1)* #hl(`dv(,x), dv(,x,2), dv(,x,k+1)`) \
+    *(1)* #hl(`dv(,x), dv(,x,2), dv(f,x,k+1)`) \
     $ dv(,x), dv(,x,2), dv(,x,k+1) $
   ],
   [
-    *(2)* #hl(`dv(, vb(r)), dv(, vb(r), 2)`) \
-    $ dv(, vb(r)), dv(, vb(r), 2) $
+    *(2)* #hl(`dv(, vb(r)), dv(f, vb(r)_e, 2)`) \
+    $ dv(, vb(r)), dv(, vb(r)_e, 2) $
   ],
   [
-    *(3)* #hl(`dv(f,x), dv(f,x,2), dv(f,xi,k+1)`) \
-    $ dv(f,x), dv(f,x,2), dv(f,xi,k+1) $
-  ],
-  [
-    *(4)* #hl(`dv(f, vb(r)), dv(f, vb(r), 2)`) \
-    $ dv(f, vb(r)), dv(f, vb(r), 2) $
-  ],
-  [
-    *(5)* #hl(`dv(f,x,2,s:\/), dv(f,xi,k+1,s:slash)`) \
+    *(3)* #hl(`dv(f,x,2,s:\/), dv(f,xi,k+1,s:slash)`) \
     $ dv(f,x,2,s:\/), dv(f,xi,k+1,s:slash) $
   ],
   [
-    *(6)* #hl(`dv(, x, d:delta), dv(, x, 2, d:Delta)`) \
+    *(4)* #hl(`dv(, x, d:delta), dv(, x, 2, d:Delta)`) \
     $ dv(, x, d:delta), dv(, x, 2, d:Delta) $
   ],
   [
-    *(7)* #hl(`dv(vb(u), t, 2, d: upright(D))`) \
+    *(5)* #hl(`dv(vb(u), t, 2, d: upright(D))`) \
     $ dv(vb(u), t, 2, d: upright(D)) $
   ],
   [
-    *(8)* #hl(`dv(vb(u),t,2,d:upright(D),s:slash)`) \
+    *(6)* #hl(`dv(vb(u),t,2,d:upright(D),s:slash)`) \
     $ dv(vb(u),t,2,d:upright(D),s:slash) $
   ],
 )
@@ -576,24 +606,18 @@ Function: `derivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `dv(`...`)
 
 Function: `partialderivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `pdv(`...`)`.
 - _f_: the function, which can be `#none` or omitted,
-- positional _args_: the variable names, *optionally* followed by an order number e.g. `#2`, or an order number array e.g. `#(2,3)`.
-  - Note `#` is important, since Typst constructs a number or array in *code mode* -- without `#`, what follows will just be parsed as a sequence of generic symbols (not numbers) that are not operable in the numeric computation of the total order.
+- positional _args_: the variable names, then at last *optionally* followed by an order number e.g. `2`, or an order array e.g. `[2,3]`, `[k]`, `[m n, lambda+1]`.
 - named _kwargs_:
   - `s`: the "slash" separating the numerator and denominator [default: `none`], by default it produces the normal fraction form $pdv(f,x)$. The most common non-default is `slash` or simply `\/`, so as to create a flat form $pdv(f,x,s:\/)$ that fits inline.
+  - `total`: the user-specified total order.
+    - If it is absent, then (1) if the orders assigned to all variables are numeric, the total order number will be *automatically computed*; (2) if non-number symbols are present, computation will be attempted with minimum effort, and a user override with argument `total` may be necessary.
 
 *Order assignment algorithm:*
-- If there is no order number or order number array, all variables has order 1.
-- If there is an order number (not an array), then this order number is assigned to _every_ variable, e.g. `pdv(f,x,y,#2)` assigns $x <- 2, y <- 2$.
-- If there is an order number array, then the order numbers therein are assigned to the variables in order, e.g. `pdv(f,x,y,#(2,3))` assigns $x <- 2, y <- 3$.
-- If the order number array holds fewer numbers than the number of variables, then the orders of the remaining variables are 1, e.g. `pdv(f,x,y,z,#(2,3))` assigns $x <- 2, y <- 3, z <- 1$.
+- If there is no order number or order array, all variables has order 1.
+- If there is an order number (not an array), then this order number is assigned to _every_ variable, e.g. `pdv(f,x,y,2)` assigns $x <- 2, y <- 2$.
+- If there is an order array, then the orders therein are assigned to the variables in order, e.g. `pdv(f,x,y,[2,3])` assigns $x <- 2, y <- 3$.
+- If the order array holds fewer elements than the number of variables, then the orders of the remaining variables are 1, e.g. `pdv(f,x,y,z,[2,3])` assigns $x <- 2, y <- 3, z <- 1$.
 - If a variable $x$ has order 1, it is rendered as $x$, not $x^1$.
-
-The total order applied to the function differential is automatically calculated by adding the order numbers of the variables. Examples:
-- `pdv(f, x)` has total order 1,
-- `pdv(f, x, #2)` has total order 2,
-- `pdv(f, x, y, #2)` has total order 2 + 2 = 4,
-- `pdv(f, x, y, #(2, 3))` has total order 2 + 3 = 5,
-- `pdv(f, x, y, z, #(2, 3))` has total order 2 + 3 + 1 = 6,
 
 #align(center, [*Examples*])
 
@@ -602,40 +626,48 @@ The total order applied to the function differential is automatically calculated
   row-gutter: 1em,
   column-gutter: 2em,
   [
-    *(1)* #hl(`pdv(,x), pdv(,t,#2)`) \
-    $ pdv(,x), pdv(,t,#2) $
+    *(1)* #hl(`pdv(,x), pdv(,t,2), pdv(,lambda,[k])`) \
+    $ pdv(,x), pdv(,t,2), pdv(,lambda,[k]) $
   ],
   [
-    *(2)* #hl(`pdv(f,vb(r)), pdv(phi,vb(r),#2)`) \
-    $ pdv(phi,vb(r)), pdv(phi,vb(r),#2) $
+    *(2)* #hl(`pdv(f,vb(r)), pdv(phi,vb(r)_e,2)`) \
+    $ pdv(phi,vb(r)), pdv(phi,vb(r)_e,2) $
   ],
   [
-    *(3)* #hl(`pdv(,x,y), pdv(,x,y,#2)`) \
-    $ pdv(,x,y), pdv(,x,y,#2) $
+    *(3)* #hl(`pdv(,x,y), pdv(,x,y,2)`) \
+    $ pdv(,x,y), pdv(,x,y,2) $
   ],
   [
-    *(4)* #hl(`pdv(f,x,y,#2), pdv(f,x,y,#3)`) \
-    $ pdv(phi,x,y,#2), pdv(phi,x,y,#3) $
+    *(4)* #hl(`pdv(f,x,y,2), pdv(f,x,y,3)`) \
+    $ pdv(phi,x,y,2), pdv(phi,x,y,3) $
   ],
   [
-    *(5)* #hl(`pdv(,x,y,#(2,)), pdv(,x,y,#(1,2))`) \
-    $ pdv(,x,y,#(2,)), pdv(,x,y,#(1,2)) $
+    *(5)* #hl(`pdv(,x,y,[2,]), pdv(,x,y,[1,2])`) \
+    $ pdv(,x,y,[2,]), pdv(,x,y,[1,2]) $
   ],
   [
-    *(6)* #hl(`pdv(,t,#2,s:\/), pdv(f,x,y,s:slash)`) \
-    $ pdv(,t,#2,s:\/), pdv(f,x,y,s:slash) $
+    *(6)* #hl(`pdv(,t,2,s:\/), pdv(f,x,y,s:slash)`) \
+    $ pdv(,t,2,s:\/), pdv(f,x,y,s:slash) $
   ],
   [
-    *(7)* #hl(`pdv(, (x^1), (x^2), (x^3), #(1,3))`) \
-    $ pdv(, (x^1), (x^2), (x^3), #(1,3)) $
+    *(7)* #hl(`pdv(, (x^1), (x^2), (x^3), [1,3])`) \
+    $ pdv(, (x^1), (x^2), (x^3), [1,3]) $
   ],
   [
-    *(8)* #hl(`pdv(phi,x,y,z,tau, #(2,2,2,1))`) \
-    $ pdv(phi,x,y,z,tau, #(2,2,2,1)) $
+    *(8)* #hl(`pdv(phi,x,y,z,tau, [2,2,2,1])`) \
+    $ pdv(phi,x,y,z,tau, [2,2,2,1]) $
+  ],
+   [
+    *(9)* #hl(`pdv(,x,y,z,t,[1,xi,2,eta+2])`) \
+    $ pdv(,x,y,z,t,[1,xi,2,eta+2]) $
+  ],
+  [
+    *(10)* #hl(`pdv(,x,y,z,[xi n,n-1],total:(xi+1)n)`) \
+    $ pdv(,x,y,z,[xi n,n-1],total:(xi+1)n) $
   ],
 )
 
-*(9)* #hl(`integral_V dd(V) (pdv(cal(L), phi) - diff_mu (pdv(cal(L), (diff_mu phi)))) = 0`) \
+*(11)* #hl(`integral_V dd(V) (pdv(cal(L), phi) - diff_mu (pdv(cal(L), (diff_mu phi)))) = 0`) \
 $ integral_V dd(V) (pdv(cal(L), phi) - diff_mu (pdv(cal(L), (diff_mu phi)))) = 0 $
 
 == Miscellaneous
@@ -646,7 +678,7 @@ $ integral_V dd(V) (pdv(cal(L), phi) - diff_mu (pdv(cal(L), (diff_mu phi)))) = 0
 
 #v(1em)
 
-Due to the default font, the built-in symbol `planck.reduce` $planck.reduce$ looks a bit off: on letter "h" there is a slash instead of a horizontal bar, contrary to the symbol's colloquial name "h-bar". This package offers `hbar` to render the symbol in the familiar form: $hbar$. Contrast:
+In the default font, the Typst built-in symbol `planck.reduce` $planck.reduce$ looks a bit off: on letter "h" there is a slash instead of a horizontal bar, contrary to the symbol's colloquial name "h-bar". This package offers `hbar` to render the symbol in the familiar form: $hbar$. Contrast:
 
 #table(
   columns: (auto, auto, auto, auto, auto),
@@ -675,7 +707,7 @@ Tensors are often expressed using the #linkurl("abstract index notation", "https
 
 Function: `tensor(`_symbol_, \*_args_`)`.
 - _symbol_: the tensor symbol,
-- positional args: comma-separated list taking the form of $+dots.h$ or $-dots.h$, where a `+` prefix denotes an upper index and a `-` prefix denotes a lower index.
+- positional _args_: each argument takes the form of $+dots.h$ or $-dots.h$, where a `+` prefix denotes an upper index and a `-` prefix denotes a lower index.
 
 #align(center, [*Examples*])
 
@@ -752,12 +784,59 @@ $ isotope("Bi",a:211,z:83) --> isotope("Tl",a:207,z:81) + isotope("He",a:4,z:2) 
 *(4)* #hl(`isotope("Tl",a:207,z:81) --> isotope("Pb",a:207,z:82) + isotope(e,a:0,z:-1)`)
 $ isotope("Tl",a:207,z:81) --> isotope("Pb",a:207,z:82) + isotope(e,a:0,z:-1) $
 
+== Symbolic addition
+
+#v(1em)
+
+This package implements a very rudimentary, *bare-minimum-effort* symbolic addition function to aid the automatic computation of a partial derivative's total order in the absence of user override (see @partial-derivatives). Though rudimentary and unsophisticated, this should suffice for most use cases in partial derivatives.
+
+Function: `BMEsymadd([`...`])`.
+- `...`: symbols that need to be added up e.g. `[1,2]`, `[a+1,b^2+1,2]`.
+
+#align(center, [*Examples*])
+
+#grid(
+  columns: (auto, auto, auto),
+  row-gutter: 1em,
+  column-gutter: 2em,
+
+  [*(1)* #hl(`BMEsymadd([1]), BMEsymadd([2, 3])`)],
+  [#sym.arrow],
+  [$BMEsymadd([1]), BMEsymadd([2, 3])$],
+
+  [*(2)* #hl(`BMEsymadd([a, b^2, 1])`)],
+  [#sym.arrow],
+  [$BMEsymadd([a, b^2, 1])$],
+
+  [*(3)* #hl(`BMEsymadd([a+1,2c,b,2,b])`)],
+  [#sym.arrow],
+  [$BMEsymadd([a+1,2c,b,2,b])$],
+
+  [*(4)* #hl(`BMEsymadd([a+1,2(b+1),1,b+1,15])`)],
+  [#sym.arrow],
+  [$BMEsymadd([a+1,2(b+1),1,b+1,15])$],
+
+  [*(5)* #hl(`BMEsymadd([a+1,2(b+1),1,(b+1),15])`)],
+  [#sym.arrow],
+  [$BMEsymadd([a+1,2(b+1),1,(b+1),15])$],
+
+  [*(6)* #hl(`BMEsymadd([a+1,2(b+1),1,3(b+1),15])`)],
+  [#sym.arrow],
+  [$BMEsymadd([a+1,2(b+1),1,3(b+1),15])$],
+
+  [*(7)* #hl(`BMEsymadd([2a+1,xi,b+1,a xi + 2b+a,2b+1])`)],
+  [#sym.arrow],
+  [$BMEsymadd([2a+1,xi,b+1,a xi + 2b+a,2b+1])$],
+)
+
 = Acknowledgement
 
 #v(1em)
 
-Huge thanks to Sergio C. de la Barrera's LATEX `physics` package and Simon
-Jensen's LATEX `derivative` package, which lit the way for physics typesetting.
+Huge thanks to these LATEX packages, for lighting the way of physics typesetting.
+- `physics` by Sergio C. de la Barrera,
+- `derivatives` by Simon Jensen,
+- `tensor` by Philip G. Ratcliffe et al.
 
 #v(2em)
 

@@ -1,6 +1,6 @@
 # The physics module
 
-Current semantic version: `0.3`. [Demo](physics-manual.pdf).
+Current semantic version: `0.6`. [Demo](physics-manual.pdf).
 
 This [Typst](https://typst.app) package provides handy typesetting utilities for
 physics, including:
@@ -9,7 +9,7 @@ physics, including:
 * Matrices,
 * Dirac braket notations,
 * Common math functions,
-* Differentials and derivatives, including partial derivatives,
+* Differentials and derivatives, including partial derivatives of mixed orders,
 * Tensor abstract index notations, isotopes.
 
 :warning: [Typst](https://typst.app) is in beta and evolving, and this package
@@ -67,8 +67,8 @@ testing by comparing rendered pictures with golden images.
 These items seem to need Typst's language support:
 
 1. Isotopes:
-  * A better way to align the subscripts and supscripts at the right, not at the
-  left. Currently it uses an embedded table to achieve that, but it feels rather
+  * A better way to align the subscripts and superscripts to the right.
+  Currently it uses an embedded table to achieve that, but it feels rather
   heavy weight.
 2. Dirac braket notations:
   * Reduce the horizontal space of the inner divider.
