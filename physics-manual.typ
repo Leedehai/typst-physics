@@ -1,7 +1,7 @@
 // Copyright 2023 Leedehai
 // This document is shared under the Creative Commons BY-ND 4.0 license.
 
-#let version = 0.6
+#let version = "0.6.1"
 
 #set page(
   numbering: "1/1",
@@ -22,13 +22,13 @@
 ]
 
 #align(center)[
-  Version #version, April 2, 2023\
-  Document updated: April 2, 2023
+  Version #version, April 4, 2023\
+  Document updated: April 4, 2023
 ]
 
 #set par(justify: true)
 
-*NOTE (2023-04-02):* #linkurl("Typst", "https://typst.app") is in beta and evolving, and this package evolves with it. Also, the package itself is under development and fine-tuning. While the major version stays 0, no backward compatibility is guaranteed.
+*NOTE (2023-04-02):* #linkurl("Typst", "https://typst.app") is version 0.x and evolving, and this package evolves with it. Also, the package itself is under development and fine-tuning. While the major version stays 0, no backward compatibility is guaranteed.
 
 #outline(indent: true)
 #pagebreak(weak: true)
@@ -80,7 +80,7 @@ This manual itself was generated using the Typst CLI and the `physics` package, 
 #import "physics.typ": *
 
 // Put the superscript *before* the symbol, in case there are symbols after it.
-#let builtin(symbol) = [#super(text(fill: blue, "Typst "))#symbol]
+#let builtin(symbol) = [#super(text(fill: blue, "typst "))#symbol]
 
 #let hl(s) = {  // Highlight. Usage: hl("..."), hl(`...`)
   show regex("#\(.+?\)|#\d+"): set text(red)
@@ -202,7 +202,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`laplacian`],
   [],
   [`diaer(u) = c^2 laplacian u` \ #sym.arrow $diaer(u) = c^2 laplacian u$],
-  [Laplacian],
+  [Laplacian, different from #builtin(`laplace`) $laplace$],
 
   [`dotproduct`],
   [`dprod`],

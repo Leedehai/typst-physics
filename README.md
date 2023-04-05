@@ -43,13 +43,13 @@ CLI Version:
 
 ```sh
 $ typst --version # From release 28-03-32 (pre-release)
-typst 056d15aa
+typst 0.1.0 (b3faef4b)
 ```
 
 To regenerate the manual, use command
 
 ```sh
-typst --watch physics-manual.typ
+typst watch physics-manual.typ
 ```
 
 ## Contribution
