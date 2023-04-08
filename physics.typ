@@ -1,9 +1,9 @@
 // Copyright 2023 Leedehai
 // Use of this code is governed by a MIT license in the LICENSE.txt file.
-// For a manual on this package, see manual.pdf.
+// For a manual on this package, see physics-manual.pdf.
 
 // Returns whether a Content object holds an integer. The caller is responsible
-// to ensure the input argument is a Content object.
+// for ensuring the input argument is a Content object.
 #let __content_holds_number(content) = {
   return content.func() == text and regex("^\d+$") in content.text
 }
@@ -196,6 +196,7 @@
 #let mdet = matrixdet
 
 #let diagonalmatrix(..sink) = {
+  // TODO(unpacking): https://github.com/typst/typst/pull/532
   let args = sink.pos()  // array
   let kwargs = sink.named()  // dictionary
 
@@ -215,6 +216,7 @@
 #let dmat = diagonalmatrix
 
 #let antidiagonalmatrix(..sink) = {
+  // TODO(unpacking): https://github.com/typst/typst/pull/532
   let args = sink.pos()  // array
   let kwargs = sink.named()  // dictionary
 
@@ -331,55 +333,56 @@
 
 // == Math functions
 
-#let sin = $op("sin")$
-#let sinh = $op("sinh")$
-#let arcsin = $op("arcsin")$
-#let asin = $op("asin")$
+#let sin = math.op("sin")
+#let sinh = math.op("sinh")
+#let arcsin = math.op("arcsin")
+#let asin = math.op("asin")
 
-#let cos = $op("cos")$
-#let cosh = $op("cosh")$
-#let arccos = $op("arccos")$
-#let acos = $op("acos")$
+#let cos = math.op("cos")
+#let cosh = math.op("cosh")
+#let arccos = math.op("arccos")
+#let acos = math.op("acos")
 
-#let tan = $op("tan")$
-#let tanh = $op("tanh")$
-#let arctan = $op("arctan")$
-#let atan = $op("atan")$
+#let tan = math.op("tan")
+#let tanh = math.op("tanh")
+#let arctan = math.op("arctan")
+#let atan = math.op("atan")
 
-#let sec = $op("sec")$
-#let sech = $op("sech")$
-#let arcsec = $op("arcsec")$
-#let asec = $op("asec")$
+#let sec = math.op("sec")
+#let sech = math.op("sech")
+#let arcsec = math.op("arcsec")
+#let asec = math.op("asec")
 
-#let csc = $op("csc")$
-#let csch = $op("csch")$
-#let arccsc = $op("arccsc")$
-#let acsc = $op("acsc")$
+#let csc = math.op("csc")
+#let csch = math.op("csch")
+#let arccsc = math.op("arccsc")
+#let acsc = math.op("acsc")
 
-#let cot = $op("cot")$
-#let coth = $op("coth")$
-#let arccot = $op("arccot")$
-#let acot = $op("acot")$
+#let cot = math.op("cot")
+#let coth = math.op("coth")
+#let arccot = math.op("arccot")
+#let acot = math.op("acot")
 
 #let diag = math.op("diag")
 
-#let trace = $op("trace")$
-#let tr = $op("tr")$
-#let Trace = $op("Trace")$
-#let Tr = $op("Tr")$
+#let trace = math.op("trace")
+#let tr = math.op("tr")
+#let Trace = math.op("Trace")
+#let Tr = math.op("Tr")
 
-#let rank = $op("rank")$
-#let erf = $op("erf")$
-#let Res = $op("Res")$
+#let rank = math.op("rank")
+#let erf = math.op("erf")
+#let Res = math.op("Res")
 
-#let Re = $op("Re")$
-#let Im = $op("Im")$
+#let Re = math.op("Re")
+#let Im = math.op("Im")
 
 #let sgn = $op("sgn")$
 
 // == Differentials
 
 #let differential(..sink) = {
+  // TODO(unpacking): https://github.com/typst/typst/pull/532
   let args = sink.pos()  // array
   let kwargs = sink.named()  // dictionary
 
@@ -422,6 +425,7 @@
 
   let arr = ()
   for i in range(var_num) {
+    // TODO(unpacking): https://github.com/typst/typst/pull/532
     let var = args.at(i)
     let order = orders.at(i)
     if order != [1] {
@@ -461,6 +465,7 @@
 #let derivative(f, ..sink) = {
   if f == [] { f = none }  // Convert empty content to none
 
+  // TODO(unpacking): https://github.com/typst/typst/pull/532
   let args = sink.pos()  // array
   let kwargs = sink.named()  // dictionary
   assert(args.len() > 0, message: "variable name expected")
@@ -493,6 +498,7 @@
 #let dv = derivative
 
 #let partialderivative(..sink) = {
+  // TODO(unpacking): https://github.com/typst/typst/pull/532
   let args = sink.pos()  // array
   let kwargs = sink.named()  // dictionary
   assert(args.len() >= 2, message: "expecting one function name and at least one variable name")
@@ -590,6 +596,7 @@
 #let tensor(T, ..sink) = {
   let args = sink.pos()
 
+  // TODO(unpacking): https://github.com/typst/typst/pull/532
   let uppers = ()
   let lowers = ()
   let hphantom(s) = { hide(box(height: 0em, s)) }  // Like Latex's \hphantom

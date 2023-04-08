@@ -434,11 +434,11 @@ Typst built-in math operators: #linkurl("source code", "https://github.com/typst
 
   [`Res A`],
   [$Res A$],
-  [residue],
+  [residue (complex analysis)],
 
   [`Re z, Im z `],
   [$Re z, Im z$],
-  [real, imaginary parts of a complex number],
+  [real, imaginary (complex analysis)],
 
   [`sgn x`],
   [$sgn x$],
@@ -600,7 +600,7 @@ Function: `derivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `dv(`...`)
   ],
 )
 
-=== Partial derivatives <partial-derivatives>
+=== Partial derivatives (incl. mixed orders) <partial-derivatives>
 
 #v(1em)
 
@@ -756,6 +756,8 @@ $ grad_mu A^nu = diff_mu A^nu + tensor(Gamma,+nu,-mu,-lambda) A^lambda $
 === Isotopes
 
 #v(1em)
+
+*Note*: the complexity of this compositional approach could get the alignment wrong. This #linkurl("pull request", "https://github.com/typst/typst/pull/699") to Typst intends to add the support natively.
 
 Function: `isotope(`_element_, _a_: ..., _z_: ...`)`.
 - _element_: the chemical element (use `".."` for multi-letter symbols)
