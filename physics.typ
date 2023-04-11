@@ -653,6 +653,84 @@
   })
 }
 
+#let signals(str, style: 0.5pt) = {
+  assert(type(str) == "string", message: "input needs to be a string")
+
+  let elements = ()  // array
+  for e in str {
+    if e == " " {
+      elements.push(rect(width: 1em, height: 1em, stroke: none))
+    } else if e == "n" {
+      elements.push(
+        rect(width: 1em, height: 1em, stroke: (left: style, top: style, right: style)))
+    } else if e == "u" {
+      elements.push(
+        rect(width: 1em, height: 1em, stroke: (left: style, bottom: style, right: style)))
+    } else if (e == "H" or e == "1") {
+      elements.push(rect(width: 1em, height: 1em, stroke: (top: style)))
+    } else if e == "h" {
+      elements.push(rect(width: 0.5em, height: 1em, stroke: (top: style)))
+    } else if e == "^" {
+       elements.push(rect(width: 0.1em, height: 1em, stroke: (top: style)))
+    } else if (e == "M" or e == "-") {
+      elements.push(line(start: (0em, 0.5em), end: (1em, 0.5em), stroke: style))
+    } else if e == "m" {
+      elements.push(line(start: (0em, 0.5em), end: (0.5em, 0.5em), stroke: style))
+    } else if (e == "L" or e == "0") {
+      elements.push(rect(width: 1em, height: 1em, stroke: (bottom: style)))
+    } else if e == "l" {
+      elements.push(rect(width: 0.5em, height: 1em, stroke: (bottom: style)))
+    } else if e == "v" {
+       elements.push(rect(width: 0.1em, height: 1em, stroke: (bottom: style)))
+    } else if e == "#" {
+      elements.push(rect(width: 1em, height: 1em, stroke: (top: style, bottom: style)))
+    } else if e == "=" {
+      elements.push(rect(width: 0.5em, height: 1em, stroke: (top: style, bottom: style)))
+    } else if e == "|" {
+      elements.push(line(start: (0em, 0em), end: (0em, 1em), stroke: style))
+    } else if e == "'" {
+      elements.push(line(start: (0em, 0em), end: (0em, 0.5em), stroke: style))
+    } else if e == "." {
+      elements.push(line(start: (0em, 0.5em), end: (0em, 1em), stroke: style))
+    } else if e == "R" {
+      elements.push(line(start: (0em, 1em), end: (1em, 0em), stroke: style))
+    } else if e == "r" {
+      elements.push(line(start: (0em, 1em), end: (0.5em, 0em), stroke: style))
+    } else if e == "F" {
+      elements.push(line(start: (0em, 0em), end: (1em, 1em), stroke: style))
+    } else if e == "f" {
+      elements.push(line(start: (0em, 0em), end: (0.5em, 1em), stroke: style))
+    } else if e == "<" {
+      // TODO: wait forTypst release that supports 'path'
+    } else if e == "⟨" {
+      // TODO: wait forTypst release that supports 'path'
+    } else if e == ">" {
+      // TODO: wait forTypst release that supports 'path'
+    } else if e == "⟩" {
+      // TODO: wait forTypst release that supports 'path'
+    } else if e == "C" {
+      // TODO: wait for Typst release that supports 'path'
+      // elements.push(
+      //   path(stroke: style, closed: false, (0em, 1em), (0.5em, 0.3em), (1em, 0em)))
+    } else if e == "c" {
+      // TODO: wait for Typst release that supports 'path'
+    } else if e == "D" {
+      // TODO: wait forTypst release that supports 'path'
+      // elements.push(
+      //   path(stroke: style, closed: false, (0em, 0em), (0.5em, 0.7em), (1em, 1em)))
+    } else if e == "d" {
+      // TODO: wait forTypst release that supports 'path'
+    } else {
+      elements.push("?")
+    }
+  }
+  grid(
+    columns: (auto,) * elements.len(),
+    column-gutter: 0em,
+    ..elements,
+  )
+}
+
 #let BMEsymadd(content) = {
   let elements = __extract_array_contents(content)
   __bare_minimum_effort_symbolic_add(elements)

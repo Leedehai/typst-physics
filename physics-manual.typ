@@ -576,7 +576,7 @@ Function: `derivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `dv(`...`)
 
   [
     *(1)* #hl(`dv(,x), dv(,x,2), dv(f,x,k+1)`) \
-    $ dv(,x), dv(,x,2), dv(,x,k+1) $
+    $ dv(,x), dv(,x,2), dv(f,x,k+1) $
   ],
   [
     *(2)* #hl(`dv(, vb(r)), dv(f, vb(r)_e, 2)`) \
@@ -757,7 +757,7 @@ $ grad_mu A^nu = diff_mu A^nu + tensor(Gamma,+nu,-mu,-lambda) A^lambda $
 
 #v(1em)
 
-*Note*: the complexity of this compositional approach could get the alignment wrong. This #linkurl("pull request", "https://github.com/typst/typst/pull/699") to Typst intends to add the support natively.
+*Note*: this complex compositional approach might get the layout wrong in some cases. I authored this #linkurl("pull request", "https://github.com/typst/typst/pull/699") for Typst, which intends to add the support natively.
 
 Function: `isotope(`_element_, _a_: ..., _z_: ...`)`.
 - _element_: the chemical element (use `".."` for multi-letter symbols)
@@ -785,6 +785,46 @@ $ isotope("Bi",a:211,z:83) --> isotope("Tl",a:207,z:81) + isotope("He",a:4,z:2) 
 
 *(4)* #hl(`isotope("Tl",a:207,z:81) --> isotope("Pb",a:207,z:82) + isotope(e,a:0,z:-1)`)
 $ isotope("Tl",a:207,z:81) --> isotope("Pb",a:207,z:82) + isotope(e,a:0,z:-1) $
+
+=== Signal sequences
+
+In engineering, people often need to represent (digital) signal sequences like $signals("1|0|1|0")$.
+
+Function: `signals(str`, `style`:...`)`.
+- `str`: a string representing the pulse sequence. Each character represents an glyph (see below).
+- `style` (optional): the stroke style [default: `#0.5pt` (color interited)]. Possible values could be `#2pt`, `#(1pt + blue)`, etc.
+
+#align(center, [*Glyph characters*])
+
+#grid(
+  columns: (1fr, 1fr, 1fr, 1fr),
+  row-gutter: 1em,
+  column-gutter: 2em,
+
+  [`"HLM"` #sym.arrow.l.r.double `"10-"` #text(size: 0.6em, [1em]) \ $ signals("HLM 10-") $],
+  [`"hlm ^v"` #text(size: 0.6em, [0.5em, 0.1em]) \ $ signals("hlm ^v") $],
+  [`"| ' ." (edge)` \ $ signals("| ' .") $],
+  [`"# ="` (band) \ $ signals("# =") $],
+
+  [`"R r"` (rise) \ $ signals("R r") $],
+  [`"F f"` (fall) \ $ signals("F f") $],
+  [`"C c"` (charge) \ $ "TODO: wait for Typst" signals("C c") $],
+  [`"D d"` (drain) \ $ "TODO: wait for Typst" signals("D d") $],
+
+  [`"< ⟨"` #text(size: 0.6em, [`⟨`: `\u{27e8}`]) \ $ "TODO: wait for Typst" signals("< ⟨") $],
+  [`"> ⟩"` #text(size: 0.6em, [`⟩`: `\u{27e9}`]) \ $ "TODO: wait for Typst" signals("> ⟩") $],
+)
+
+#align(center, [*Examples*])
+
+*(1)* `signals("H|L|HFLR 1|0|1F0R h|l|hflr M'H|L|h|l|^|v. |H'M'H|l.m.l|")`
+$ signals("H|L|HFLR 1|0|1F0R h|l|hflr M'H|L|h|l|^|v. |H'M'H|l.m.l|") $
+
+*(2)* `signals("-|#|- -|=|- -<##>- -⟨==⟩- CHDLchdl 0101")`
+$ signals("-|#|- -|=|- -<##>- -⟨==⟩- CHDLchdl 0101") "TODO: wait for Typst" $
+
+*(3)* `signals("-|#|-", style:#blue)signals("-|#|-", style:#(0.5pt + rgb("#ffa509")))`
+$ signals("-|#|-", style:#blue)signals("-|#|-", style:#(0.5pt + rgb("#ffa509"))) $
 
 == Symbolic addition
 

@@ -10,7 +10,8 @@ physics, including:
 * Dirac braket notations,
 * Common math functions,
 * Differentials and derivatives, including partial derivatives of mixed orders,
-* Tensor abstract index notations, isotopes.
+* Tensor abstract index notations, isotopes,
+* Signal sequences.
 
 :warning: [Typst](https://typst.app) is in beta and evolving, and this package
 evolves with it. As a result, no backward compatibility is guaranteed yet. Also,
