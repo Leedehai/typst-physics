@@ -11,7 +11,7 @@ physics, including:
 * Common math functions,
 * Differentials and derivatives, including partial derivatives of mixed orders,
 * Tensor abstract index notations, isotopes,
-* Signal sequences.
+* Signal sequences i.e. digital timing diagrams.
 
 :warning: [Typst](https://typst.app) is in beta and evolving, and this package
 evolves with it. As a result, no backward compatibility is guaranteed yet. Also,
@@ -43,8 +43,8 @@ generated directly with the [Typst](https://typst.app) CLI.
 CLI Version:
 
 ```sh
-$ typst --version # From release 28-03-32 (pre-release)
-typst 0.1.0 (b3faef4b)
+$ typst --version
+typst 0.2.0 (fe2640c5)
 ```
 
 To regenerate the manual, use command

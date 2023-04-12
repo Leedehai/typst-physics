@@ -429,9 +429,9 @@
     let var = args.at(i)
     let order = orders.at(i)
     if order != [1] {
-      arr.push($dsym^#order #var$)
+      arr.push($dsym^#order#var$)
     } else {
-      arr.push($dsym #var$)
+      arr.push($dsym#var$)
     }
   }
   $#arr.join(prod)$
@@ -487,12 +487,12 @@
 
   if args.len() >= 2 {  // i.e. specified the order
     let order = args.at(1)  // Not necessarily representing a number
-    let upper = if f == none { $#d^#order$ } else { $#d^#order #f$ }
+    let upper = if f == none { $#d^#order$ } else { $#d^#order#f$ }
     let varorder = __combine_var_order(var, order)
-    display(upper, $#d #varorder$, slash)
+    display(upper, $#d#varorder$, slash)
   } else {  // i.e. no order specified
-    let upper = if f == none { $#d$ } else { $#d #f$ }
-    display(upper, $#d #var$, slash)
+    let upper = if f == none { $#d$ } else { $#d#f$ }
+    display(upper, $#d#var$, slash)
   }
 }
 #let dv = derivative
@@ -544,15 +544,15 @@
     let var = args.at(1 + i)  // 1st element is the function name, skip
     let order = orders.at(i)
     if order == [1] {
-      lowers.push($diff #var$)
+      lowers.push($diff#var$)
     } else {
       let varorder = __combine_var_order(var, order)
-      lowers.push($diff #varorder$)
+      lowers.push($diff#varorder$)
     }
   }
 
   let upper = if total_order != 1 and total_order != [1] {  // number or Content
-    if f == none { $diff^#total_order$ } else { $diff^#total_order #f$ }
+    if f == none { $diff^#total_order$ } else { $diff^#total_order#f$ }
   } else {
     if f == none { $diff$ } else { $diff #f$ }
   }
@@ -653,77 +653,84 @@
   })
 }
 
-#let signals(str, style: 0.5pt) = {
+#let __signal_element(e, W, color) = {
+  let style = 0.5pt + color
+  if e == "&" {
+    return rect(width: W, height: 1em, stroke: none)
+  } else if e == "n" {
+    return rect(width: 1em, height: W, stroke: (left: style, top: style, right: style))
+  } else if e == "u" {
+    return rect(width: W, height: 1em, stroke: (left: style, bottom: style, right: style))
+  } else if (e == "H" or e == "1") {
+    return rect(width: W, height: 1em, stroke: (top: style))
+  } else if e == "h" {
+    return rect(width: W * 50%, height: 1em, stroke: (top: style))
+  } else if e == "^" {
+    return rect(width: W * 10%, height: 1em, stroke: (top: style))
+  } else if (e == "M" or e == "-") {
+    return line(start: (0em, 0.5em), end: (W, 0.5em), stroke: style)
+  } else if e == "m" {
+    return line(start: (0em, 0.5em), end: (W * 0.5, 0.5em), stroke: style)
+  } else if (e == "L" or e == "0") {
+    return rect(width: W, height: 1em, stroke: (bottom: style))
+  } else if e == "l" {
+    return rect(width: W * 50%, height: 1em, stroke: (bottom: style))
+  } else if e == "v" {
+    return rect(width: W * 10%, height: 1em, stroke: (bottom: style))
+  } else if e == "=" {
+    return rect(width: W, height: 1em, stroke: (top: style, bottom: style))
+  } else if e == "#" {
+    return path(stroke: style, closed: false,
+      (0em, 0em), (W * 50%, 0em), (0em, 1em), (W, 1em),
+      (W * 50%, 1em), (W, 0em), (W * 50%, 0em),
+    )
+  } else if e == "|" {
+    return line(start: (0em, 0em), end: (0em, 1em), stroke: style)
+  } else if e == "'" {
+    return line(start: (0em, 0em), end: (0em, 0.5em), stroke: style)
+  } else if e == "," {
+    return line(start: (0em, 0.5em), end: (0em, 1em), stroke: style)
+  } else if e == "R" {
+    return line(start: (0em, 1em), end: (W, 0em), stroke: style)
+  } else if e == "F" {
+    return line(start: (0em, 0em), end: (W, 1em), stroke: style)
+  } else if e == "<" {
+    return path(stroke: style, closed: false, (W, 0em), (0em, 0.5em), (W, 1em))
+  } else if e == ">" {
+    return path(stroke: style, closed: false, (0em, 0em), (W, 0.5em), (0em, 1em))
+  } else if e == "C" {
+    return path(stroke: style, closed: false, (0em, 1em), ((W, 0em), (-W * 75%, 0.05em)))
+  } else if e == "c" {
+    return path(stroke: style, closed: false, (0em, 1em), ((W * 50%, 0em), (-W * 38%, 0.05em)))
+  } else if e == "D" {
+    return path(stroke: style, closed: false, (0em, 0em), ((W, 1em), (-W * 75%, -0.05em)))
+  } else if e == "d" {
+    return path(stroke: style, closed: false, (0em, 0em), ((W * 50%, 1em), (-W * 38%, -0.05em)))
+  } else if e == "X" {
+    return path(stroke: style, closed: false,
+      (0em, 0em), (W * 50%, 0.5em), (0em, 1em),
+      (W, 0em), (W * 50%, 0.5em), (W, 1em),
+    )
+  } else {
+    return "[" + e + "]"
+  }
+}
+
+#let signals(str, step: 1em, color: black) = {
   assert(type(str) == "string", message: "input needs to be a string")
 
   let elements = ()  // array
+  let previous = " "
   for e in str {
-    if e == " " {
-      elements.push(rect(width: 1em, height: 1em, stroke: none))
-    } else if e == "n" {
-      elements.push(
-        rect(width: 1em, height: 1em, stroke: (left: style, top: style, right: style)))
-    } else if e == "u" {
-      elements.push(
-        rect(width: 1em, height: 1em, stroke: (left: style, bottom: style, right: style)))
-    } else if (e == "H" or e == "1") {
-      elements.push(rect(width: 1em, height: 1em, stroke: (top: style)))
-    } else if e == "h" {
-      elements.push(rect(width: 0.5em, height: 1em, stroke: (top: style)))
-    } else if e == "^" {
-       elements.push(rect(width: 0.1em, height: 1em, stroke: (top: style)))
-    } else if (e == "M" or e == "-") {
-      elements.push(line(start: (0em, 0.5em), end: (1em, 0.5em), stroke: style))
-    } else if e == "m" {
-      elements.push(line(start: (0em, 0.5em), end: (0.5em, 0.5em), stroke: style))
-    } else if (e == "L" or e == "0") {
-      elements.push(rect(width: 1em, height: 1em, stroke: (bottom: style)))
-    } else if e == "l" {
-      elements.push(rect(width: 0.5em, height: 1em, stroke: (bottom: style)))
-    } else if e == "v" {
-       elements.push(rect(width: 0.1em, height: 1em, stroke: (bottom: style)))
-    } else if e == "#" {
-      elements.push(rect(width: 1em, height: 1em, stroke: (top: style, bottom: style)))
-    } else if e == "=" {
-      elements.push(rect(width: 0.5em, height: 1em, stroke: (top: style, bottom: style)))
-    } else if e == "|" {
-      elements.push(line(start: (0em, 0em), end: (0em, 1em), stroke: style))
-    } else if e == "'" {
-      elements.push(line(start: (0em, 0em), end: (0em, 0.5em), stroke: style))
-    } else if e == "." {
-      elements.push(line(start: (0em, 0.5em), end: (0em, 1em), stroke: style))
-    } else if e == "R" {
-      elements.push(line(start: (0em, 1em), end: (1em, 0em), stroke: style))
-    } else if e == "r" {
-      elements.push(line(start: (0em, 1em), end: (0.5em, 0em), stroke: style))
-    } else if e == "F" {
-      elements.push(line(start: (0em, 0em), end: (1em, 1em), stroke: style))
-    } else if e == "f" {
-      elements.push(line(start: (0em, 0em), end: (0.5em, 1em), stroke: style))
-    } else if e == "<" {
-      // TODO: wait forTypst release that supports 'path'
-    } else if e == "⟨" {
-      // TODO: wait forTypst release that supports 'path'
-    } else if e == ">" {
-      // TODO: wait forTypst release that supports 'path'
-    } else if e == "⟩" {
-      // TODO: wait forTypst release that supports 'path'
-    } else if e == "C" {
-      // TODO: wait for Typst release that supports 'path'
-      // elements.push(
-      //   path(stroke: style, closed: false, (0em, 1em), (0.5em, 0.3em), (1em, 0em)))
-    } else if e == "c" {
-      // TODO: wait for Typst release that supports 'path'
-    } else if e == "D" {
-      // TODO: wait forTypst release that supports 'path'
-      // elements.push(
-      //   path(stroke: style, closed: false, (0em, 0em), (0.5em, 0.7em), (1em, 1em)))
-    } else if e == "d" {
-      // TODO: wait forTypst release that supports 'path'
+    if e == " " { continue; }
+    if e == "." {
+      elements.push(__signal_element(previous, step, color))
     } else {
-      elements.push("?")
+      elements.push(__signal_element(e, step, color))
+      previous = e
     }
   }
+
   grid(
     columns: (auto,) * elements.len(),
     column-gutter: 0em,

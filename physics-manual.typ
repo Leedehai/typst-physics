@@ -1,7 +1,7 @@
 // Copyright 2023 Leedehai
 // This document is shared under the Creative Commons BY-ND 4.0 license.
 
-#let version = "0.6.1"
+#let version = "0.6.2"
 
 #set page(
   numbering: "1/1",
@@ -22,8 +22,8 @@
 ]
 
 #align(center)[
-  Version #version, April 4, 2023\
-  Document updated: April 4, 2023
+  Version #version, April 12, 2023\
+  Document updated: April 12, 2023
 ]
 
 #set par(justify: true)
@@ -757,7 +757,7 @@ $ grad_mu A^nu = diff_mu A^nu + tensor(Gamma,+nu,-mu,-lambda) A^lambda $
 
 #v(1em)
 
-*Note*: this complex compositional approach might get the layout wrong in some cases. I authored this #linkurl("pull request", "https://github.com/typst/typst/pull/699") for Typst, which intends to add the support natively.
+*Note*: this complex compositional approach might get the layout wrong in some cases. I authored this #linkurl("pull request", "https://github.com/typst/typst/pull/825") for Typst, which intends to add the support natively.
 
 Function: `isotope(`_element_, _a_: ..., _z_: ...`)`.
 - _element_: the chemical element (use `".."` for multi-letter symbols)
@@ -786,13 +786,14 @@ $ isotope("Bi",a:211,z:83) --> isotope("Tl",a:207,z:81) + isotope("He",a:4,z:2) 
 *(4)* #hl(`isotope("Tl",a:207,z:81) --> isotope("Pb",a:207,z:82) + isotope(e,a:0,z:-1)`)
 $ isotope("Tl",a:207,z:81) --> isotope("Pb",a:207,z:82) + isotope(e,a:0,z:-1) $
 
-=== Signal sequences
+=== Signal sequences (digital timing diagrams)
 
-In engineering, people often need to represent (digital) signal sequences like $signals("1|0|1|0")$.
+In engineering, people often need to draw digital timing diagrams for signals, like $signals("1|0|1|0")$.
 
-Function: `signals(str`, `style`:...`)`.
-- `str`: a string representing the pulse sequence. Each character represents an glyph (see below).
-- `style` (optional): the stroke style [default: `#0.5pt` (color interited)]. Possible values could be `#2pt`, `#(1pt + blue)`, etc.
+Function: `signals(str`, `step:`:..., `style`:...`)`.
+- `str`: a string representing the signals. Each character represents an glyph (see below).
+- `step` (optional): step width, i.e. how wide each glyph is [default: `#1em`].
+- `color` (optional): the stroke color [default: `#black`].
 
 #align(center, [*Glyph characters*])
 
@@ -801,30 +802,48 @@ Function: `signals(str`, `style`:...`)`.
   row-gutter: 1em,
   column-gutter: 2em,
 
-  [`"HLM"` #sym.arrow.l.r.double `"10-"` #text(size: 0.6em, [1em]) \ $ signals("HLM 10-") $],
-  [`"hlm ^v"` #text(size: 0.6em, [0.5em, 0.1em]) \ $ signals("hlm ^v") $],
-  [`"| ' ." (edge)` \ $ signals("| ' .") $],
-  [`"# ="` (band) \ $ signals("# =") $],
+  [`HLM` #sym.arrow.l.r.double `"10-"` #text(size: 0.5em, [full step]) \ $ signals("HLM&10-") $],
+  [`hlm ^v` #text(size: 0.5em, [1/2 step, 1/10 step])  \ $ signals("hlm&^v") $],
+  [`| ' ,` (edge) #text(size: 0.5em, [0 step]) \ $ signals("|&'&,") $],
+  [`= #` #text(size: 0.5em, [empty, shaded]) \ $ signals("=&#") $],
 
-  [`"R r"` (rise) \ $ signals("R r") $],
-  [`"F f"` (fall) \ $ signals("F f") $],
-  [`"C c"` (charge) \ $ "TODO: wait for Typst" signals("C c") $],
-  [`"D d"` (drain) \ $ "TODO: wait for Typst" signals("D d") $],
+  [`R` (rise) \ $ signals("R") $],
+  [`F` (fall) \ $ signals("F") $],
+  [`C` (charge) \ $ signals("C") $],
+  [`D` (drain) \ $ signals("D") $],
 
-  [`"< ⟨"` #text(size: 0.6em, [`⟨`: `\u{27e8}`]) \ $ "TODO: wait for Typst" signals("< ⟨") $],
-  [`"> ⟩"` #text(size: 0.6em, [`⟩`: `\u{27e9}`]) \ $ "TODO: wait for Typst" signals("> ⟩") $],
+  [`<` \ $ signals("<") $],
+  [`>` \ $ signals(">") $],
+  [`X` \ $ signals("X") $],
+  [],
+
+  [ingore: (blankspace) \ separate: `&`],
+  [repeat: `.` (dot)],
 )
 
 #align(center, [*Examples*])
 
-*(1)* `signals("H|L|HFLR 1|0|1F0R h|l|hflr M'H|L|h|l|^|v. |H'M'H|l.m.l|")`
-$ signals("H|L|HFLR 1|0|1F0R h|l|hflr M'H|L|h|l|^|v. |H'M'H|l.m.l|") $
+*(1)* `signals("10.1"), signals("1|0|1|0R"), signals("CD"), signals("CD", step: #2em)`
+$ signals("10.1"), signals("1|0|1|0R"), signals("CD"), signals("CD", step: #2em) $
 
-*(2)* `signals("-|#|- -|=|- -<##>- -⟨==⟩- CHDLchdl 0101")`
-$ signals("-|#|- -|=|- -<##>- -⟨==⟩- CHDLchdl 0101") "TODO: wait for Typst" $
+*(2)* `signals("M'H|L|h|l|^|v,&|H'M'H|l,m,l|")` (the ampersand `&` serves as a separator)
+$ signals("M'H|L|h|l|^|v,&|H'M'H|l,m,l|") $
 
-*(3)* `signals("-|#|-", style:#blue)signals("-|#|-", style:#(0.5pt + rgb("#ffa509")))`
-$ signals("-|#|-", style:#blue)signals("-|#|-", style:#(0.5pt + rgb("#ffa509"))) $
+*(3)* `signals("-|=|-", step: #2em), signals("-|#|-"), signals("-<=>-<=")`
+$ signals("-|=|-", step: #2em), signals("-|#|-"), signals("-<=>-<=") $
+
+*(4)* `signals("R1..F0..", step: #.5em)signals("R1.|v|1", step: #.5em, color:#fuchsia)`
+$ signals("R1..F0..", step: #.5em)signals("R1.|v|1", step: #.5em, color:#fuchsia) $
+
+*(5)*
+```
+"clk:" & signals("|1....|0....|1....|0....|1....|0....|1....|0..", step: #0.5em) \
+"bus:" & signals(" #.... X=... ..... ..... X=... ..... ..... X#.", step: #0.5em)
+```
+$
+"clk:" & signals("|1....|0....|1....|0....|1....|0....|1....|0..", step: #0.5em) \
+"bus:" & signals(" #.... X=... ..... ..... X=... ..... ..... X#.", step: #0.5em)
+$
 
 == Symbolic addition
 
