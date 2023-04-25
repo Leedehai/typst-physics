@@ -73,8 +73,6 @@ These items seem to need Typst's language support:
   heavy weight.
 2. Dirac braket notations:
   * Reduce the horizontal space of the inner divider.
-  * Let the inner divider's height match the height given by `lr()` to the left
-  and right angle brackets.
 
 ## License
 

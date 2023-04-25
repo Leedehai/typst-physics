@@ -1,7 +1,7 @@
 // Copyright 2023 Leedehai
 // This document is shared under the Creative Commons BY-ND 4.0 license.
 
-#let version = "0.6.2"
+#let version = "0.6.3"
 
 #set page(
   numbering: "1/1",
@@ -336,16 +336,16 @@ All symbols need to be used in *math mode* `$...$`.
   [`innerproduct(`_a_, _b_`)`],
   [`iprod`],
   [
-    `iprod(u, v)` \ #sym.arrow $iprod(u, v)$ \
-    `iprod(limits(sum)_(i=0)^n i, b)` \ #sym.arrow $iprod(limits(sum)_(i=0)^n i, b)$
+    `iprod(u), iprod(u, u)` \ #sym.arrow $iprod(u), iprod(u, v)$ \
+    `iprod(a, limits(sum)_(i=0)^n i)` \ #sym.arrow $iprod(a, limits(sum)_(i=0)^n i)$
   ],
   [innerproduct],
 
   [`outerproduct(`_a_, _b_`)`],
   [`oprod`],
   [
-    `oprod(u, v)` \ #sym.arrow $oprod(u, v)$ \
-    `oprod(limits(sum)_(i=0)^n i,b)` \ #sym.arrow $oprod(limits(sum)_(i=0)^n i,b)$
+    `oprod(u), oprod(u, v)` \ #sym.arrow $oprod(u), oprod(u, v)$ \
+    `oprod(a, limits(sum)_(i=0)^n i)` \ #sym.arrow $oprod(a, limits(sum)_(i=0)^n i)$
   ],
   [outerproduct],
 

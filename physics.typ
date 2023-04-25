@@ -301,34 +301,48 @@
 #let bra(f) = $lr(angle.l #f|)$
 #let ket(f) = $lr(|#f angle.r)$
 
-#let braket(..sink) = {
+// Credit: thanks to peng1999@ and szdytom@'s suggestions of measure() and
+// phantoms. The hack works until https://github.com/typst/typst/issues/240 is
+// addressed by Typst.
+#let braket(..sink) = style(styles => {
   let args = sink.pos()  // array
   assert(args.len() == 1 or args.len() == 2, message: "expecting 1 or 2 args")
 
-  let f = args.at(0)
-  let g = if args.len() >= 2 { args.at(1) } else { f }
+  let bra = args.at(0)
+  let ket = if args.len() >= 2 { args.at(1) } else { bra }
 
-  // Do not replace "|" with "bar.v" -- takes up too much width
-  $lr(angle.l #f|#g angle.r)$
-}
-#let ketbra(..sink) = {
+  let height = measure($ bra ket $, styles).height;
+  let phantom = box(height: height, width: 0pt, inset: 0pt, stroke: none);
+  $ lr(angle.l bra lr(|phantom#h(0pt)) ket angle.r) $
+})
+
+// Credit: until https://github.com/typst/typst/issues/240 is addressed by Typst
+// we use the same hack as braket().
+#let ketbra(..sink) = style(styles => {
   let args = sink.pos()  // array
   assert(args.len() == 1 or args.len() == 2, message: "expecting 1 or 2 args")
 
-  let f = args.at(0)
-  let g = if args.len() >= 2 { args.at(1) } else { f }
+  let bra = args.at(0)
+  let ket = if args.len() >= 2 { args.at(1) } else { bra }
 
-  // Do not replace "|" with "bar.v" -- takes up too much width
-  $lr(|#f angle.r)lr(angle.l #g|)$
-}
+  let height = measure($ bra ket $, styles).height;
+  let phantom = box(height: height, width: 0pt, inset: 0pt, stroke: none);
+  $ |lr(bra#h(0pt)phantom angle.r)lr(angle.l phantom#h(0pt)ket)| $
+})
 
-#let innerproduct(f, g) = { braket(f, g) }
+#let innerproduct = braket
 #let iprod = innerproduct
-
-#let outerproduct(f, g) = { ketbra(f, g) }
+#let outerproduct = ketbra
 #let oprod = outerproduct
 
-#let matrixelement(n, M, m) = $lr(angle.l #n lr(|#M|) #m angle.r)$
+// Credit: until https://github.com/typst/typst/issues/240 is addressed by Typst
+// we use the same hack as braket().
+#let matrixelement(n, M, m) = style(styles => {
+  let height = measure($ #n #M #m $, styles).height;
+  let phantom = box(height: height, width: 0pt, inset: 0pt, stroke: none);
+  $ lr(angle.l #n |#M#h(0pt)phantom| #m angle.r) $
+})
+
 #let mel = matrixelement
 
 // == Math functions
