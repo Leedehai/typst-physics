@@ -1,7 +1,7 @@
 // Copyright 2023 Leedehai
 // This document is shared under the Creative Commons BY-ND 4.0 license.
 
-#let version = "0.6.3"
+#let version = "0.7.0"
 
 #set page(
   numbering: "1/1",
@@ -90,6 +90,8 @@ This manual itself was generated using the Typst CLI and the `physics` package, 
   s
 }
 
+#let SUM = $limits(sum)_(i=0)^n i$
+
 Some symbols are already provided as a Typst built-in. They are listed here just for completeness with annotation like #builtin([`this`]), as users coming from LATEX might not know they are already available in Typst out of box.
 
 All symbols need to be used in *math mode* `$...$`.
@@ -99,7 +101,7 @@ All symbols need to be used in *math mode* `$...$`.
 #v(1em)
 
 #table(
-  columns: (auto, 2fr, 6fr, 5fr),
+  columns: (auto, auto, auto, auto),
   align: left,
   stroke: none,
   [*Symbol*], [*Abbr.*], [*Example*], [*Notes*],
@@ -122,8 +124,8 @@ All symbols need to be used in *math mode* `$...$`.
   [`Set`],
   [],
   [
-    `Set(a_n)` #sym.arrow $Set(a_n)$ \
-    `Set(integral u, forall u)` \ #sym.arrow $Set(integral u, forall u)$
+    `Set(a_n), Set(a_i, forall i)` \ #sym.arrow $Set(a_n), Set(a_i, forall i)$ \
+    `Set(1/n, forall n)` \ #sym.arrow $Set(1/n, forall n)$
   ],
   [math set, use `Set` not `set` since the latter is a Typst keyword],
 
@@ -305,7 +307,7 @@ All symbols need to be used in *math mode* `$...$`.
   [],
   [
     `bra(u)`  #sym.arrow $bra(u)$ \
-    `bra(limits(sum)_(i=0)^n i)` \ #sym.arrow $bra(limits(sum)_(i=0)^n i)$
+    `bra(vec(1,2))` #sym.arrow $bra(vec(1,2))$
   ],
   [bra],
 
@@ -313,7 +315,7 @@ All symbols need to be used in *math mode* `$...$`.
   [],
   [
     `ket(u)`  #sym.arrow $ket(u)$ \
-    `ket(limits(sum)_(i=0)^n i)` \ #sym.arrow $ket(limits(sum)_(i=0)^n i)$
+    `ket(vec(1,2))` #sym.arrow $ket(vec(1,2))$
   ],
   [ket],
 
@@ -321,7 +323,7 @@ All symbols need to be used in *math mode* `$...$`.
   [],
   [
     `braket(u), braket(u, v)` \ #sym.arrow $braket(u), braket(u, v)$ \
-    `braket(limits(sum)_(i=0)^n i, b)` \ #sym.arrow $braket(limits(sum)_(i=0)^n i, b)$
+    `braket(vec(1,2), b)` #sym.arrow $braket(vec(1,2), b)$
   ],
   [braket],
 
@@ -329,15 +331,15 @@ All symbols need to be used in *math mode* `$...$`.
   [],
   [
     `ketbra(u), ketbra(u, v)` \ #sym.arrow $ketbra(u), ketbra(u, v)$ \
-    `ketbra(limits(sum)_(i=0)^n i, b)` \ #sym.arrow $ketbra(limits(sum)_(i=0)^n i, b)$
+    `ketbra(vec(1,2), b)` #sym.arrow $ketbra(vec(1,2), b)$
   ],
   [ketbra],
 
   [`innerproduct(`_a_, _b_`)`],
   [`iprod`],
   [
-    `iprod(u), iprod(u, u)` \ #sym.arrow $iprod(u), iprod(u, v)$ \
-    `iprod(a, limits(sum)_(i=0)^n i)` \ #sym.arrow $iprod(a, limits(sum)_(i=0)^n i)$
+    `iprod(u), iprod(u, v)` \ #sym.arrow $iprod(u), iprod(u, v)$ \
+    `iprod(a, vec(1,2))` #sym.arrow $iprod(a, vec(1,2))$
   ],
   [innerproduct],
 
@@ -345,7 +347,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`oprod`],
   [
     `oprod(u), oprod(u, v)` \ #sym.arrow $oprod(u), oprod(u, v)$ \
-    `oprod(a, limits(sum)_(i=0)^n i)` \ #sym.arrow $oprod(a, limits(sum)_(i=0)^n i)$
+    `oprod(a, vec(1,2))` #sym.arrow $oprod(a, vec(1,2))$
   ],
   [outerproduct],
 
@@ -353,7 +355,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`mel`],
   [
     `mel(n, diff_nu H, m)` \ #sym.arrow $mel(n, diff_nu H, m)$ \
-    `mel(n, limits(sum)_(i=0)^n i, m)` \ #sym.arrow $mel(n, limits(sum)_(i=0)^n i, m)$
+    `mel(n, vec(U,V), m)` #sym.arrow $mel(n, vec(U,V), m)$
   ],
   [matrix element \ (quantum theory)],
 )
@@ -757,12 +759,12 @@ $ grad_mu A^nu = diff_mu A^nu + tensor(Gamma,+nu,-mu,-lambda) A^lambda $
 
 #v(1em)
 
-*Note*: this complex compositional approach might get the layout wrong in some cases. I authored this #linkurl("pull request", "https://github.com/typst/typst/pull/825") for Typst, which intends to add the support natively.
-
 Function: `isotope(`_element_, _a_: ..., _z_: ...`)`.
 - _element_: the chemical element (use `".."` for multi-letter symbols)
 - _a_: the mass number _A_ [default: `none`].
 - _z_: the atomic number _Z_ [default: `none`].
+
+*Change log*: Typst merged my #linkurl("PR", "https://github.com/typst/typst/pull/825"), which fixed a misalignment issue with the surrounding text.
 
 #align(center, [*Examples*])
 

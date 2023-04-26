@@ -122,17 +122,19 @@
 
 // == Braces
 
-#let Set(..sink) = {
+#let Set(..sink) = style(styles => {
   let args = sink.pos()  // array
   let expr = if args.len() >= 1 { args.at(0) } else { none }
   let cond = if args.len() >= 2 { args.at(1) } else { none }
+  let height = measure($ expr cond $, styles).height;
+  let phantom = box(height: height, width: 0pt, inset: 0pt, stroke: none);
 
   if expr == none {
-    if cond == none { ${}$ } else { $lr({|#cond})$ }
+    if cond == none { ${}$ } else { ${lr(|phantom#h(0pt))#cond}$ }
   } else {
-    if cond == none { $lr({#expr})$ } else { $lr({#expr | #cond})$ }
+    if cond == none { ${#expr}$ } else { ${#expr lr(|phantom#h(0pt))#cond}$ }
   }
-}
+})
 
 #let order(content) = $cal(O)(content)$
 
@@ -156,12 +158,14 @@
 #let __vectoraccent(a, accent) = {
   let bold_italic(e) = math.bold(math.italic(e))
   if type(a) == "content" and a.func() == math.attach {
-    let top = if a.has("top") { a.top } else { none }
-    let bottom = if a.has("bottom") { a.bottom } else { none }
     math.attach(
       math.accent(bold_italic(a.base), accent),
-      top: math.bold(top),
-      bottom: math.bold(bottom)
+      t: if a.has("t") { math.bold(a.t) } else { none },
+      b: if a.has("b") { math.bold(a.b) } else { none },
+      tl: if a.has("tl") { math.bold(a.tl) } else { none },
+      bl: if a.has("bl") { math.bold(a.bl) } else { none },
+      tr: if a.has("tr") { math.bold(a.tr) } else { none },
+      br: if a.has("br") { math.bold(a.br) } else { none },
     )
   } else {
     math.accent(bold_italic(a), accent)
@@ -183,7 +187,7 @@
 
 #let laplacian = $nabla^2$
 
-#let dotproduct = $dot.op$
+#let dotproduct = $dot$
 #let dprod = dotproduct
 #let crossproduct = $times$
 #let cprod = crossproduct
@@ -196,10 +200,7 @@
 #let mdet = matrixdet
 
 #let diagonalmatrix(..sink) = {
-  // TODO(unpacking): https://github.com/typst/typst/pull/532
-  let args = sink.pos()  // array
-  let kwargs = sink.named()  // dictionary
-
+  let (args, kwargs) = (sink.pos(), sink.named())  // array, dictionary
   let delim = if "delim" in kwargs { kwargs.at("delim") } else { "(" }
 
   let arrays = ()  // array of arrays
@@ -216,10 +217,7 @@
 #let dmat = diagonalmatrix
 
 #let antidiagonalmatrix(..sink) = {
-  // TODO(unpacking): https://github.com/typst/typst/pull/532
-  let args = sink.pos()  // array
-  let kwargs = sink.named()  // dictionary
-
+  let (args, kwargs) = (sink.pos(), sink.named())  // array, dictionary
   let delim = if "delim" in kwargs { kwargs.at("delim") } else { "(" }
 
   let arrays = ()  // array of arrays
@@ -327,7 +325,7 @@
 
   let height = measure($ bra ket $, styles).height;
   let phantom = box(height: height, width: 0pt, inset: 0pt, stroke: none);
-  $ |lr(bra#h(0pt)phantom angle.r)lr(angle.l phantom#h(0pt)ket)| $
+  $ lr(|bra#h(0pt)phantom angle.r)lr(angle.l phantom#h(0pt)ket|) $
 })
 
 #let innerproduct = braket
@@ -396,9 +394,7 @@
 // == Differentials
 
 #let differential(..sink) = {
-  // TODO(unpacking): https://github.com/typst/typst/pull/532
-  let args = sink.pos()  // array
-  let kwargs = sink.named()  // dictionary
+  let (args, kwargs) = (sink.pos(), sink.named())  // array, dictionary
 
   let orders = ()
   let var_num = args.len()
@@ -439,9 +435,7 @@
 
   let arr = ()
   for i in range(var_num) {
-    // TODO(unpacking): https://github.com/typst/typst/pull/532
-    let var = args.at(i)
-    let order = orders.at(i)
+    let (var, order) = (args.at(i), orders.at(i))
     if order != [1] {
       arr.push($dsym^#order#var$)
     } else {
@@ -460,28 +454,26 @@
 #let difference = dd.with(d: sym.Delta)
 
 #let __combine_var_order(var, order) = {
-  let naive_res = math.attach(var, top: order)
+  let naive_result = math.attach(var, t: order)
   if type(var) != "content" or var.func() != math.attach {
-    return naive_res
+    return naive_result
   }
 
-  if var.has("bottom") and (not var.has("top")) {
+  if var.has("b") and (not var.has("t")) {
     // Place the order superscript directly above the subscript, as is
     // the custom is most papers.
-    return math.attach(var.base, top: order, bottom: var.bottom)
+    return math.attach(var.base, t: order, b: var.b)
   }
 
-  // Even if var.has("top") is true, we don't take any special action. Let
+  // Even if var.has("t") is true, we don't take any special action. Let
   // user decide. Say, if they want to wrap var in a "(..)", let they do it.
-  return naive_res
+  return naive_result
 }
 
 #let derivative(f, ..sink) = {
   if f == [] { f = none }  // Convert empty content to none
 
-  // TODO(unpacking): https://github.com/typst/typst/pull/532
-  let args = sink.pos()  // array
-  let kwargs = sink.named()  // dictionary
+  let (args, kwargs) = (sink.pos(), sink.named())  // array, dictionary
   assert(args.len() > 0, message: "variable name expected")
 
   let d = if "d" in kwargs { kwargs.at("d") } else { $upright(d)$ }
@@ -512,9 +504,7 @@
 #let dv = derivative
 
 #let partialderivative(..sink) = {
-  // TODO(unpacking): https://github.com/typst/typst/pull/532
-  let args = sink.pos()  // array
-  let kwargs = sink.named()  // dictionary
+  let (args, kwargs) = (sink.pos(), sink.named())  // array, dictionary
   assert(args.len() >= 2, message: "expecting one function name and at least one variable name")
 
   let f = args.at(0)
@@ -610,9 +600,7 @@
 #let tensor(T, ..sink) = {
   let args = sink.pos()
 
-  // TODO(unpacking): https://github.com/typst/typst/pull/532
-  let uppers = ()
-  let lowers = ()
+  let (uppers, lowers) = ((), ())  // array, array
   let hphantom(s) = { hide(box(height: 0em, s)) }  // Like Latex's \hphantom
 
   for i in range(args.len()) {
@@ -647,24 +635,11 @@
   // starting points of the upper and lower indices. Also, we put T inside
   // the first argument of attach(), so that the indices' vertical position
   // auto-adjusts with T's height.
-  math.attach((T,hphantom(sym.zwj)).join(), top: uppers.join(), bottom: lowers.join())
+  math.attach((T,hphantom(sym.zwj)).join(), t: uppers.join(), b: lowers.join())
 }
 
 #let isotope(element, /*atomic mass*/a: none, /*atomic number*/z: none) = {
-  style(styles => {
-    let size = measure([0], styles)  // The reference
-    // Use a right-aligned table to have the numbers aligned on the right.
-    // Did try using box(width: ..., align(right, ...)), but it unexpectedly
-    // shifts indices downward.
-    let tab = table(
-      align: right, gutter: 0em, stroke: none,
-      columns: (auto,), rows: size.height, inset: 0em,
-      [#text(size: size.height, a)], [#text(size: size.height, z)],
-    )
-
-    let e = math.upright(element)
-    $#tab#e$
-  })
+  $attach(upright(element), tl: #a, bl: #z)$
 }
 
 #let __signal_element(e, W, color) = {
