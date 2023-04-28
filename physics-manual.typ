@@ -1,7 +1,7 @@
 // Copyright 2023 Leedehai
 // This document is shared under the Creative Commons BY-ND 4.0 license.
 
-#let version = "0.7.0"
+#let version = "0.7.1"
 
 #set page(
   numbering: "1/1",
@@ -83,7 +83,7 @@ This manual itself was generated using the Typst CLI and the `physics` package, 
 #let builtin(symbol) = [#super(text(fill: blue, "typst "))#symbol]
 
 #let hl(s) = {  // Highlight. Usage: hl("..."), hl(`...`)
-  show regex("#\(.+?\)|#\d+"): set text(red)
+  show regex("#\(.+?\)|#(\d|\w)+"): set text(eastern)
   show regex("\[|\]"): set text(red)
   show regex("\w+:"): set text(blue)
   show regex(";"): set text(red, weight: "bold")
@@ -121,15 +121,15 @@ All symbols need to be used in *math mode* `$...$`.
   [`order(x^2)`   #sym.arrow $order(x^2)$],
   [order of magnitude],
 
-  [`Set`],
+  [`Set(`_content_`)`],
   [],
   [
     `Set(a_n), Set(a_i, forall i)` \ #sym.arrow $Set(a_n), Set(a_i, forall i)$ \
-    `Set(1/n, forall n)` \ #sym.arrow $Set(1/n, forall n)$
+    `Set(vec(1,n), forall n)` \ #sym.arrow $Set(vec(1,n), forall n)$
   ],
   [math set, use `Set` not `set` since the latter is a Typst keyword],
 
-  [`evaluated`],
+  [`evaluated(`_content_`)`],
   [`eval`],
   [
     `eval(f(x))_0^infinity` \ #sym.arrow $eval(f(x))_0^infinity$ \
@@ -139,7 +139,10 @@ All symbols need to be used in *math mode* `$...$`.
 
   [`expectationvalue`],
   [`expval`],
-  [`expval(u)`  #sym.arrow $expval(u)$],
+  [
+    `expval(u)`  #sym.arrow $expval(u)$ \
+    `expval(f/N)`  #sym.arrow $expval(f/N)$ \
+  ],
   [expectation value],
 )
 
@@ -153,12 +156,12 @@ All symbols need to be used in *math mode* `$...$`.
   stroke: none,
   [*Symbol*], [*Abbr.*], [*Example*], [*Notes*],
 
-  [#builtin([`vec`])],
+  [#builtin([`vec(`...`)`])],
   [],
   [`vec(1,2)` #sym.arrow $vec(1,2)$],
   [column vector],
 
-  [`vecrow`],
+  [`vecrow(`...`)`],
   [],
   [
     `vecrow(1,2)` #sym.arrow $vecrow(1,2)$ \
@@ -232,7 +235,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`v^TT, A^TT` #sym.arrow $v^TT, A^TT$],
   [transpose],
 
-  [#builtin([`mat`])],
+  [#builtin([`mat(`...`)`])],
   [],
   [`mat(1,2;3,4)` #sym.arrow $mat(1,2;3,4)$],
   [matrix],
@@ -248,7 +251,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`dmat`],
   [
     `dmat(1,2)` #sym.arrow $dmat(1,2)$ \
-    `dmat(1,a,xi,delim:"[")` \ #sym.arrow $dmat(1,a,xi,delim:"[")$
+    #hl(`dmat(1,a,xi,delim:"[")`) \ #sym.arrow $dmat(1,a,xi,delim:"[")$
   ],
   [diagonal matrix],
 
@@ -256,7 +259,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`admat`],
   [
     `admat(1,2)` #sym.arrow $admat(1,2)$ \
-    `admat(1,a,xi,delim:"[")` \ #sym.arrow $admat(1,a,xi,delim:"[")$
+    #hl(`admat(1,a,xi,delim:"[")`) \ #sym.arrow $admat(1,a,xi,delim:"[")$
   ],
   [anti-diagonal matrix],
 
@@ -264,7 +267,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`imat`],
   [
     `imat(2)` #sym.arrow $imat(2)$ \
-    `imat(3,delim:"[")` #sym.arrow $imat(3,delim:"[")$
+    #hl(`imat(3,delim:"[")`) #sym.arrow $imat(3,delim:"[")$
   ],
   [identity matrix],
 
@@ -272,25 +275,85 @@ All symbols need to be used in *math mode* `$...$`.
   [`zmat`],
   [
     `zmat(2)` #sym.arrow $zmat(2)$ \
-    `zmat(3,delim:"[")` #sym.arrow $zmat(3,delim:"[")$
+    #hl(`zmat(3,delim:"[")`) #sym.arrow $zmat(3,delim:"[")$
   ],
   [zero matrix],
 
   [`jacobianmatrix(`...`)`],
   [`jmat`],
-  [
-    #hl(`jmat(f_1,f_2;x,y)`) #sym.arrow $jmat(f_1,f_2;x,y)$ \
-    #hl(`jmat(f_1,f_2;x,y;delim:"[")`) \ #sym.arrow $jmat(f_1,f_2;x,y;delim:"[")$
-  ],
+  [See below],
   [Jacobian matrix],
 
   [`hessianmatrix(`...`)`],
   [`hmat`],
-  [
-    #hl(`hmat(f;x,y)`) #sym.arrow $hmat(f;x,y)$ \
-    #hl(`hmat(f;x,y;delim:"[")`) \ #sym.arrow $hmat(f;x,y;delim:"[")$
-  ],
+  [See below],
   [Hessian matrix],
+
+  [`xmatrix(`_m, n, func, delim_`)`],
+  [`xmat`],
+  [See below],
+  [Matrix built with an element building function],
+)
+
+Jacobian matrix: `jacobianmatrix(`...`)`, i.e. `jmat(`...`)`.
+
+#table(
+  columns: (1fr, 1fr),
+  align: center,
+  stroke: none,
+  column-gutter: 1em,
+
+  [
+    #hl(`jmat(f_1,f_2; x,y)`)
+    $ jmat(f_1,f_2;x,y) $
+  ],
+  [
+    #hl(`jmat(f_1,f_2; x,y,z; delim:"[")`)
+    $ jmat(f_1,f_2;x,y,z;delim:"[") $
+  ],
+)
+
+Hessian matrix: `hessianmatrix(`...`)`, i.e. `hmat(`...`)`.
+
+#table(
+  columns: (1fr, 1fr),
+  align: center,
+  stroke: none,
+  column-gutter: 1em,
+
+  [
+    #hl(`hmat(f; x,y)`)
+    $ hmat(f; x,y) $
+  ],
+  [
+    #hl(`hmat(; x,y,z; delim:"[")`)
+    $ hmat(; x,y,z; delim:"[") $
+  ],
+)
+
+Matrix built with an element building function: `xmatrix(`_m, n, func_`)`, i.e. `xmat(`...`)`. The element building function _func_ takes two integers which are the row and column numbers starting from 1.
+
+#table(
+  columns: (auto, auto),
+  align: left,
+  stroke: none,
+  column-gutter: 1em,
+
+  [
+#hl(`#let g = (i,j) => $g^(#(i - 1)#(j - 1))$
+xmat(2, 2, #g)`)
+    $ #let g = (i,j) => $g^(#(i - 1)#(j - 1))$
+    xmat(2, 2, #g) $
+  ],
+
+  [
+#hl(`xmat(2, 3, #(r, c) => {
+  $"exp"(#r, #c) = #calc.pow(r, c)$
+}, delim:"[")`)
+    $ xmat(2, 3, #(r, c) => {
+      $"exp"(#r, #c) = #calc.pow(r, c)$
+    }, delim:"[") $
+  ],
 )
 
 == Dirac braket notations
@@ -322,7 +385,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`braket(`_a_, _b_`)`],
   [],
   [
-    `braket(u), braket(u, v)` \ #sym.arrow $braket(u), braket(u, v)$ \
+    `braket(a), braket(u, v)` \ #sym.arrow $braket(a), braket(u, v)$ \
     `braket(vec(1,2), b)` #sym.arrow $braket(vec(1,2), b)$
   ],
   [braket],
@@ -330,7 +393,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`ketbra(`_a_, _b_`)`],
   [],
   [
-    `ketbra(u), ketbra(u, v)` \ #sym.arrow $ketbra(u), ketbra(u, v)$ \
+    `ketbra(a), ketbra(u, v)` \ #sym.arrow $ketbra(a), ketbra(u, v)$ \
     `ketbra(vec(1,2), b)` #sym.arrow $ketbra(vec(1,2), b)$
   ],
   [ketbra],
@@ -338,26 +401,26 @@ All symbols need to be used in *math mode* `$...$`.
   [`innerproduct(`_a_, _b_`)`],
   [`iprod`],
   [
-    `iprod(u), iprod(u, v)` \ #sym.arrow $iprod(u), iprod(u, v)$ \
+    `iprod(a), iprod(u, v)` \ #sym.arrow $iprod(a), iprod(u, v)$ \
     `iprod(a, vec(1,2))` #sym.arrow $iprod(a, vec(1,2))$
   ],
-  [innerproduct],
+  [innerproduct\ = braket],
 
   [`outerproduct(`_a_, _b_`)`],
   [`oprod`],
   [
-    `oprod(u), oprod(u, v)` \ #sym.arrow $oprod(u), oprod(u, v)$ \
+    `oprod(a), oprod(u, v)` \ #sym.arrow $oprod(a), oprod(u, v)$ \
     `oprod(a, vec(1,2))` #sym.arrow $oprod(a, vec(1,2))$
   ],
-  [outerproduct],
+  [outerproduct\ = ketbra],
 
   [`matrixelement(`_n_, _M_, _m_`)`],
   [`mel`],
   [
     `mel(n, diff_nu H, m)` \ #sym.arrow $mel(n, diff_nu H, m)$ \
-    `mel(n, vec(U,V), m)` #sym.arrow $mel(n, vec(U,V), m)$
+    `mel(n,vec(U,V),m)` #sym.arrow $mel(n,vec(U,V),m)$
   ],
-  [matrix element \ (quantum theory)],
+  [matrix element],
 )
 
 == Math functions

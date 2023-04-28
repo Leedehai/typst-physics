@@ -239,7 +239,7 @@
   if type(order) == "content" and __content_holds_number(order) {
     order_num = int(order.text)
   } else {
-    panic("the order shall be a number, e.g. 2")
+    panic("the order shall be an integer, e.g. 2")
   }
 
   let ones = range(order_num).map((i) => 1)
@@ -252,7 +252,7 @@
   if type(order) == "content" and __content_holds_number(order) {
     order_num = int(order.text)
   } else {
-    panic("the order shall be a number, e.g. 2")
+    panic("the order shall be an integer, e.g. 2")
   }
 
   let ones = range(order_num).map((i) => 0)
@@ -265,7 +265,7 @@
   assert(type(xs) == "array", message: "expecting an array of variable names")
   let arrays = ()  // array of arrays
   for f in fs {
-    arrays.push(xs.map((x) => math.frac($diff #f$, $diff #x$)))
+    arrays.push(xs.map((x) => math.frac($diff#f$, $diff#x$)))
   }
   math.mat(delim: delim, ..arrays)
 }
@@ -276,23 +276,52 @@
   assert(fs.len() == 1, message: "expecting only one function name")
   let f = fs.at(0)
   assert(type(xs) == "array", message: "expecting an array of variable names")
-  let arrays = ()  // array of arrays
-  for i in range(xs.len()) {
-    let array = ()  // array
-    let xi = xs.at(i)
-    for j in range(xs.len()) {
-      if i == j {
-        array.push(math.frac($diff^2 #f$, $diff #xi^2$))
-        continue;
-      }
-      let xj = xs.at(j)
-      array.push(math.frac($diff^2 #f$, $diff #xi diff #xj$))
+  let row_arrays = ()  // array of arrays
+  let order = xs.len()
+  for r in range(order) {
+    let row_array = ()  // array
+    let xr = xs.at(r)
+    for c in range(order) {
+      let xc = xs.at(c)
+      row_array.push(math.frac(
+        $diff^#order #f$,
+        if xr == xc { $diff #xr^2$ } else { $diff #xr diff #xc$ }
+      ))
     }
-    arrays.push(array)
+    row_arrays.push(row_array)
   }
-  math.mat(delim: delim, ..arrays)
+  math.mat(delim: delim, ..row_arrays)
 }
 #let hmat = hessianmatrix
+
+#let xmatrix(m, n, func, delim:"(") = {
+  let rows = none
+  if type(m) == "content" and __content_holds_number(m) {
+    rows = int(m.text)
+  } else {
+    panic("the first argument shall be an integer, e.g. 2")
+  }
+  let cols = none
+  if type(n) == "content" and __content_holds_number(m) {
+    cols = int(n.text)
+  } else {
+    panic("the second argument shall be an integer, e.g. 2")
+  }
+  assert(
+    type(func) == "function",
+    message: "func shall be a function (did you forget to add a preceding '#' before the function name)?"
+  )
+  let row_arrays = ()  // array of arrays
+  for i in range(1, rows + 1) {
+    let row_array = ()  // array
+    for j in range(1, cols + 1) {
+      row_array.push(func(i, j))
+    }
+    row_arrays.push(row_array)
+  }
+  math.mat(delim: delim, ..row_arrays)
+}
+#let xmat = xmatrix
 
 // == Dirac braket notations
 
