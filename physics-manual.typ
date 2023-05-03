@@ -382,6 +382,14 @@ xmat(2, 2, #g)`)
   ],
   [ket],
 
+  [`expval(`_content_`)`],
+  [],
+  [
+    `expval(u)`  #sym.arrow $expval(u)$ \
+    `expval(vec(1,2))` #sym.arrow $expval(vec(1,2))$
+  ],
+  [expectation],
+
   [`braket(`_a_, _b_`)`],
   [],
   [

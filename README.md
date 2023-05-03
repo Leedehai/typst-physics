@@ -1,6 +1,6 @@
 # The physics module
 
-Current semantic version: `0.6`. [Demo](physics-manual.pdf).
+Current semantic version: `0.7`. [Manual](physics-manual.pdf).
 
 This [Typst](https://typst.app) package provides handy typesetting utilities for
 physics, including:
@@ -9,13 +9,18 @@ physics, including:
 * Matrices,
 * Dirac braket notations,
 * Common math functions,
-* Differentials and derivatives, including partial derivatives of mixed orders,
-* Tensor abstract index notations, isotopes,
+* Differentials and derivatives, including partial derivatives of mixed orders with automatic order summation,
+* Familiar "h-bar", tensor abstract index notations, isotopes,
 * Signal sequences i.e. digital timing diagrams.
 
 :warning: [Typst](https://typst.app) is in beta and evolving, and this package
-evolves with it. As a result, no backward compatibility is guaranteed yet. Also,
-the package itself is under development and fine-tuning.
+evolves with it. As a result, no backward compatibility is guaranteed yet.
+
+## A quick look
+
+Typst source: [demo.typ](demo.typ). See the [manual](manual.pdf) for more details.
+
+![demo](https://user-images.githubusercontent.com/18319900/236073825-e91b4601-7e92-490b-a7e4-e9e405a2147b.png)
 
 ## Using phyiscs in your Typst document
 
@@ -35,16 +40,16 @@ package under name scope `physics`:
   $op("curl")(op("grad") f) = curl (grad f)$
   ```
 
-## Demo & manual
+## Manual
 
-See the manual [physics-manual.pdf](physics-manual.pdf) for a demo, a PDF file
-generated directly with the [Typst](https://typst.app) CLI.
+See the manual [physics-manual.pdf](physics-manual.pdf) for a more comprehensive coverage, a PDF file
+generated directly with the [Typst](https://typst.app) binary.
 
 CLI Version:
 
 ```sh
 $ typst --version
-typst 0.2.0 (fe2640c5)
+typst 0.3.0 (b1e0de00)
 ```
 
 To regenerate the manual, use command
@@ -64,15 +69,6 @@ explore the design together. Some features might warrant a package on its own.
 * Testing: currently testing is done by closely inspecting the generated
 [physics-manual.pdf](physics-manual.pdf). This does not scale well. I plan to add programmatic
 testing by comparing rendered pictures with golden images.
-
-These items seem to need Typst's language support:
-
-1. Isotopes:
-  * A better way to align the subscripts and superscripts to the right.
-  Currently it uses an embedded table to achieve that, but it feels rather
-  heavy weight.
-2. Dirac braket notations:
-  * Reduce the horizontal space of the inner divider.
 
 ## License
 
