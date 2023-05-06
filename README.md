@@ -18,7 +18,7 @@ evolves with it. As a result, no backward compatibility is guaranteed yet.
 
 ## A quick look
 
-Typst source: [demo.typ](demo.typ). See the [manual](manual.pdf) for more details.
+Typst source: [demo.typ](demo.typ). See the [manual](physics-manual.pdf) for more details.
 
 ![demo](https://user-images.githubusercontent.com/18319900/236073825-e91b4601-7e92-490b-a7e4-e9e405a2147b.png)
 
