@@ -1,6 +1,6 @@
 // Copyright 2023 Leedehai
 // Use of this code is governed by a MIT license in the LICENSE.txt file.
-// For a manual on this package, see physics-manual.pdf.
+// Current version: 0.7.1. Please see physics-manual.pdf for user docs.
 
 // Returns whether a Content object holds an integer. The caller is responsible
 // for ensuring the input argument is a Content object.
