@@ -1,7 +1,7 @@
 // Copyright 2023 Leedehai
 // This document is shared under the Creative Commons BY-ND 4.0 license.
 
-#let version = "0.7.1"
+#let version = "0.7.2"
 
 #set page(
   numbering: "1/1",
@@ -22,8 +22,8 @@
 ]
 
 #align(center)[
-  Version #version, April 12, 2023\
-  Document updated: April 12, 2023
+  Version #version, May 12, 2023\
+  Document updated: May 12, 2023
 ]
 
 #set par(justify: true)
@@ -251,7 +251,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`dmat`],
   [
     `dmat(1,2)` #sym.arrow $dmat(1,2)$ \
-    #hl(`dmat(1,a,xi,delim:"[")`) \ #sym.arrow $dmat(1,a,xi,delim:"[")$
+    #hl(`dmat(1,a,xi,delim:"[",fill:0)`) \ #sym.arrow $dmat(1,a,xi,delim:"[",fill:0)$
   ],
   [diagonal matrix],
 
@@ -259,7 +259,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`admat`],
   [
     `admat(1,2)` #sym.arrow $admat(1,2)$ \
-    #hl(`admat(1,a,xi,delim:"[")`) \ #sym.arrow $admat(1,a,xi,delim:"[")$
+    #hl(`admat(1,a,xi,delim:"[",fill:dot)`) \ #sym.arrow $admat(1,a,xi,delim:"[",fill:dot)$
   ],
   [anti-diagonal matrix],
 
@@ -267,7 +267,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`imat`],
   [
     `imat(2)` #sym.arrow $imat(2)$ \
-    #hl(`imat(3,delim:"[")`) #sym.arrow $imat(3,delim:"[")$
+    #hl(`imat(3,delim:"[",fill:0)`) #sym.arrow $imat(3,delim:"[",fill:0)$
   ],
   [identity matrix],
 

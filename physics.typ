@@ -1,6 +1,6 @@
 // Copyright 2023 Leedehai
 // Use of this code is governed by a MIT license in the LICENSE.txt file.
-// Current version: 0.7.1. Please see physics-manual.pdf for user docs.
+// Current version: 0.7.2. Please see physics-manual.pdf for user docs.
 
 // Returns whether a Content object holds an integer. The caller is responsible
 // for ensuring the input argument is a Content object.
@@ -202,12 +202,13 @@
 #let diagonalmatrix(..sink) = {
   let (args, kwargs) = (sink.pos(), sink.named())  // array, dictionary
   let delim = if "delim" in kwargs { kwargs.at("delim") } else { "(" }
+  let fill = if "fill" in kwargs { kwargs.at("fill") } else { none }
 
   let arrays = ()  // array of arrays
   let n = args.len()
   for i in range(n) {
     let array = range(n).map((j) => {
-      let e = if j == i { args.at(i) } else { 0 }
+      let e = if j == i { args.at(i) } else { fill }
       return e
     })
     arrays.push(array)
@@ -219,13 +220,14 @@
 #let antidiagonalmatrix(..sink) = {
   let (args, kwargs) = (sink.pos(), sink.named())  // array, dictionary
   let delim = if "delim" in kwargs { kwargs.at("delim") } else { "(" }
+  let fill = if "fill" in kwargs { kwargs.at("fill") } else { none }
 
   let arrays = ()  // array of arrays
   let n = args.len()
   for i in range(n) {
     let array = range(n).map((j) => {
       let complement = n - 1 - i
-      let e = if j == complement { args.at(i) } else { 0 }
+      let e = if j == complement { args.at(i) } else { fill }
       return e
     })
     arrays.push(array)
@@ -234,7 +236,7 @@
 }
 #let admat = antidiagonalmatrix
 
-#let identitymatrix(order, delim:"(") = {
+#let identitymatrix(order, delim:"(", fill:none) = {
   let order_num = 1
   if type(order) == "content" and __content_holds_number(order) {
     order_num = int(order.text)
@@ -243,7 +245,7 @@
   }
 
   let ones = range(order_num).map((i) => 1)
-  diagonalmatrix(..ones, delim: delim)
+  diagonalmatrix(..ones, delim: delim, fill: fill)
 }
 #let imat = identitymatrix
 
@@ -256,7 +258,7 @@
   }
 
   let ones = range(order_num).map((i) => 0)
-  diagonalmatrix(..ones, delim: delim)
+  diagonalmatrix(..ones, delim: delim, fill: 0)
 }
 #let zmat = zeromatrix
 
