@@ -176,7 +176,7 @@ All symbols need to be used in *math mode* `$...$`.
 
   [`vectorbold(`_content_`)`],
   [`vb`],
-  [`vb(a),va(mu_1)` #sym.arrow $vb(a),vb(mu_1)$],
+  [`vb(a),vb(mu_1)` #sym.arrow $vb(a),vb(mu_1)$],
   [vector, bold],
 
   [`vectorarrow(`_content_`)`],
