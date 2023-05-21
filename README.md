@@ -49,7 +49,7 @@ CLI Version:
 
 ```sh
 $ typst --version
-typst 0.3.0 (b1e0de00)
+typst 0.4.0 (f692a5ef)
 ```
 
 To regenerate the manual, use command
