@@ -1,6 +1,6 @@
 // Copyright 2023 Leedehai
 // Use of this code is governed by a MIT license in the LICENSE.txt file.
-// Current version: 0.7.2. Please see physics-manual.pdf for user docs.
+// Current version: 0.7.3. Please see physics-manual.pdf for user docs.
 
 // Returns whether a Content object holds an integer. The caller is responsible
 // for ensuring the input argument is a Content object.
@@ -124,8 +124,8 @@
 
 #let Set(..sink) = style(styles => {
   let args = sink.pos()  // array
-  let expr = if args.len() >= 1 { args.at(0) } else { none }
-  let cond = if args.len() >= 2 { args.at(1) } else { none }
+  let expr = args.at(0, default: none)
+  let cond = args.at(1, default: none)
   let height = measure($ expr cond $, styles).height;
   let phantom = box(height: height, width: 0pt, inset: 0pt, stroke: none);
 
@@ -201,8 +201,8 @@
 
 #let diagonalmatrix(..sink) = {
   let (args, kwargs) = (sink.pos(), sink.named())  // array, dictionary
-  let delim = if "delim" in kwargs { kwargs.at("delim") } else { "(" }
-  let fill = if "fill" in kwargs { kwargs.at("fill") } else { none }
+  let delim = kwargs.at("delim", default:"(")
+  let fill = kwargs.at("fill", default: none)
 
   let arrays = ()  // array of arrays
   let n = args.len()
@@ -219,8 +219,8 @@
 
 #let antidiagonalmatrix(..sink) = {
   let (args, kwargs) = (sink.pos(), sink.named())  // array, dictionary
-  let delim = if "delim" in kwargs { kwargs.at("delim") } else { "(" }
-  let fill = if "fill" in kwargs { kwargs.at("fill") } else { none }
+  let delim = kwargs.at("delim", default:"(")
+  let fill = kwargs.at("fill", default: none)
 
   let arrays = ()  // array of arrays
   let n = args.len()
@@ -338,7 +338,7 @@
   assert(args.len() == 1 or args.len() == 2, message: "expecting 1 or 2 args")
 
   let bra = args.at(0)
-  let ket = if args.len() >= 2 { args.at(1) } else { bra }
+  let ket = args.at(1, default: bra)
 
   let height = measure($ bra ket $, styles).height;
   let phantom = box(height: height, width: 0pt, inset: 0pt, stroke: none);
@@ -352,7 +352,7 @@
   assert(args.len() == 1 or args.len() == 2, message: "expecting 1 or 2 args")
 
   let bra = args.at(0)
-  let ket = if args.len() >= 2 { args.at(1) } else { bra }
+  let ket = args.at(1, default: bra)
 
   let height = measure($ bra ket $, styles).height;
   let phantom = box(height: height, width: 0pt, inset: 0pt, stroke: none);
@@ -446,17 +446,8 @@
     orders.push(default_order)
   }
 
-  let dsym = if "d" in kwargs {
-    kwargs.at("d")
-  } else {
-    $upright(d)$
-  }
-
-  let prod = if "p" in kwargs {
-    kwargs.at("p")
-  } else {
-    none
-  }
+  let dsym = kwargs.at("d", default: $upright(d)$)
+  let prod = kwargs.at("p", default: none)
 
   let difference = var_num - orders.len()
   while difference > 0 {
@@ -507,8 +498,8 @@
   let (args, kwargs) = (sink.pos(), sink.named())  // array, dictionary
   assert(args.len() > 0, message: "variable name expected")
 
-  let d = if "d" in kwargs { kwargs.at("d") } else { $upright(d)$ }
-  let slash = if "s" in kwargs { kwargs.at("s") } else { none }
+  let d = kwargs.at("d", default: $upright(d)$)
+  let slash = kwargs.at("s", default: none)
 
   let var = args.at(0)
   assert(args.len() >= 1, message: "expecting at least one argument")
@@ -568,10 +559,12 @@
   }
 
   let total_order = none  // any type, could be a number
-  if "total" in kwargs {
-    total_order = kwargs.at("total")
+  // Do not use kwargs.at("total", default: ...), so as to avoid unnecessary
+  // premature evaluation of the default param.
+  total_order = if "total" in kwargs {
+    kwargs.at("total")
   } else {
-    total_order = __bare_minimum_effort_symbolic_add(orders)
+    __bare_minimum_effort_symbolic_add(orders)
   }
 
   let lowers = ()
@@ -601,7 +594,7 @@
     }
   }
 
-  let slash = if "s" in kwargs { kwargs.at("s") } else { none }
+  let slash = kwargs.at("s", default: none)
   display(upper, lowers.join(), slash)
 }
 #let pdv = partialderivative
@@ -636,7 +629,7 @@
 
   for i in range(args.len()) {
     let arg = args.at(i)
-    let tuple = if arg.has("children") == true {
+    let tuple = if arg.has("children") {
       arg.at("children")
     } else {
       ([+], sym.square)

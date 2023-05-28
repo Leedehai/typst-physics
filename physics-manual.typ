@@ -1,7 +1,7 @@
 // Copyright 2023 Leedehai
 // This document is shared under the Creative Commons BY-ND 4.0 license.
 
-#let version = "0.7.2"
+#let version = "0.7.3"
 
 #set page(
   numbering: "1/1",
@@ -22,8 +22,8 @@
 ]
 
 #align(center)[
-  Version #version, May 12, 2023\
-  Document updated: May 12, 2023
+  Version #version, May 28, 2023 \
+  Doc updated: May 28, 2023
 ]
 
 #set par(justify: true)
@@ -267,7 +267,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`imat`],
   [
     `imat(2)` #sym.arrow $imat(2)$ \
-    #hl(`imat(3,delim:"[",fill:0)`) #sym.arrow $imat(3,delim:"[",fill:0)$
+    #hl(`imat(3,delim:"[",fill:*)`) #sym.arrow \ $imat(3,delim:"[",fill:*)$
   ],
   [identity matrix],
 
@@ -275,7 +275,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`zmat`],
   [
     `zmat(2)` #sym.arrow $zmat(2)$ \
-    #hl(`zmat(3,delim:"[")`) #sym.arrow $zmat(3,delim:"[")$
+    #hl(`zmat(3,delim:"[")`) #sym.arrow \ $zmat(3,delim:"[")$
   ],
   [zero matrix],
 
@@ -289,7 +289,7 @@ All symbols need to be used in *math mode* `$...$`.
   [See below],
   [Hessian matrix],
 
-  [`xmatrix(`_m, n, func, delim_`)`],
+  [`xmatrix(`...`)`],
   [`xmat`],
   [See below],
   [Matrix built with an element building function],
