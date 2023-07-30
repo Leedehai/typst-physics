@@ -1,7 +1,7 @@
 // Copyright 2023 Leedehai
 // This document is shared under the Creative Commons BY-ND 4.0 license.
 
-#let version = "0.7.4"
+#let version = "0.7.5"
 
 #set page(
   numbering: "1/1",
@@ -30,6 +30,9 @@
 
 *NOTE (2023-04-02):* #linkurl("Typst", "https://typst.app") is version 0.x and evolving, and this package evolves with it. Also, the package itself is under development and fine-tuning. While the major version stays 0, no backward compatibility is guaranteed.
 
+Indexed at
+#linkurl("https://typst.app/docs/packages/", "https://typst.app/docs/packages/").
+
 #outline(indent: true)
 #pagebreak(weak: true)
 
@@ -47,31 +50,13 @@ This manual itself was generated using the Typst CLI and the `physica` package, 
 
 #v(1em)
 
-// TODO: update usage when Typst has package management.
+With `typst`'s #linkurl("package management", "https://github.com/typst/packages"):
 
-- To use the `physica` package, you may import names specifically:
-  ```typ
-  #import "physica.typ": curl, grad
+```
+#import "@preview/physica:0.7.5": *
 
-  The expression $op("curl")(op("grad") f) ident curl (grad f) = 0$ is not
-  foreign to any trained eye in physical mathematics.
-  ```
-
-- or you may simply import all names:
-  ```typ
-  #import "physica.typ": *
-
-  The expression $op("curl")(op("grad") f) ident curl (grad f)$ is not foreign
-  to any trained eye in physical mathematics.
-  ```
-
-- sometimes you may want to import the names under a name space:
-  ```typ
-  #import "physica.typ"
-
-  The expression $op("curl")(op("grad") f) ident physica.curl (physica.grad f)$
-  is not foreign to any trained eye in physical mathematics.
-  ```
+$op("curl")(op("grad") f) = curl (grad f)$
+```
 
 = The symbols
 

@@ -2,6 +2,8 @@
 
 Current semantic version: `0.7`. [Manual](https://github.com/Leedehai/typst-physics/blob/master/physica-manual.pdf).
 
+Available at [https://typst.app/docs/packages/](https://typst.app/docs/packages/).
+
 This [Typst](https://typst.app) package provides handy typesetting utilities for
 physics, including:
 * Braces,
@@ -22,11 +24,23 @@ everybody", this package was renamed from `physics` to `physica`.
 
 ## A quick look
 
-Typst source: [demo.typ](demo.typ). See the [manual](https://github.com/Leedehai/typst-physics/blob/master/physica-manual.pdf) for more details.
+See the [manual](https://github.com/Leedehai/typst-physics/blob/master/physica-manual.pdf) for more details.
 
 ![demo](https://user-images.githubusercontent.com/18319900/236073825-e91b4601-7e92-490b-a7e4-e9e405a2147b.png)
 
 ## Using phyiscs in your Typst document
+
+### With `typst` package management (recommended)
+
+See https://github.com/typst/packages.
+
+```
+#import "@preview/physica:0.7.5": *
+
+$op("curl")(op("grad") f) = curl (grad f)$
+```
+
+### Without `typst` package management
 
 * To use the `physics` package, simply insert `#import "physics.typ": *` at the
 beginning of your document.
