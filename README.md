@@ -1,6 +1,6 @@
-# The physics module
+# The physica module (for physics)
 
-Current semantic version: `0.7`. [Manual](physics-manual.pdf).
+Current semantic version: `0.7`. [Manual](https://github.com/Leedehai/typst-physics/blob/master/physica-manual.pdf).
 
 This [Typst](https://typst.app) package provides handy typesetting utilities for
 physics, including:
@@ -16,9 +16,13 @@ physics, including:
 :warning: [Typst](https://typst.app) is in beta and evolving, and this package
 evolves with it. As a result, no backward compatibility is guaranteed yet.
 
+:information_source: In response to the official Typst package [guideline](https://github.com/typst/packages/tree/main#submission-guidelines)
+"Package names should not be merely descriptive to create level grounds for
+everybody", this package was renamed from `physics` to `physica`.
+
 ## A quick look
 
-Typst source: [demo.typ](demo.typ). See the [manual](physics-manual.pdf) for more details.
+Typst source: [demo.typ](demo.typ). See the [manual](https://github.com/Leedehai/typst-physics/blob/master/physica-manual.pdf) for more details.
 
 ![demo](https://user-images.githubusercontent.com/18319900/236073825-e91b4601-7e92-490b-a7e4-e9e405a2147b.png)
 
@@ -42,14 +46,14 @@ package under name scope `physics`:
 
 ## Manual
 
-See the manual [physics-manual.pdf](physics-manual.pdf) for a more comprehensive coverage, a PDF file
+See the manual [physics-manual.pdf](https://github.com/Leedehai/typst-physics/blob/master/physica-manual.pdf) for a more comprehensive coverage, a PDF file
 generated directly with the [Typst](https://typst.app) binary.
 
 CLI Version:
 
 ```sh
 $ typst --version
-typst 0.4.0 (f692a5ef)
+typst 0.6.0 (2dfd44fe)
 ```
 
 To regenerate the manual, use command

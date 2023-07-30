@@ -1,16 +1,16 @@
 // Copyright 2023 Leedehai
 // This document is shared under the Creative Commons BY-ND 4.0 license.
 
-#let version = "0.7.3"
+#let version = "0.7.4"
 
 #set page(
   numbering: "1/1",
-  header: align(right)[The `physics` package, version #version],
+  header: align(right)[The `physica` package, version #version],
 )
 
 #set heading(numbering: "1.")
 
-#align(center, text(16pt)[*The `physics` package*])
+#align(center, text(16pt)[*The `physica` package*])
 
 #let linkurl(s, url) = {
   link(url)[#underline(text(fill: blue, s))]
@@ -22,8 +22,8 @@
 ]
 
 #align(center)[
-  Version #version, May 28, 2023 \
-  Doc updated: May 28, 2023
+  Version #version, July 30, 2023 \
+  Doc updated: July 30, 2023
 ]
 
 #set par(justify: true)
@@ -39,19 +39,19 @@
 
 #linkurl("Typst", "https://typst.app") is typesetting framework aiming to become the next generation alternative to LATEX. It excels in its friendly user experience and performance.
 
-The `physics` package provides handy Typst typesetting functions that make academic writing for physics simpler and faster, by simplifying otherwise very complex and repetitive expressions in the domain of physics.
+The `physica` package provides handy Typst typesetting functions that make academic writing for physics simpler and faster, by simplifying otherwise very complex and repetitive expressions in the domain of physics.
 
-This manual itself was generated using the Typst CLI and the `physics` package, so hopefully this document is able to provide you with a sufficiently self evident demonstration of how this package shall be used.
+This manual itself was generated using the Typst CLI and the `physica` package, so hopefully this document is able to provide you with a sufficiently self evident demonstration of how this package shall be used.
 
-= Using `physics`
+= Using `physica`
 
 #v(1em)
 
 // TODO: update usage when Typst has package management.
 
-- To use the `physics` package, you may import names specifically:
+- To use the `physica` package, you may import names specifically:
   ```typ
-  #import "physics.typ": curl, grad
+  #import "physica.typ": curl, grad
 
   The expression $op("curl")(op("grad") f) ident curl (grad f) = 0$ is not
   foreign to any trained eye in physical mathematics.
@@ -59,7 +59,7 @@ This manual itself was generated using the Typst CLI and the `physics` package, 
 
 - or you may simply import all names:
   ```typ
-  #import "physics.typ": *
+  #import "physica.typ": *
 
   The expression $op("curl")(op("grad") f) ident curl (grad f)$ is not foreign
   to any trained eye in physical mathematics.
@@ -67,9 +67,9 @@ This manual itself was generated using the Typst CLI and the `physics` package, 
 
 - sometimes you may want to import the names under a name space:
   ```typ
-  #import "physics.typ"
+  #import "physica.typ"
 
-  The expression $op("curl")(op("grad") f) ident physics.curl (physics.grad f)$
+  The expression $op("curl")(op("grad") f) ident physica.curl (physica.grad f)$
   is not foreign to any trained eye in physical mathematics.
   ```
 
@@ -77,7 +77,7 @@ This manual itself was generated using the Typst CLI and the `physics` package, 
 
 #v(1em)
 
-#import "physics.typ": *
+#import "physica.typ": *
 
 // Put the superscript *before* the symbol, in case there are symbols after it.
 #let builtin(symbol) = [#super(text(fill: blue, "typst "))#symbol]
