@@ -155,8 +155,9 @@
 #let vectorbold(a) = $bold(italic(#a))$
 #let vb = vectorbold
 
-#let __vectoraccent(a, accent) = {
-  let bold_italic(e) = math.bold(math.italic(e))
+#let __vectoraccent(a, accent, bold_italic) = {
+  let bi = bold_italic
+  let bold_italic(e) = if bi { math.bold(math.italic(e)) } else { e }
   if type(a) == "content" and a.func() == math.attach {
     math.attach(
       math.accent(bold_italic(a.base), accent),
@@ -171,10 +172,10 @@
     math.accent(bold_italic(a), accent)
   }
 }
-#let vectorarrow(a) = __vectoraccent(a, math.arrow)
+#let vectorarrow(a) = __vectoraccent(a, math.arrow, false)
 #let va = vectorarrow
 
-#let vectorunit(a) = __vectoraccent(a, math.hat)
+#let vectorunit(a) = __vectoraccent(a, math.hat, true)
 #let vu = vectorunit
 
 #let gradient = $bold(nabla)$
