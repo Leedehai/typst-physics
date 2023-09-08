@@ -1,0 +1,26 @@
+name: 🚀 Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: yusancky/setup-typst@v2
+        with:
+            version: latest
+      - name: Compile the manual
+        run: typst compile physica-manual.typ
+      - name: Release
+        id: release
+        uses: softprops/action-gh-release@v1
+        with:
+            name: Physica ${{ github.ref_name }}
+            files: physica-manual.pdf
+            fail_on_unmatched_files: true
+      - name: Generate the job summary
+        run: echo '🎉 [Release for ${{ github.ref_name }}](${{ steps.release.outputs.url }}) is ready.' >> $GITHUB_STEP_SUMMARY
