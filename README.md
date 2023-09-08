@@ -3,7 +3,7 @@
 [![CI](https://github.com/Leedehai/typst-physics/actions/workflows/ci.yml/badge.svg)](https://github.com/Leedehai/typst-physics/actions/workflows/ci.yml)
 [![Latest release date](https://img.shields.io/github/release-date/Leedehai/typst-physics)][latest-release]
 
-Current semantic version: `0.7`. [Manual][latest-manual].
+Current semantic version: `0.7`. [Manual](physica-manual.pdf).
 
 Available at [https://typst.app/docs/packages/](https://typst.app/docs/packages/).
 
@@ -27,7 +27,7 @@ everybody", this package was renamed from `physics` to `physica`.
 
 ## A quick look
 
-See the [manual][latest-manual] for more details.
+See the [manual](physica-manual.pdf) for more details.
 
 ![demo](https://user-images.githubusercontent.com/18319900/236073825-e91b4601-7e92-490b-a7e4-e9e405a2147b.png)
 
@@ -63,7 +63,7 @@ package under name scope `physica`:
 
 ## Manual
 
-See the manual [physica-manual.pdf][latest-manual] for a more comprehensive coverage, a PDF file
+See the manual [physica-manual.pdf](physica-manual.pdf) for a more comprehensive coverage, a PDF file
 generated directly with the [Typst](https://typst.app) binary.
 
 CLI Version:
@@ -88,7 +88,7 @@ request. If it is large, the best first step is creating an issue and let us
 explore the design together. Some features might warrant a package on its own.
 
 * Testing: currently testing is done by closely inspecting the generated
-[physica-manual.pdf][latest-manual]. This does not scale well. I plan to add programmatic
+[physica-manual.pdf](physica-manual.pdf). This does not scale well. I plan to add programmatic
 testing by comparing rendered pictures with golden images.
 
 ## License
