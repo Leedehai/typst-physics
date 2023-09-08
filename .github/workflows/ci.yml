@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    paths:
+      - '*.typ'
+  pull_request:
+    paths:
+      - '*.typ'
+  workflow_dispatch:
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: yusancky/setup-typst@v2
+        with:
+            version: latest
+      - name: Compile
+        run: |
+          typst compile physica-manual.typ
+          typst compile demo.typ
+      - uses: actions/upload-artifact@v3
+        with:
+          name: PDF
+          path: '*.pdf'

@@ -1,6 +1,6 @@
 # The physica module (for physics)
 
-[![🚀 Release](https://github.com/Leedehai/typst-physics/actions/workflows/release.yml/badge.svg)](https://github.com/Leedehai/typst-physics/actions/workflows/release.yml)
+[![CI](https://github.com/Leedehai/typst-physics/actions/workflows/ci.yml/badge.svg)](https://github.com/Leedehai/typst-physics/actions/workflows/ci.yml)
 [![Latest release date](https://img.shields.io/github/release-date/Leedehai/typst-physics)][latest-release]
 
 Current semantic version: `0.7`. [Manual][latest-manual].
