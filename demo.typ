@@ -1,8 +1,8 @@
 // Copyright 2023 Leedehai
 // Use of this code is governed by a MIT license in the LICENSE.txt file.
-// For a manual on this package, see physics-manual.pdf.
+// For a manual on this package, see physica-manual.pdf.
 
-#import "physics.typ": *
+#import "physica.typ": *
 
 $
 curl vb(E) = - pdv(vb(B), t),

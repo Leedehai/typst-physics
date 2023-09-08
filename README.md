@@ -45,18 +45,18 @@ $op("curl")(op("grad") f) = curl (grad f)$
 
 ### Without `typst` package management
 
-* To use the `physics` package, simply insert `#import "physics.typ": *` at the
+* To use the `physica` package, simply insert `#import "physica.typ": *` at the
 beginning of your document.
 * To reduce the possibility of name collisions, you may want to import the
-package under name scope `physics`:
+package under name scope `physica`:
   ```
-  #import "physics.typ"
+  #import "physica.typ"
 
-  $op("curl")(op("grad") f) = physics.curl (physics.grad f)$
+  $op("curl")(op("grad") f) = physica.curl (physica.grad f)$
   ```
 * You may also import names specifically:
   ```
-  #import "physics.typ": curl, grad
+  #import "physica.typ": curl, grad
 
   $op("curl")(op("grad") f) = curl (grad f)$
   ```
@@ -76,7 +76,7 @@ typst 0.6.0 (2dfd44fe)
 To regenerate the manual, use command
 
 ```sh
-typst watch physics-manual.typ
+typst watch physica-manual.typ
 ```
 
 ## Contribution
