@@ -164,15 +164,15 @@ All symbols need to be used in *math mode* `$...$`.
   [`vb(a),vb(mu_1)` #sym.arrow $vb(a),vb(mu_1)$],
   [vector, bold],
 
-  [`vectorarrow(`_content_`)`],
-  [`va`],
-  [`va(a),va(mu_1)` #sym.arrow $va(a),va(mu_1)$],
-  [vector, arrow],
-
   [`vectorunit(`_content_`)`],
   [`vu`],
   [`vu(a),vu(mu_1)` #sym.arrow $vu(a),vu(mu_1)$],
   [unit vector],
+
+  [`vectorarrow(`_content_`)`],
+  [`va`],
+  [`va(a),va(mu_1)` #sym.arrow $va(a),va(mu_1)$],
+  [vector, arrow \ #sub[(not bold: see ISO 80000-2:2019)]],
 
   [`gradient`],
   [`grad`],
