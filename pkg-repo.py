@@ -22,7 +22,8 @@ def copy_file(dest, file):
 
 def copy_files(args):
     # https://github.com/typst/packages/tree/main#submission-guidelines
-    physica_dir = Path(args.repo_dir, 'packages', 'preview', f'physica-{args.version}')
+    physica_dir = Path(
+        args.repo_dir, 'packages', 'preview', 'physica', f'{args.version}')
     os.makedirs(physica_dir, exist_ok = False)
     print(f"Destination: {physica_dir}")
     for file in FILES:
