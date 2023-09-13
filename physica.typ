@@ -10,13 +10,13 @@
 
 // Given a Content generated from lr(), return the array of sub Content objects.
 // Example: "[1,a_1,(1,1),n+1]" => "1", "a_1", "(1,1)", "n+1"
-#let __extract_array_contents(content) = {
-  assert(type(content) == "content", message: "expecting a content type input")
-  if content.func() != math.lr { return none }
+#let __extract_array_contents(input) = {
+  assert(type(input) == content, message: "expecting a content type input")
+  if input.func() != math.lr { return none }
   // A Content object made by lr() definitely has a "body" field, and a
   // "children" field underneath it. It holds an array of Content objects,
   // starting with a Content holding "(" and ending with a Content holding ")".
-  let children = content.at("body").at("children")
+  let children = input.at("body").at("children")
 
   let result_elements = ()  // array of Content objects
 
@@ -45,7 +45,7 @@
 
 // A bare-minimum-effort symbolic addition.
 #let __bare_minimum_effort_symbolic_add(elements) = {
-  assert(type(elements) == "array", message: "expecting an array of content")
+  assert(type(elements) == array, message: "expecting an array of content")
   let operands = ()  // array
   for e in elements {
     if not e.has("children") {
@@ -161,7 +161,7 @@
   } else {
     math.italic(e)
   }
-  if type(a) == "content" and a.func() == math.attach {
+  if type(a) == content and a.func() == math.attach {
     math.attach(
       math.accent(maybe_bold(a.base), accent),
       t: if a.has("t") { maybe_bold(a.t) } else { none },
@@ -246,7 +246,7 @@
 
 #let identitymatrix(order, delim:"(", fill:none) = {
   let order_num = 1
-  if type(order) == "content" and __content_holds_number(order) {
+  if type(order) == content and __content_holds_number(order) {
     order_num = int(order.text)
   } else {
     panic("the order shall be an integer, e.g. 2")
@@ -259,7 +259,7 @@
 
 #let zeromatrix(order, delim:"(") = {
   let order_num = 1
-  if type(order) == "content" and __content_holds_number(order) {
+  if type(order) == content and __content_holds_number(order) {
     order_num = int(order.text)
   } else {
     panic("the order shall be an integer, e.g. 2")
@@ -271,8 +271,8 @@
 #let zmat = zeromatrix
 
 #let jacobianmatrix(fs, xs, delim:"(") = {
-  assert(type(fs) == "array", message: "expecting an array of function names")
-  assert(type(xs) == "array", message: "expecting an array of variable names")
+  assert(type(fs) == array, message: "expecting an array of function names")
+  assert(type(xs) == array, message: "expecting an array of variable names")
   let arrays = ()  // array of arrays
   for f in fs {
     arrays.push(xs.map((x) => math.frac($diff#f$, $diff#x$)))
@@ -282,10 +282,10 @@
 #let jmat = jacobianmatrix
 
 #let hessianmatrix(fs, xs, delim:"(") = {
-  assert(type(fs) == "array", message: "expecting a one-element array")
+  assert(type(fs) == array, message: "expecting a one-element array")
   assert(fs.len() == 1, message: "expecting only one function name")
   let f = fs.at(0)
-  assert(type(xs) == "array", message: "expecting an array of variable names")
+  assert(type(xs) == array, message: "expecting an array of variable names")
   let row_arrays = ()  // array of arrays
   let order = xs.len()
   for r in range(order) {
@@ -306,19 +306,19 @@
 
 #let xmatrix(m, n, func, delim:"(") = {
   let rows = none
-  if type(m) == "content" and __content_holds_number(m) {
+  if type(m) == content and __content_holds_number(m) {
     rows = int(m.text)
   } else {
     panic("the first argument shall be an integer, e.g. 2")
   }
   let cols = none
-  if type(n) == "content" and __content_holds_number(m) {
+  if type(n) == content and __content_holds_number(m) {
     cols = int(n.text)
   } else {
     panic("the second argument shall be an integer, e.g. 2")
   }
   assert(
-    type(func) == "function",
+    type(func) == function,
     message: "func shall be a function (did you forget to add a preceding '#' before the function name)?"
   )
   let row_arrays = ()  // array of arrays
@@ -349,7 +349,7 @@
   let ket = args.at(1, default: bra)
 
   let height = measure($ bra ket $, styles).height;
-  let phantom = box(height: height, width: 0pt, inset: 0pt, stroke: none);
+  let phantom = box(height: height * 0.8, width: 0pt, inset: 0pt, stroke: none);
   $ lr(angle.l bra lr(|phantom#h(0pt)) ket angle.r) $
 })
 
@@ -363,8 +363,8 @@
   let ket = args.at(1, default: bra)
 
   let height = measure($ bra ket $, styles).height;
-  let phantom = box(height: height, width: 0pt, inset: 0pt, stroke: none);
-  $ lr(|bra#h(0pt)phantom angle.r)lr(angle.l phantom#h(0pt)ket|) $
+  let phantom = box(height: height * 0.8, width: 0pt, inset: 0pt, stroke: none);
+  $ lr(bar.v bra#h(0pt)phantom angle.r)lr(angle.l phantom#h(0pt)ket bar.v) $
 })
 
 #let innerproduct = braket
@@ -376,8 +376,8 @@
 // we use the same hack as braket().
 #let matrixelement(n, M, m) = style(styles => {
   let height = measure($ #n #M #m $, styles).height;
-  let phantom = box(height: height, width: 0pt, inset: 0pt, stroke: none);
-  $ lr(angle.l #n |#M#h(0pt)phantom| #m angle.r) $
+  let phantom = box(height: height * 0.8, width: 0pt, inset: 0pt, stroke: none);
+  $ lr(angle.l #n lr(|#M#h(0pt)phantom|) #m angle.r) $
 })
 
 #let mel = matrixelement
@@ -439,7 +439,7 @@
   let var_num = args.len()
   let default_order = [1]  // a Content holding "1"
   let last = args.at(args.len() - 1)
-  if type(last) == "content" {
+  if type(last) == content {
     if last.func() == math.lr and last.at("body").at("children").at(0) == [\[] {
       var_num -= 1
       orders = __extract_array_contents(last)  // array
@@ -448,7 +448,7 @@
       default_order = last  // treat as a single element
       orders.push(default_order)
     }
-  } else if type(last) == "integer" {
+  } else if type(last) == int {
     var_num -= 1
     default_order = [#last]  // make it a Content
     orders.push(default_order)
@@ -485,7 +485,7 @@
 
 #let __combine_var_order(var, order) = {
   let naive_result = math.attach(var, t: order)
-  if type(var) != "content" or var.func() != math.attach {
+  if type(var) != content or var.func() != math.attach {
     return naive_result
   }
 
@@ -545,7 +545,7 @@
 
   // The last argument might be the order numbers, let's check.
   let last = args.at(args.len() - 1)
-  if type(last) == "content" {
+  if type(last) == content {
     if last.func() == math.lr and last.at("body").at("children").at(0) == [\[] {
       var_num -= 1
       orders = __extract_array_contents(last)  // array
@@ -554,7 +554,7 @@
       default_order = last
       orders.push(default_order)
     }
-  } else if type(last) == "integer" {
+  } else if type(last) == int {
     var_num -= 1
     default_order = [#last]  // make it a Content
     orders.push(default_order)
@@ -642,7 +642,7 @@
     } else {
       ([+], sym.square)
     }
-    assert(type(tuple) == "array", message: "shall be array")
+    assert(type(tuple) == array, message: "shall be array")
 
     let pos = tuple.at(0)
     let symbol = if tuple.len() >= 2 {
@@ -737,12 +737,12 @@
   }
 }
 
-#let signals(str, step: 1em, color: black) = {
-  assert(type(str) == "string", message: "input needs to be a string")
+#let signals(input, step: 1em, color: black) = {
+  assert(type(input) == str, message: "input needs to be a string")
 
   let elements = ()  // array
   let previous = " "
-  for e in str {
+  for e in input {
     if e == " " { continue; }
     if e == "." {
       elements.push(__signal_element(previous, step, color))

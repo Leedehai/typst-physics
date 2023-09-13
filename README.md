@@ -1,11 +1,12 @@
 # The physica module (for physics)
 
 [![CI](https://github.com/Leedehai/typst-physics/actions/workflows/ci.yml/badge.svg)](https://github.com/Leedehai/typst-physics/actions/workflows/ci.yml)
-[![Latest release date](https://img.shields.io/github/release-date/Leedehai/typst-physics)][latest-release]
+[![Latest release](https://img.shields.io/github/v/release/Leedehai/typst-physics.svg?color=gold)][latest-release]
 
-Current semantic version: `0.7`. [Manual](physica-manual.pdf).
+The [manual](physica-manual.pdf).
+Download releases [here](https://github.com/Leedehai/typst-physics/releases/).
 
-Available at [https://typst.app/docs/packages/](https://typst.app/docs/packages/).
+Available at the official collection of [Typst packages](https://typst.app/docs/packages/).
 
 This [Typst](https://typst.app) package provides handy typesetting utilities for
 physics, including:
@@ -37,29 +38,34 @@ See the [manual](physica-manual.pdf) for more details.
 
 See https://github.com/typst/packages.
 
-```
-#import "@preview/physica:0.7.5": *
+<p align="center">
+<img src="https://github.com/Leedehai/typst-physics/assets/18319900/f2a3a2bd-3ef7-4383-ab92-9a71affb4e12" width="173" alt="effect">
+</p>
 
-$op("curl")(op("grad") f) = curl (grad f)$
+```
+// Style 1
+#import "@preview/physica:0.8.0": *
+
+$ curl (grad f), tensor(T, -mu, +nu), pdv(f,x,y,[1,2]) $
+```
+
+```
+// Style 2
+#import "@preview/physica:0.8.0": curl, grad, tensor, pdv
+
+$ curl (grad f), tensor(T, -mu, +nu), pdv(f,x,y,[1,2]) $
+```
+
+```
+// Style 3
+#import "@preview/physica:0.8.0"
+
+$ physica.curl (physica.grad f), physica.tensor(T, -mu, +nu), physica.pdv(f,x,y,[1,2]) $
 ```
 
 ### Without `typst` package management
 
-* To use the `physica` package, simply insert `#import "physica.typ": *` at the
-beginning of your document.
-* To reduce the possibility of name collisions, you may want to import the
-package under name scope `physica`:
-  ```
-  #import "physica.typ"
-
-  $op("curl")(op("grad") f) = physica.curl (physica.grad f)$
-  ```
-* You may also import names specifically:
-  ```
-  #import "physica.typ": curl, grad
-
-  $op("curl")(op("grad") f) = curl (grad f)$
-  ```
+Similar to examples above, but import with the undecorated file path like `"physica.typ"`.
 
 ## Manual
 
@@ -70,7 +76,7 @@ CLI Version:
 
 ```sh
 $ typst --version
-typst 0.6.0 (2dfd44fe)
+typst 0.8.0 (360cc9b9)
 ```
 
 To regenerate the manual, use command
@@ -97,4 +103,3 @@ testing by comparing rendered pictures with golden images.
 * Docs: the [Creative Commons BY-ND 4.0 license](https://creativecommons.org/licenses/by-nd/4.0/).
 
 [latest-release]: https://github.com/Leedehai/typst-physics/releases/latest "The latest release"
-[latest-manual]: https://github.com/Leedehai/typst-physics/releases/latest/download/physica-manual.pdf "Download the latest manual"

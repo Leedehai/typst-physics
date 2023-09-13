@@ -1,7 +1,7 @@
 // Copyright 2023 Leedehai
 // This document is shared under the Creative Commons BY-ND 4.0 license.
 
-#let version = "0.7.5"
+#let version = "0.8.0"
 
 #set page(
   numbering: "1/1",
@@ -22,8 +22,8 @@
 ]
 
 #align(center)[
-  Version #version, July 30, 2023 \
-  Doc updated: July 30, 2023
+  Version #version, September 12, 2023 \
+  Doc updated: September 12, 2023
 ]
 
 #set par(justify: true)
@@ -52,17 +52,19 @@ This manual itself was generated using the Typst CLI and the `physica` package, 
 
 With `typst`'s #linkurl("package management", "https://github.com/typst/packages"):
 
-```
-#import "@preview/physica:0.7.5": *
+#import "physica.typ": *
 
-$op("curl")(op("grad") f) = curl (grad f)$
 ```
+#import "@preview/physica:0.8.0": *
+
+$ curl (grad f), tensor(T, -mu, +nu), pdv(f,x,y,[1,2]) $
+```
+
+$ curl (grad f), tensor(T, -mu, +nu), pdv(f,x,y,[1,2]) $
 
 = The symbols
 
 #v(1em)
-
-#import "physica.typ": *
 
 // Put the superscript *before* the symbol, in case there are symbols after it.
 #let builtin(symbol) = [#super(text(fill: blue, "typst "))#symbol]
