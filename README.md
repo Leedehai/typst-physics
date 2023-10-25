@@ -32,7 +32,7 @@ See the [manual](https://github.com/Leedehai/typst-physics/blob/master/physica-m
 
 ![demo](https://user-images.githubusercontent.com/18319900/236073825-e91b4601-7e92-490b-a7e4-e9e405a2147b.png)
 
-## Using phyiscs in your Typst document
+## Using physica in your Typst document
 
 ### With `typst` package management (recommended)
 
@@ -42,21 +42,21 @@ See https://github.com/typst/packages.
 <img src="https://github.com/Leedehai/typst-physics/assets/18319900/f2a3a2bd-3ef7-4383-ab92-9a71affb4e12" width="173" alt="effect">
 </p>
 
-```
+```typst
 // Style 1
 #import "@preview/physica:0.8.0": *
 
 $ curl (grad f), tensor(T, -mu, +nu), pdv(f,x,y,[1,2]) $
 ```
 
-```
+```typst
 // Style 2
 #import "@preview/physica:0.8.0": curl, grad, tensor, pdv
 
 $ curl (grad f), tensor(T, -mu, +nu), pdv(f,x,y,[1,2]) $
 ```
 
-```
+```typst
 // Style 3
 #import "@preview/physica:0.8.0"
 
