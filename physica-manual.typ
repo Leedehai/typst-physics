@@ -1,7 +1,7 @@
 // Copyright 2023 Leedehai
 // This document is shared under the Creative Commons BY-ND 4.0 license.
 
-#let version = "0.8.0"
+#let version = "0.8.1"
 
 #set page(
   numbering: "1/1",
@@ -22,8 +22,8 @@
 ]
 
 #align(center)[
-  Version #version, September 12, 2023 \
-  Doc updated: September 12, 2023
+  Version #version, October 25, 2023 \
+  Doc updated: October 25, 2023
 ]
 
 #set par(justify: true)
