@@ -295,7 +295,7 @@
     for c in range(order) {
       let xc = xs.at(c)
       row_array.push(math.frac(
-        $diff^#order #f$,
+        $diff^2 #f$,
         if xr == xc { $diff #xr^2$ } else { $diff #xr diff #xc$ }
       ))
     }
