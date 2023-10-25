@@ -54,7 +54,7 @@ With `typst`'s #linkurl("package management", "https://github.com/typst/packages
 
 #import "physica.typ": *
 
-```
+```typst
 #import "@preview/physica:0.8.0": *
 
 $ curl (grad f), tensor(T, -mu, +nu), pdv(f,x,y,[1,2]) $
@@ -422,7 +422,7 @@ xmat(2, 2, #g)`)
 
 #v(1em)
 
-Typst built-in math operators: #linkurl("source code", "https://github.com/typst/typst/blob/main/library/src/math/op.rs").
+Typst built-in math operators: #linkurl(`math.op`, "https://typst.app/docs/reference/math/op/").
 
 #table(
   columns: (auto, auto),
@@ -877,7 +877,7 @@ Function: `signals(str`, `step:`:..., `style`:...`)`.
   [`X` \ $ signals("X") $],
   [],
 
-  [ingore: (blankspace) \ separate: `&`],
+  [ignore: (blankspace) \ separate: `&`],
   [repeat: `.` (dot)],
 )
 
@@ -896,7 +896,7 @@ $ signals("-|=|-", step: #2em), signals("-|#|-"), signals("-<=>-<=") $
 $ signals("R1..F0..", step: #.5em)signals("R1.|v|1", step: #.5em, color:#fuchsia) $
 
 *(5)*
-```
+```typst
 "clk:" & signals("|1....|0....|1....|0....|1....|0....|1....|0..", step: #0.5em) \
 "bus:" & signals(" #.... X=... ..... ..... X=... ..... ..... X#.", step: #0.5em)
 ```
