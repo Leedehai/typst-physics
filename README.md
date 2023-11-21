@@ -30,7 +30,9 @@ everybody", this package was renamed from `physics` to `physica`.
 
 See the [manual](https://github.com/Leedehai/typst-physics/blob/master/physica-manual.pdf) for more details.
 
-![demo](https://user-images.githubusercontent.com/18319900/236073825-e91b4601-7e92-490b-a7e4-e9e405a2147b.png)
+![demo1](https://github.com/Leedehai/typst-physics/assets/18319900/b0e2753e-ba72-46d4-809f-d6a12d8d1d6d)
+
+![demo2](https://user-images.githubusercontent.com/18319900/236073825-e91b4601-7e92-490b-a7e4-e9e405a2147b.png)
 
 ## Using physica in your Typst document
 
@@ -44,21 +46,21 @@ See https://github.com/typst/packages.
 
 ```typst
 // Style 1
-#import "@preview/physica:0.8.0": *
+#import "@preview/physica:0.8.1": *
 
 $ curl (grad f), tensor(T, -mu, +nu), pdv(f,x,y,[1,2]) $
 ```
 
 ```typst
 // Style 2
-#import "@preview/physica:0.8.0": curl, grad, tensor, pdv
+#import "@preview/physica:0.8.1": curl, grad, tensor, pdv
 
 $ curl (grad f), tensor(T, -mu, +nu), pdv(f,x,y,[1,2]) $
 ```
 
 ```typst
 // Style 3
-#import "@preview/physica:0.8.0"
+#import "@preview/physica:0.8.1"
 
 $ physica.curl (physica.grad f), physica.tensor(T, -mu, +nu), physica.pdv(f,x,y,[1,2]) $
 ```
@@ -76,7 +78,7 @@ CLI Version:
 
 ```sh
 $ typst --version
-typst 0.8.0 (360cc9b9)
+typst 0.9.0 (7bb4f6df)
 ```
 
 To regenerate the manual, use command

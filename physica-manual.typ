@@ -23,7 +23,7 @@
 
 #align(center)[
   Version #version, October 25, 2023 \
-  Doc updated: October 25, 2023
+  Doc updated: November 21, 2023
 ]
 
 #set par(justify: true)
@@ -55,12 +55,12 @@ With `typst`'s #linkurl("package management", "https://github.com/typst/packages
 #import "physica.typ": *
 
 ```typst
-#import "@preview/physica:0.8.0": *
+#import "@preview/physica:0.8.1": *
 
-$ curl (grad f), tensor(T, -mu, +nu), pdv(f,x,y,[1,2]) $
+$ curl (grad f), pdv(,x,y,[1,2]), tensor(Gamma,+k,-i,-j) = pdv(vb(e)_i,x^j)vb(e)^k $
 ```
 
-$ curl (grad f), tensor(T, -mu, +nu), pdv(f,x,y,[1,2]) $
+$ curl (grad f), pdv(,x,y,[1,2]), tensor(Gamma,+k,-i,-j) = pdv(vb(e)_i,x^j)vb(e)^k $
 
 = The symbols
 
@@ -413,7 +413,7 @@ xmat(2, 2, #g)`)
   [`mel`],
   [
     `mel(n, diff_nu H, m)` \ #sym.arrow $mel(n, diff_nu H, m)$ \
-    `mel(n,vec(U,V),m)` #sym.arrow $mel(n,vec(U,V),m)$
+    `mel(vec(U,V),A,m)` #sym.arrow $mel(vec(U,V),A,m)$
   ],
   [matrix element],
 )
