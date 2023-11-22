@@ -153,18 +153,20 @@
 
 #let TT = $sans(upright(T))$
 
-#let vectorbold(a) = $bold(italic(#a))$
-#let vb = vectorbold
-
-#let __vectoraccent(a, accent, be_bold) = {
+#let __vector(a, accent, be_bold) = {
   let maybe_bold(e) = if be_bold {
     math.bold(math.italic(e))
   } else {
     math.italic(e)
   }
+  let maybe_accent(e) = if accent != none {
+    math.accent(maybe_bold(e), accent)
+  } else {
+    maybe_bold(e)
+  }
   if type(a) == content and a.func() == math.attach {
     math.attach(
-      math.accent(maybe_bold(a.base), accent),
+      maybe_accent(a.base),
       t: if a.has("t") { maybe_bold(a.t) } else { none },
       b: if a.has("b") { maybe_bold(a.b) } else { none },
       tl: if a.has("tl") { maybe_bold(a.tl) } else { none },
@@ -173,17 +175,20 @@
       br: if a.has("br") { maybe_bold(a.br) } else { none },
     )
   } else {
-    math.accent(maybe_bold(a), accent)
+    maybe_accent(a)
   }
 }
 
-#let vectorunit(a) = __vectoraccent(a, math.hat, true)
+#let vectorbold(a) = __vector(a, none, true)
+#let vb = vectorbold
+
+#let vectorunit(a) = __vector(a, math.hat, true)
 #let vu = vectorunit
 
 // According to "ISO 80000-2:2019 Quantities and units — Part 2: Mathematics"
 // the vector notation should be either bold italic or non-bold italic accented
 // by a right arrow
-#let vectorarrow(a) = __vectoraccent(a, math.arrow, false)
+#let vectorarrow(a) = __vector(a, math.arrow, false)
 #let va = vectorarrow
 
 #let gradient = $bold(nabla)$

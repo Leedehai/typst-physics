@@ -57,10 +57,10 @@ With `typst`'s #linkurl("package management", "https://github.com/typst/packages
 ```typst
 #import "@preview/physica:0.8.1": *
 
-$ curl (grad f), pdv(,x,y,[1,2]), tensor(Gamma,+k,-i,-j) = pdv(vb(e)_i,x^j)vb(e)^k $
+$ curl (grad f), pdv(,x,y,[1,2]), tensor(Gamma,+k,-i,-j) = pdv(vb(e_i),x^j)vb(e^k) $
 ```
 
-$ curl (grad f), pdv(,x,y,[1,2]), tensor(Gamma,+k,-i,-j) = pdv(vb(e)_i,x^j)vb(e)^k $
+$ curl (grad f), pdv(,x,y,[1,2]), tensor(Gamma,+k,-i,-j) = pdv(vb(e_i),x^j)vb(e^k) $
 
 = The symbols
 
