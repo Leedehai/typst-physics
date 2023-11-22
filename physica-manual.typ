@@ -1,5 +1,6 @@
 // Copyright 2023 Leedehai
 // This document is shared under the Creative Commons BY-ND 4.0 license.
+#import "physica.typ": *
 
 #let version = "0.8.1"
 
@@ -51,8 +52,6 @@ This manual itself was generated using the Typst CLI and the `physica` package, 
 #v(1em)
 
 With `typst`'s #linkurl("package management", "https://github.com/typst/packages"):
-
-#import "physica.typ": *
 
 ```typst
 #import "@preview/physica:0.8.1": *

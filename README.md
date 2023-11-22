@@ -99,6 +99,8 @@ explore the design together. Some features might warrant a package on its own.
 [physica-manual.pdf](https://github.com/Leedehai/typst-physics/blob/master/physica-manual.pdf). This does not scale well. I plan to add programmatic
 testing by comparing rendered pictures with golden images.
 
+* Please nudge Typst maintainers to resolve https://github.com/typst/typst/issues/240 by scaling up given glyphs in the middle of [`lr()`](https://typst.app/docs/reference/math/lr#functions-lr) :grinning:
+
 ## License
 
 * Code: the [MIT License](LICENSE.txt).

@@ -344,6 +344,15 @@
 #let bra(f) = $lr(angle.l #f|)$
 #let ket(f) = $lr(|#f angle.r)$
 
+// Quadratic interpolation that takes in a height in pt units.
+// Intended input-output pairs: {10.59,1},{23.01,0.8},{26.93,0.7}.
+// This is imperfect, hacky and has corner cases unresolved, but until
+// https://github.com/typst/typst/issues/240 is resolved there is no better way.
+// Motivated by https://github.com/Leedehai/typst-physics/issues/16
+#let __height_mul_factor(h) = {
+  -0.0005757 * h * h + 0.0032409 * h + 1.03024
+}
+
 // Credit: thanks to peng1999@ and szdytom@'s suggestions of measure() and
 // phantoms. The hack works until https://github.com/typst/typst/issues/240 is
 // addressed by Typst.
@@ -355,7 +364,9 @@
   let ket = args.at(1, default: bra)
 
   let height = measure($ bra ket $, styles).height;
-  let phantom = box(height: height * 0.8, width: 0pt, inset: 0pt, stroke: none);
+  let phantom = box(
+    height: height * __height_mul_factor(height.pt()),
+    width: 0pt, inset: 0pt, stroke: none);
   $ lr(angle.l bra lr(|phantom#h(0pt)) ket angle.r) $
 })
 
@@ -369,7 +380,9 @@
   let ket = args.at(1, default: bra)
 
   let height = measure($ bra ket $, styles).height;
-  let phantom = box(height: height * 0.8, width: 0pt, inset: 0pt, stroke: none);
+  let phantom = box(
+    height: height * __height_mul_factor(height.pt()),
+    width: 0pt, inset: 0pt, stroke: none);
   $ lr(bar.v bra#h(0pt)phantom angle.r)lr(angle.l phantom#h(0pt)ket bar.v) $
 })
 
@@ -382,7 +395,9 @@
 // we use the same hack as braket().
 #let matrixelement(n, M, m) = style(styles => {
   let height = measure($ #n #M #m $, styles).height;
-  let phantom = box(height: height * 0.8, width: 0pt, inset: 0pt, stroke: none);
+  let phantom = box(
+    height: height * __height_mul_factor(height.pt()),
+    width: 0pt, inset: 0pt, stroke: none);
   $ lr(angle.l #n lr(|#M#h(0pt)phantom|) #m angle.r) $
 })
 
