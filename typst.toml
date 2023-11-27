@@ -1,9 +1,7 @@
 [package]
 name = "physica"
 version = "0.8.1"
-entrypoint = "physica.typ"
-license = "MIT"
-description = "Physics: derivative, differential, field, matrix, braket, tensor, hbar, etc."
+description = "Neat derivative, differential, field, matrix, braket, tensor, hbar, etc."
 authors = ["Leedehai"]
 repository = "https://github.com/Leedehai/typst-physics"
 keywords = [
@@ -14,3 +12,5 @@ keywords = [
 ]
 compiler = "0.8.0"
 exclude = ["*.pdf", "*.py"]
+entrypoint = "physica.typ"
+license = "MIT"

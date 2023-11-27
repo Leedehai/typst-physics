@@ -1,12 +1,11 @@
-# The physica module (for physics)
+# The `physica` package for Typst
 
 [![CI](https://github.com/Leedehai/typst-physics/actions/workflows/ci.yml/badge.svg)](https://github.com/Leedehai/typst-physics/actions/workflows/ci.yml)
 [![Latest release](https://img.shields.io/github/v/release/Leedehai/typst-physics.svg?color=gold)][latest-release]
 
-The [manual](https://github.com/Leedehai/typst-physics/blob/master/physica-manual.pdf).
-Download releases [here](https://github.com/Leedehai/typst-physics/releases/).
+:green_book: The [manual](https://github.com/Leedehai/typst-physics/blob/master/physica-manual.pdf).
 
-Available at the official collection of [Typst packages](https://typst.app/docs/packages/).
+Available in the collection of [Typst packages](https://typst.app/docs/packages/): `#import "@preview/physica:0.8.1": *`
 
 This [Typst](https://typst.app) package provides handy typesetting utilities for
 physics, including:
@@ -30,9 +29,9 @@ everybody", this package was renamed from `physics` to `physica`.
 
 See the [manual](https://github.com/Leedehai/typst-physics/blob/master/physica-manual.pdf) for more details.
 
-![demo1](https://github.com/Leedehai/typst-physics/assets/18319900/b0e2753e-ba72-46d4-809f-d6a12d8d1d6d)
+![demo-quick](https://github.com/Leedehai/typst-physics/assets/18319900/4a9f40df-f753-4324-8114-c682d270e9c7)
 
-![demo2](https://user-images.githubusercontent.com/18319900/236073825-e91b4601-7e92-490b-a7e4-e9e405a2147b.png)
+![demo-larger](https://user-images.githubusercontent.com/18319900/236073825-e91b4601-7e92-490b-a7e4-e9e405a2147b.png)
 
 ## Using physica in your Typst document
 

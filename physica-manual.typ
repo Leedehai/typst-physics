@@ -24,7 +24,7 @@
 
 #align(center)[
   Version #version, October 25, 2023 \
-  Doc updated: November 21, 2023
+  Doc updated: November 26, 2023
 ]
 
 #set par(justify: true)
@@ -56,10 +56,10 @@ With `typst`'s #linkurl("package management", "https://github.com/typst/packages
 ```typst
 #import "@preview/physica:0.8.1": *
 
-$ curl (grad f), pdv(,x,y,[1,2]), tensor(Gamma,+k,-i,-j) = pdv(vb(e_i),x^j)vb(e^k) $
+$ curl (grad f), pdv(,x,y,z,[2,k]), tensor(Gamma,+k,-i,-j) = pdv(vb(e_i),x^j)vb(e^k) $
 ```
 
-$ curl (grad f), pdv(,x,y,[1,2]), tensor(Gamma,+k,-i,-j) = pdv(vb(e_i),x^j)vb(e^k) $
+$ curl (grad f), pdv(,x,y,z,[2,k]), tensor(Gamma,+k,-i,-j)=pdv(vb(e_i),x^j)vb(e^k) $
 
 = The symbols
 
