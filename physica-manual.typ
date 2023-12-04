@@ -2,11 +2,11 @@
 // This document is shared under the Creative Commons BY-ND 4.0 license.
 #import "physica.typ": *
 
-#let version = "0.8.1"
+#let version = "0.9.0"
 
 #set page(
   numbering: "1/1",
-  header: align(right)[The `physica` package, version #version],
+  header: align(right)[#text(8pt)[The `physica` package\ version #version]],
 )
 
 #set heading(numbering: "1.")
@@ -19,20 +19,19 @@
 
 #align(center)[
   Leedehai \
-  #linkurl("https://github.com/leedehai/typst-physics", "https://github.com/leedehai/typst-physics")
-]
-
-#align(center)[
-  Version #version, October 25, 2023 \
-  Doc updated: November 26, 2023
+  #linkurl("GitHub repo", "https://github.com/leedehai/typst-physics") |
+  #linkurl("Typst index", "https://typst.app/docs/packages/")
 ]
 
 #set par(justify: true)
 
-*NOTE (2023-04-02):* #linkurl("Typst", "https://typst.app") is version 0.x and evolving, and this package evolves with it. Also, the package itself is under development and fine-tuning. While the major version stays 0, no backward compatibility is guaranteed.
+#v(1em)
 
-Indexed at
-#linkurl("https://typst.app/docs/packages/", "https://typst.app/docs/packages/").
+#align(center)[
+/ physica: _noun_. Latin, study of nature.
+]
+
+#v(1em)
 
 #outline(indent: true)
 #pagebreak(weak: true)
@@ -43,7 +42,7 @@ Indexed at
 
 #linkurl("Typst", "https://typst.app") is typesetting framework aiming to become the next generation alternative to LATEX. It excels in its friendly user experience and performance.
 
-The `physica` package provides handy Typst typesetting functions that make academic writing for physics simpler and faster, by simplifying otherwise very complex and repetitive expressions in the domain of physics.
+The `physica` package provides handy Typst typesetting functions that make academic writing for natural sciences simpler and faster, by simplifying otherwise very complex and repetitive expressions in the domain of natural sciences.
 
 This manual itself was generated using the Typst CLI and the `physica` package, so hopefully this document is able to provide you with a sufficiently self evident demonstration of how this package shall be used.
 
@@ -54,7 +53,7 @@ This manual itself was generated using the Typst CLI and the `physica` package, 
 With `typst`'s #linkurl("package management", "https://github.com/typst/packages"):
 
 ```typst
-#import "@preview/physica:0.8.1": *
+#import "@preview/physica:0.9.0": *
 
 $ curl (grad f), pdv(,x,y,z,[2,k]), tensor(Gamma,+k,-i,-j) = pdv(vb(e_i),x^j)vb(e^k) $
 ```

@@ -1,14 +1,17 @@
-# The `physica` package for Typst
+# The physica package for Typst
 
 [![CI](https://github.com/Leedehai/typst-physics/actions/workflows/ci.yml/badge.svg)](https://github.com/Leedehai/typst-physics/actions/workflows/ci.yml)
 [![Latest release](https://img.shields.io/github/v/release/Leedehai/typst-physics.svg?color=gold)][latest-release]
 
 :green_book: The [manual](https://github.com/Leedehai/typst-physics/blob/master/physica-manual.pdf).
 
-Available in the collection of [Typst packages](https://typst.app/docs/packages/): `#import "@preview/physica:0.8.1": *`
+Available in the collection of [Typst packages](https://typst.app/docs/packages/): `#import "@preview/physica:0.9.0": *`
+
+> physica _noun_.
+> * Latin, study of nature
 
 This [Typst](https://typst.app) package provides handy typesetting utilities for
-physics, including:
+natural sciences, including:
 * Braces,
 * Vectors and vector fields,
 * Matrices,
@@ -37,7 +40,10 @@ See the [manual](https://github.com/Leedehai/typst-physics/blob/master/physica-m
 
 ### With `typst` package management (recommended)
 
-See https://github.com/typst/packages.
+See https://github.com/typst/packages. If you are using the Typst's web app,
+packages listed there are readily available; if you are using the Typst
+compiler locally, it downloads packages on-demand and caches them on-disk, see
+[here](https://github.com/typst/packages#downloads) for details.
 
 <p align="center">
 <img src="https://github.com/Leedehai/typst-physics/assets/18319900/f2a3a2bd-3ef7-4383-ab92-9a71affb4e12" width="173" alt="effect">
@@ -45,21 +51,21 @@ See https://github.com/typst/packages.
 
 ```typst
 // Style 1
-#import "@preview/physica:0.8.1": *
+#import "@preview/physica:0.9.0": *
 
 $ curl (grad f), tensor(T, -mu, +nu), pdv(f,x,y,[1,2]) $
 ```
 
 ```typst
 // Style 2
-#import "@preview/physica:0.8.1": curl, grad, tensor, pdv
+#import "@preview/physica:0.9.0": curl, grad, tensor, pdv
 
 $ curl (grad f), tensor(T, -mu, +nu), pdv(f,x,y,[1,2]) $
 ```
 
 ```typst
 // Style 3
-#import "@preview/physica:0.8.1"
+#import "@preview/physica:0.9.0"
 
 $ physica.curl (physica.grad f), physica.tensor(T, -mu, +nu), physica.pdv(f,x,y,[1,2]) $
 ```
@@ -68,17 +74,24 @@ $ physica.curl (physica.grad f), physica.tensor(T, -mu, +nu), physica.pdv(f,x,y,
 
 Similar to examples above, but import with the undecorated file path like `"physica.typ"`.
 
+## Typst version
+
+The version requirement for the compiler is in [typst.toml](typst.toml)'s
+`compiler` field. If you are using an unsupported Typst version, the compiler
+will throw an error. You may want to update your compiler with `typst update`,
+or choose an earlier version of the `physica` package.
+
+Developed with compiler version:
+
+```sh
+$ typst --version
+typst 0.10.0 (70ca0d25)
+```
+
 ## Manual
 
 See the manual [physica-manual.pdf](https://github.com/Leedehai/typst-physics/blob/master/physica-manual.pdf) for a more comprehensive coverage, a PDF file
 generated directly with the [Typst](https://typst.app) binary.
-
-CLI Version:
-
-```sh
-$ typst --version
-typst 0.9.0 (7bb4f6df)
-```
 
 To regenerate the manual, use command
 
@@ -97,8 +110,6 @@ explore the design together. Some features might warrant a package on its own.
 * Testing: currently testing is done by closely inspecting the generated
 [physica-manual.pdf](https://github.com/Leedehai/typst-physics/blob/master/physica-manual.pdf). This does not scale well. I plan to add programmatic
 testing by comparing rendered pictures with golden images.
-
-* Please nudge Typst maintainers to resolve https://github.com/typst/typst/issues/240 by scaling up given glyphs in the middle of [`lr()`](https://typst.app/docs/reference/math/lr#functions-lr) :grinning:
 
 ## License
 
