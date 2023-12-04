@@ -34,7 +34,7 @@ See the [manual](https://github.com/Leedehai/typst-physics/blob/master/physica-m
 
 ![demo-quick](https://github.com/Leedehai/typst-physics/assets/18319900/4a9f40df-f753-4324-8114-c682d270e9c7)
 
-![demo-larger](https://user-images.githubusercontent.com/18319900/236073825-e91b4601-7e92-490b-a7e4-e9e405a2147b.png)
+![demo-larger](https://github.com/Leedehai/typst-physics/assets/18319900/3a5cc613-bf36-4b13-ac28-790150c5fb94)
 
 ## Using physica in your Typst document
 
