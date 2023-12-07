@@ -4,6 +4,14 @@
 
 #let version = "0.9.0"
 
+#set document(
+  title: [physica-manual.typ],
+  author: ("Leedehai"),
+  // Prevents setting the creation date to PDF metadata, so the same *.typ
+  // file content will result in the same *.pdf binary.
+  date: none,
+)
+
 #set page(
   numbering: "1/1",
   header: align(right)[#text(8pt)[The `physica` package\ version #version]],
