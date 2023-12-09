@@ -1,9 +1,12 @@
+:green_book: The [manual](https://github.com/Leedehai/typst-physics/blob/master/physica-manual.pdf).
+<p align="center">
+<img width="545" alt="logo" src="https://github.com/Leedehai/typst-physics/assets/18319900/781d5747-4842-49f6-bb41-a1fd4d17a1ff">
+</p>
+
 # The physica package for Typst
 
 [![CI](https://github.com/Leedehai/typst-physics/actions/workflows/ci.yml/badge.svg)](https://github.com/Leedehai/typst-physics/actions/workflows/ci.yml)
 [![Latest release](https://img.shields.io/github/v/release/Leedehai/typst-physics.svg?color=gold)][latest-release]
-
-:green_book: The [manual](https://github.com/Leedehai/typst-physics/blob/master/physica-manual.pdf).
 
 Available in the collection of [Typst packages](https://typst.app/docs/packages/): `#import "@preview/physica:0.9.0": *`
 
