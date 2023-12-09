@@ -9,11 +9,15 @@ curl vb(E) = - pdv(vb(B), t),
 quad
 tensor(Lambda,+mu,-nu) = dmat(1,RR),
 quad
+dd(x,y),
+quad
+dd(vb(x),y,[3]),
+quad
 dd(x,y,2,d:Delta,p:and),
 quad
 dv(phi,t,d:upright(D)) = pdv(phi,t) + vb(u) grad phi \
 
-H(f) = hmat(f;x,y),
+H(f) = hmat(f;x,y;delim:"[",big:#true),
 quad
 vb(v^a) = sum_(i=1)^n alpha_i vu(u^i),
 quad

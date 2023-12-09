@@ -206,7 +206,24 @@
 #let crossproduct = $times$
 #let cprod = crossproduct
 
+#let innerproduct(u, v) = {
+  $lr(angle.l #u, #v angle.r)$
+}
+#let iprod = innerproduct
+
 // == Matrices
+
+// Display matrix element in display/inline style. The latter vertically
+// compresses a tall content (e.g. a fraction) while the former doesn't.
+// In Typst and LaTeX, a matrix element is automatically cramped, even if
+// the matrix is in a standalone math block.
+#let __mate(content, big) = {
+  if big {
+    math.display(content)
+  } else {
+    math.inline(content)
+  }
+}
 
 #let matrixdet(..sink) = {
   math.mat(..sink, delim:"|")
@@ -276,20 +293,20 @@
 }
 #let zmat = zeromatrix
 
-#let jacobianmatrix(fs, xs, delim:"(") = {
+#let jacobianmatrix(fs, xs, delim:"(", big: false) = {
   assert(type(fs) == array, message: "expecting an array of function names")
   assert(type(xs) == array, message: "expecting an array of variable names")
   let arrays = ()  // array of arrays
   for f in fs {
-    arrays.push(xs.map((x) => math.frac($diff#f$, $diff#x$)))
+    arrays.push(xs.map((x) => __mate(math.frac($diff#f$, $diff#x$), big)))
   }
   math.mat(delim: delim, ..arrays)
 }
 #let jmat = jacobianmatrix
 
-#let hessianmatrix(fs, xs, delim:"(") = {
-  assert(type(fs) == array, message: "expecting a one-element array")
-  assert(fs.len() == 1, message: "expecting only one function name")
+#let hessianmatrix(fs, xs, delim:"(", big: false) = {
+  assert(type(fs) == array, message: "usage: hessianmatrix(f; x, y...)")
+  assert(fs.len() == 1, message: "usage: hessianmatrix(f; x, y...)")
   let f = fs.at(0)
   assert(type(xs) == array, message: "expecting an array of variable names")
   let row_arrays = ()  // array of arrays
@@ -299,10 +316,10 @@
     let xr = xs.at(r)
     for c in range(order) {
       let xc = xs.at(c)
-      row_array.push(math.frac(
+      row_array.push(__mate(math.frac(
         $diff^2 #f$,
         if xr == xc { $diff #xr^2$ } else { $diff #xr diff #xc$ }
-      ))
+      ), big))
     }
     row_arrays.push(row_array)
   }
@@ -363,11 +380,6 @@
 
   $ lr(bar.v ket#h(0pt)mid(angle.r#h(0pt)angle.l)#h(0pt)bra bar.v) $
 })
-
-#let innerproduct = braket
-#let iprod = innerproduct
-#let outerproduct = ketbra
-#let oprod = outerproduct
 
 #let matrixelement(n, M, m) = style(styles => {
   $ lr(angle.l #n#h(0pt)mid(bar.v)#h(0pt)#M#h(0pt)mid(bar.v)#h(0pt)#m angle.r) $
@@ -661,6 +673,25 @@
   // the first argument of attach(), so that the indices' vertical position
   // auto-adjusts with T's height.
   math.attach((T,hphantom(sym.zwj)).join(), t: uppers.join(), b: lowers.join())
+}
+
+#let taylorterm(fn, xv, x0, idx) = {
+  let noparen(expr) = {
+    if type(expr) == content and expr.func() == math.lr {
+      let children = expr.at("body").at("children")
+      children.slice(1, children.len() - 1).join()
+    } else {
+      expr
+    }
+  }
+
+  if idx == [0] or idx == 0 {
+    $fn (noparen(x0))$
+  } else if idx == [1] or idx == 1 {
+    $fn^((1)) (noparen(x0))(xv - x0)$
+  } else {
+    $frac(fn^((noparen(idx))) (noparen(x0)), idx !)(xv - x0)^noparen(idx)$
+  }
 }
 
 #let isotope(element, /*atomic mass*/a: none, /*atomic number*/z: none) = {

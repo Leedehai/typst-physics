@@ -1,6 +1,6 @@
 :green_book: The [manual](https://github.com/Leedehai/typst-physics/blob/master/physica-manual.pdf).
 <p align="center">
-<img width="545" alt="logo" src="https://github.com/Leedehai/typst-physics/assets/18319900/781d5747-4842-49f6-bb41-a1fd4d17a1ff">
+<img width="545" alt="logo" src="https://github.com/Leedehai/typst-physics/assets/18319900/ed86198a-8ddb-4473-aed3-8111d5ecde60">
 </p>
 
 # The physica package for Typst
@@ -17,27 +17,22 @@ This [Typst](https://typst.app) package provides handy typesetting utilities for
 natural sciences, including:
 * Braces,
 * Vectors and vector fields,
-* Matrices,
+* Matrices, including Jacobian and Hessian,
 * Dirac braket notations,
 * Common math functions,
 * Differentials and derivatives, including partial derivatives of mixed orders with automatic order summation,
-* Familiar "h-bar", tensor abstract index notations, isotopes,
+* Familiar "h-bar", tensor abstract index notations, isotopes, Taylor series term,
 * Signal sequences i.e. digital timing diagrams.
-
-:warning: [Typst](https://typst.app) is in beta and evolving, and this package
-evolves with it. As a result, no backward compatibility is guaranteed yet.
-
-:information_source: In response to the official Typst package [guideline](https://github.com/typst/packages/tree/main#submission-guidelines)
-"Package names should not be merely descriptive to create level grounds for
-everybody", this package was renamed from `physics` to `physica`.
 
 ## A quick look
 
-See the [manual](https://github.com/Leedehai/typst-physics/blob/master/physica-manual.pdf) for more details.
+See the [manual](https://github.com/Leedehai/typst-physics/blob/master/physica-manual.pdf) for more details and examples.
 
 ![demo-quick](https://github.com/Leedehai/typst-physics/assets/18319900/4a9f40df-f753-4324-8114-c682d270e9c7)
 
-![demo-larger](https://github.com/Leedehai/typst-physics/assets/18319900/3a5cc613-bf36-4b13-ac28-790150c5fb94)
+A larger [demo.typ](https://github.com/Leedehai/typst-physics/blob/master/demo.typ):
+
+![demo-larger](https://github.com/Leedehai/typst-physics/assets/18319900/ed2d95af-4bb9-4131-957f-ffba4f932a03)
 
 ## Using physica in your Typst document
 

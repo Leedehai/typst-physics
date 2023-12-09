@@ -27,8 +27,8 @@
 
 #align(center)[
   Leedehai \
-  #linkurl("GitHub repo", "https://github.com/leedehai/typst-physics") |
-  #linkurl("Typst index", "https://typst.app/docs/packages/")
+  #linkurl("GitHub", "https://github.com/leedehai/typst-physics") |
+  #linkurl("Typst", "https://typst.app/docs/packages/")
 ]
 
 #set par(justify: true)
@@ -211,6 +211,14 @@ All symbols need to be used in *math mode* `$...$`.
   [`cprod`],
   [`a cprod b` #sym.arrow $a cprod b$],
   [cross product],
+
+  [`innerproduct`],
+  [`iprod`],
+  [
+    `iprod(u, v)` #sym.arrow $iprod(u, v)$ \
+    `iprod(sum_i a_i, b)` \ #sym.arrow $iprod(sum_i a_i, b)$
+  ],
+  [inner product],
 )
 
 == Matrix notations
@@ -291,29 +299,46 @@ All symbols need to be used in *math mode* `$...$`.
 Jacobian matrix: `jacobianmatrix(`...`)`, i.e. `jmat(`...`)`.
 
 #table(
-  columns: (1fr, 1fr),
+  columns: (25%, auto, auto),
   align: center,
   stroke: none,
   column-gutter: 1em,
 
   [
+    \ Typst (like LaTeX) \ cramps fractions in a matrix...
+  ],
+  [
     #hl(`jmat(f_1,f_2; x,y)`)
     $ jmat(f_1,f_2;x,y) $
   ],
   [
-    #hl(`jmat(f_1,f_2; x,y,z; delim:"[")`)
-    $ jmat(f_1,f_2;x,y,z;delim:"[") $
+    #hl(`jmat(f,g; x,y,z; delim:"[")`)
+    $ jmat(f,g;x,y,z;delim:"[") $
+  ],
+  [
+    \ ...but you can uncramp them using argument #hl(`big:#true`) here
+  ],
+  [
+    #hl(`jmat(f_1,f_2;x,y;big:#true)`)
+    $ jmat(f_1,f_2;x,y;big:#true) $
+  ],
+  [
+    #hl(`jmat(f,g;x,y,z;delim:"|",big:#true)`)
+    $ jmat(f,g;x,y,z;delim:"|",big:#true) $
   ],
 )
 
 Hessian matrix: `hessianmatrix(`...`)`, i.e. `hmat(`...`)`.
 
 #table(
-  columns: (1fr, 1fr),
+  columns: (25%, auto, auto),
   align: center,
   stroke: none,
   column-gutter: 1em,
 
+  [
+    \ Typst (like LaTeX) \ cramps fractions in a matrix...
+  ],
   [
     #hl(`hmat(f; x,y)`)
     $ hmat(f; x,y) $
@@ -321,6 +346,17 @@ Hessian matrix: `hessianmatrix(`...`)`, i.e. `hmat(`...`)`.
   [
     #hl(`hmat(; x,y,z; delim:"[")`)
     $ hmat(; x,y,z; delim:"[") $
+  ],
+  [
+    \ ...but you can uncramp them using argument #hl(`big:#true`) here
+  ],
+  [
+    #hl(`hmat(f;x,y;big:#true)`)
+    $ hmat(f;x,y;big:#true) $
+  ],
+  [
+    #hl(`hmat(;x,y,z;delim:"|",big:#true)`)
+    $ hmat(; x,y,z;delim:"|",big:#true) $
   ],
 )
 
@@ -398,22 +434,6 @@ xmat(2, 2, #g)`)
     `ketbra(vec(1,2), b)` #sym.arrow $ketbra(vec(1,2), b)$
   ],
   [ketbra],
-
-  [`innerproduct(`_a_, _b_`)`],
-  [`iprod`],
-  [
-    `iprod(a), iprod(u, v)` \ #sym.arrow $iprod(a), iprod(u, v)$ \
-    `iprod(a, vec(1,2))` #sym.arrow $iprod(a, vec(1,2))$
-  ],
-  [innerproduct\ = braket],
-
-  [`outerproduct(`_a_, _b_`)`],
-  [`oprod`],
-  [
-    `oprod(a), oprod(u, v)` \ #sym.arrow $oprod(a), oprod(u, v)$ \
-    `oprod(a, vec(1,2))` #sym.arrow $oprod(a, vec(1,2))$
-  ],
-  [outerproduct\ = ketbra],
 
   [`matrixelement(`_n_, _M_, _m_`)`],
   [`mel`],
@@ -851,6 +871,51 @@ $ isotope("Bi",a:211,z:83) --> isotope("Tl",a:207,z:81) + isotope("He",a:4,z:2) 
 
 *(4)* #hl(`isotope("Tl",a:207,z:81) --> isotope("Pb",a:207,z:82) + isotope(e,a:0,z:-1)`)
 $ isotope("Tl",a:207,z:81) --> isotope("Pb",a:207,z:82) + isotope(e,a:0,z:-1) $
+
+=== The n-th term in Taylor series
+
+#v(1em)
+
+Function: `taylorterm(`_func_, _x_, _x0_, _idx_`)`.
+- _func_: the function e.g. `f`, `(f+g)`,
+- _x_: the variable name e.g. `x`,
+- _x0_: the variable value at the expansion point e.g. `x_0`, `(1+a)`,
+- _idx_: the index of the term, e.g. `0`, `1`, `2`, `n`, `(n+1)`.
+If _x0_ or _idx_ is in a parenthesis e.g. `(1+k)`, then the function
+automatically removes the outer parenthesis where appropriate.
+
+#align(center, [*Examples*])
+
+#grid(
+  columns: (50%, 50%),
+  row-gutter: 1em,
+  column-gutter: 2em,
+  [
+    *(1)* #hl(`taylorterm(f,x,x_0,0)`) \
+    $ taylorterm(f,x,x_0,0) $
+  ],
+  [
+    *(2)* #hl(`taylorterm(f,x,x_0,1)`) \
+    $ taylorterm(f,x,x_0,1) $
+  ],
+  [
+    *(3)* #hl(`taylorterm(f,x,(1+a),2)`) \
+    $ taylorterm(f,x,(1+a),2) $
+  ],
+  [
+    *(4)* #hl(`taylorterm(f,x,x_0,n)`) \
+    $ taylorterm(f,x,x_0,n) $
+  ],
+  [
+    *(5)* #hl(`taylorterm(F,x^nu,x^nu_0,n)`) \
+    $ taylorterm(F,x^nu,x^nu_0,n) $
+  ],
+  [
+    *(6)* #hl(`taylorterm(f_p,x,x_0,(n+1))`) \
+    $ taylorterm(f_p,x,x_0,(n+1)) $
+  ],
+)
+
 
 === Signal sequences (digital timing diagrams)
 
