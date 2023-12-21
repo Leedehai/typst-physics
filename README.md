@@ -17,7 +17,7 @@ This [Typst](https://typst.app) package provides handy typesetting utilities for
 natural sciences, including:
 * Braces,
 * Vectors and vector fields,
-* Matrices, including Jacobian and Hessian,
+* Matrices, including Jacobian and Hessian, interpreting `..^T` as transpose,
 * Dirac braket notations,
 * Common math functions,
 * Differentials and derivatives, including partial derivatives of mixed orders with automatic order summation,
@@ -32,7 +32,7 @@ See the [manual](https://github.com/Leedehai/typst-physics/blob/master/physica-m
 
 A larger [demo.typ](https://github.com/Leedehai/typst-physics/blob/master/demo.typ):
 
-![demo-larger](https://github.com/Leedehai/typst-physics/assets/18319900/ed2d95af-4bb9-4131-957f-ffba4f932a03)
+![demo-larger](https://github.com/Leedehai/typst-physics/assets/18319900/af4fcf6c-5da3-48d1-a7a7-59053f808db5)
 
 ## Using physica in your Typst document
 

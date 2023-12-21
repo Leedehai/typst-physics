@@ -4,8 +4,10 @@
 
 #import "physica.typ": *
 
+#show: super-T-as-transpose // Render "..^T" as transposed matrix
+
 $
-curl vb(E) = - pdv(vb(B), t),
+A^T, curl vb(E) = - pdv(vb(B), t),
 quad
 tensor(Lambda,+mu,-nu) = dmat(1,RR),
 quad
