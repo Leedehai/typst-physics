@@ -8,7 +8,7 @@
 [![CI](https://github.com/Leedehai/typst-physics/actions/workflows/ci.yml/badge.svg)](https://github.com/Leedehai/typst-physics/actions/workflows/ci.yml)
 [![Latest release](https://img.shields.io/github/v/release/Leedehai/typst-physics.svg?color=gold)][latest-release]
 
-Available in the collection of [Typst packages](https://typst.app/docs/packages/): `#import "@preview/physica:0.9.0": *`
+Available in the collection of [Typst packages](https://typst.app/docs/packages/): `#import "@preview/physica:0.9.1": *`
 
 > physica _noun_.
 > * Latin, study of nature
@@ -17,7 +17,8 @@ This [Typst](https://typst.app) package provides handy typesetting utilities for
 natural sciences, including:
 * Braces,
 * Vectors and vector fields,
-* Matrices, including Jacobian and Hessian, interpreting `..^T` as transpose,
+* Matrices, including Jacobian and Hessian,
+* Smartly render `..^T` as transpose and `..^+` as dagger (conjugate transpose),
 * Dirac braket notations,
 * Common math functions,
 * Differentials and derivatives, including partial derivatives of mixed orders with automatic order summation,
@@ -32,7 +33,7 @@ See the [manual](https://github.com/Leedehai/typst-physics/blob/master/physica-m
 
 A larger [demo.typ](https://github.com/Leedehai/typst-physics/blob/master/demo.typ):
 
-![demo-larger](https://github.com/Leedehai/typst-physics/assets/18319900/af4fcf6c-5da3-48d1-a7a7-59053f808db5)
+![demo-larger](https://github.com/Leedehai/typst-physics/assets/18319900/75b94ef8-cc98-434f-be5f-bfac1ef6aef9)
 
 ## Using physica in your Typst document
 
@@ -49,21 +50,21 @@ compiler locally, it downloads packages on-demand and caches them on-disk, see
 
 ```typst
 // Style 1
-#import "@preview/physica:0.9.0": *
+#import "@preview/physica:0.9.1": *
 
 $ curl (grad f), tensor(T, -mu, +nu), pdv(f,x,y,[1,2]) $
 ```
 
 ```typst
 // Style 2
-#import "@preview/physica:0.9.0": curl, grad, tensor, pdv
+#import "@preview/physica:0.9.1": curl, grad, tensor, pdv
 
 $ curl (grad f), tensor(T, -mu, +nu), pdv(f,x,y,[1,2]) $
 ```
 
 ```typst
 // Style 3
-#import "@preview/physica:0.9.0"
+#import "@preview/physica:0.9.1"
 
 $ physica.curl (physica.grad f), physica.tensor(T, -mu, +nu), physica.pdv(f,x,y,[1,2]) $
 ```

@@ -2,7 +2,7 @@
 // This document is shared under the Creative Commons BY-ND 4.0 license.
 #import "physica.typ": *
 
-#let version = "0.9.0"
+#let version = "0.9.1"
 
 #set document(
   title: [physica-manual.typ],
@@ -61,7 +61,7 @@ This manual itself was generated using the Typst CLI and the `physica` package, 
 With `typst`'s #linkurl("package management", "https://github.com/typst/packages"):
 
 ```typst
-#import "@preview/physica:0.9.0": *
+#import "@preview/physica:0.9.1": *
 
 $ curl (grad f), pdv(,x,y,z,[2,k]), tensor(Gamma,+k,-i,-j) = pdv(vb(e_i),x^j)vb(e^k) $
 ```
@@ -165,7 +165,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`TT`],
   [],
   [`v^TT, A^TT` #sym.arrow $v^TT, A^TT$],
-  [transpose, also see\ @matrix-tranpose],
+  [transpose, also see\ @matrix-transpose],
 
   [`vectorbold(`_content_`)`],
   [`vb`],
@@ -234,7 +234,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`TT`],
   [],
   [`v^TT, A^TT` #sym.arrow $v^TT, A^TT$],
-  [transpose, also see\ @matrix-tranpose],
+  [transpose, also see\ @matrix-transpose],
 
   [#builtin([`mat(`...`)`])],
   [],
@@ -591,6 +591,15 @@ Functions: `differential(`\*_args_, \*\*_kwargs_`)`, abbreviated as `dd(`...`)`.
 - named _kwargs_:
   - `d`: the differential symbol [default: `upright(d)`].
   - `p`: the product symbol connecting the components [default: `none`].
+  - `compact`: only effective if `p` is `none`. If `#true`, will remove the TeXBook-advised thin spaces between the d-units [default: `#false`].
+
+TeXBook advises _[f]ormulas involving calculus look best when an extra thin space
+appears before dx or dy or d whatever_ (Chapter 18 p.168), and this package
+heeds this advice. If you don't want the spaces between the d-units, you may
+pass a `compact:#true` argument: $dd(r,theta) "vs." dd(r,theta,compact:#true)$ (compact).
+// https://github.com/typst/typst/issues/147 advocates for set rules for
+// non built-in functions. When that's implemented, user can do a
+// #set dd(compact: true) to set this param for all dd() invocations.
 
 *Order assignment algorithm:*
 - If there is no order number or order array, all variables has order 1.
@@ -607,8 +616,8 @@ Functions: `differential(`\*_args_, \*\*_kwargs_`)`, abbreviated as `dd(`...`)`.
   column-gutter: 2em,
 
   [
-    *(1)* #hl(`dd(f), dd(x,y)`) \
-    $ dd(f), dd(x,y) $
+    *(1)* #hl(`dd(f), f(r,theta) dd(r,theta)`) \
+    $ dd(f), f(r,theta) dd(r,theta) $
   ],
   [
     *(2)* #hl(`dd(x,3), dd(f,[k]), dd(f,[k],d:delta)`) \
@@ -619,8 +628,8 @@ Functions: `differential(`\*_args_, \*\*_kwargs_`)`, abbreviated as `dd(`...`)`.
     $ dd(f,2), dd(vb(x),t,[3,]) $
   ],
   [
-    *(4)* #hl(`dd(x,y,[2,3]), dd(x,y,z,[2,3])`) \
-    $ dd(x,y,[2,3]), dd(x,y,z,[2,3]) $
+    *(4)* #hl(`dd(x,y), dd(x,y,[2,3]), dd(x,y,z,[2,3])`) \
+    $ dd(x,y), dd(x,y,[2,3]), dd(x,y,z,[2,3]) $
   ],
   [
     *(5)* #hl(`dd(x, y, z, [[1,1],rho+1,n_1])`) \
@@ -756,6 +765,128 @@ Function: `partialderivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `pd
 *(11)* #hl(`integral_V dd(V) (pdv(cal(L), phi) - diff_mu (pdv(cal(L), (diff_mu phi)))) = 0`) \
 $ integral_V dd(V) (pdv(cal(L), phi) - diff_mu (pdv(cal(L), (diff_mu phi)))) = 0 $
 
+== Special show rules
+
+#v(1em)
+
+=== Matrix transpose with superscript T <matrix-transpose>
+
+#v(1em)
+
+Matrix transposition can be simply written as `..^T`, just like handwriting,
+and the only superscript `T` will be formatted properly to represent
+transposition instead of a normal capital letter $T$.
+
+This $square.stroked.dotted^T => square.stroked.dotted^TT$
+conversion is disabled if the base is either
+- a `limits(...)` or `scripts(...)` element, or
+- an integration symbol $integral$ or vertical bar $|$, or
+- an equation or `lr(...)` element whose last child is one of the above.
+
+If you really want to:
+- print a transpose explicitly: use symbol `TT`: `A^TT` $=> A^TT$;
+- print a superscript letter $T$: use `scripts(T)`: `2^scripts(T)` $=> 2^scripts(T)$.
+
+This feature needs to be enabled explicitly through a _show rule_.
+```typ
+#show: super-T-as-transpose
+(A B)^T = B^T A^T
+```
+
+If you only want to enable it within a content block's scope, you may do
+```typ
+#[
+  #show: super-T-as-transpose // Enabled from here till the end of block.
+  (A B)^T = B^T A^T
+]
+```
+
+#align(center, [*Examples*])
+
+#show: super-T-as-transpose  // Necessary!
+
+#grid(
+  columns: (auto, auto),
+  row-gutter: 1em,
+  column-gutter: 2em,
+
+  [
+    *(1)* #hl(`(U V_n W')^T = W'^T V_n^T U^T`) \
+    $ (U V_n W')^T = W'^T V_n^T U^T  $
+  ],
+  [
+    *(2)* #hl(`vec(a, b)^T, mat(a, b; c, d)^T`) \
+    $ vec(a, b)^T, mat(a, b; c, d)^T $
+  ],
+  [
+    *(3)* #hl(`limits(sum)^T, scripts(e)^T`) \
+    $ limits(sum)^T, scripts(e)^T $
+  ],
+  [
+    *(4)* #hl(`integral_0^T, abs(a)^T, eval(F(t))^T_0`) \
+    $ integral_0^T, abs(a)^T, eval(F(t))^T_0 $
+  ],
+)
+
+=== Matrix dagger with superscript +
+
+The conjugate transpose, also known as the Hermitian transpose, transjugate, or
+adjoint, of a complex matrix $A$ is performed by first transposing and then
+complex-conjugating each matrix element. It is often denoted as $A^*$,
+$A^upright(sans(H))$, and sometimes with a dagger symbol:
+`A^dagger` $=> A^dagger$.
+
+Writing `..^dagger` often visually clutters an equation in the source code form.
+Therefore, the package offers the ability to write `..^+` instead.
+
+This $square.stroked.dotted^+ => square.stroked.dotted^dagger$ conversion is
+disabled if the base is either
+- a `limits(...)` or `scripts(...)` element, or
+- an equation or `lr(...)` element whose last child is one of the above.
+
+This feature needs to be enabled explicitly through a _show rule_.
+```typ
+#show: super-plus-as-dagger
+U^+U = U U^+ = I
+```
+
+If you only want to enable it within a content block's scope (e.g. you want
+to have $square.stroked.dotted^+$ for ions or Moore–Penrose inverse outside the
+block), you may do
+```typ
+#[
+  #show: super-plus-as-dagger // Enabled from here till the end of block.
+  U^+U = U U^+ = I
+]
+```
+
+#align(center, [*Examples*])
+
+#show: super-plus-as-dagger  // Necessary!
+
+#grid(
+  columns: (auto, auto),
+  row-gutter: 1em,
+  column-gutter: 2em,
+
+  [
+    *(1)* #hl(`U^+U = U U^+ = I`) \
+    $ U^+U = U U^+ = I  $
+  ],
+  [
+    *(2)* #hl(`mat(1+i,1;2-i,1)^+ = mat(1-i,2+i;1,1)`) \
+    $ mat(1+i,1;2-i,1)^+ = mat(1-i,2+i;1,1) $
+  ],
+  [
+    *(3)* #hl(`limits(N)^+, scripts(N)^+`) \
+    $ limits(N)^+, scripts(N)^+ $
+  ],
+  [
+    *(4)* #hl(`#let eq = $scripts(N)$; eq^+`) \
+    $ #let eq = $scripts(N)$; eq^+ $
+  ],
+)
+
 == Miscellaneous
 
 #v(1em)
@@ -783,39 +914,6 @@ In the default font, the Typst built-in symbol `planck.reduce` $planck.reduce$ l
   [$ (pi G^2) / (hbar c^4) $],
   [$ A e^(frac(i(p x - E t), hbar)) $],
   [$ i hbar pdv(,t) psi = -frac(hbar^2, 2m) laplacian psi $],
-)
-
-=== Matrix transpose <matrix-tranpose>
-
-#v(1em)
-
-Matrix transposition can be simply written as `..^T`, where the `T` will be
-formatted properly to represent transposition instead of a normal letter $T$.
-This conversion is disabled if the base is integral symbol.
-
-To enable this feature, users need to first import this and call
-```typ
-#import "...(this physica package)...": super-T-as-transpose
-#show: super-T-as-transpose
-```
-
-#align(center, [*Examples*])
-
-#show: super-T-as-transpose  // Necessary!
-
-#grid(
-  columns: (50%, 50%),
-  row-gutter: 1em,
-  column-gutter: 2em,
-
-  [
-    *(1)* #hl(`(A_n B_n)^T = B_n^T A_n^T`) \
-    $ (A_n B_n)^T = B_n^T A_n^T $
-  ],
-  [
-    *(2)* #hl(`integral_0^T A^T f(x) dif x`) \
-    $ integral_0^T A^T f(x) dif x $
-  ],
 )
 
 === Tensors
@@ -1054,6 +1152,8 @@ Function: `BMEsymadd([`...`])`.
   [$BMEsymadd([2a+1,xi,b+1,a xi + 2b+a,2b+1])$],
 )
 
+#pagebreak()
+
 = Acknowledgement
 
 #v(1em)
@@ -1063,10 +1163,13 @@ Huge thanks to these LATEX packages, for lighting the way of physics typesetting
 - `derivatives` by Simon Jensen,
 - `tensor` by Philip G. Ratcliffe et al.
 
-#v(2em)
+#pagebreak()
 
-#align(bottom, text(8pt)[
+= License
 
-#sym.copyright Copyright 2023 Leedehai. The document is shared under Creative Commons Attribution-NoDerivatives 4.0 license (#linkurl("CC BY-ND 4.0", "https://creativecommons.org/licenses/by-nd/4.0/legalcode")).
+Source code:
+#sym.copyright Copyright 2023 Leedehai. See the license
+#linkurl("here", "https://github.com/Leedehai/typst-physics/blob/master/LICENSE.txt").
 
-])
+The document:
+Creative Commons Attribution-NoDerivatives 4.0 license (#linkurl("CC BY-ND 4.0", "https://creativecommons.org/licenses/by-nd/4.0/legalcode")).

@@ -11,7 +11,7 @@ A^T, curl vb(E) = - pdv(vb(B), t),
 quad
 tensor(Lambda,+mu,-nu) = dmat(1,RR),
 quad
-dd(x,y),
+f(x,y) dd(x,y),
 quad
 dd(vb(x),y,[3]),
 quad
