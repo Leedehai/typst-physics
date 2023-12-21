@@ -165,7 +165,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`TT`],
   [],
   [`v^TT, A^TT` #sym.arrow $v^TT, A^TT$],
-  [transpose],
+  [transpose, also see\ @matrix-tranpose],
 
   [`vectorbold(`_content_`)`],
   [`vb`],
@@ -234,7 +234,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`TT`],
   [],
   [`v^TT, A^TT` #sym.arrow $v^TT, A^TT$],
-  [transpose],
+  [transpose, also see\ @matrix-tranpose],
 
   [#builtin([`mat(`...`)`])],
   [],
@@ -783,6 +783,39 @@ In the default font, the Typst built-in symbol `planck.reduce` $planck.reduce$ l
   [$ (pi G^2) / (hbar c^4) $],
   [$ A e^(frac(i(p x - E t), hbar)) $],
   [$ i hbar pdv(,t) psi = -frac(hbar^2, 2m) laplacian psi $],
+)
+
+=== Matrix transpose <matrix-tranpose>
+
+#v(1em)
+
+Matrix transposition can be simply written as `..^T`, where the `T` will be
+formatted properly to represent transposition instead of a normal letter $T$.
+This conversion is disabled if the base is integral symbol.
+
+To enable this feature, users need to first import this and call
+```typ
+#import "...(this physica package)...": super-T-as-transpose
+#show: super-T-as-transpose
+```
+
+#align(center, [*Examples*])
+
+#show: super-T-as-transpose  // Necessary!
+
+#grid(
+  columns: (50%, 50%),
+  row-gutter: 1em,
+  column-gutter: 2em,
+
+  [
+    *(1)* #hl(`(A_n B_n)^T = B_n^T A_n^T`) \
+    $ (A_n B_n)^T = B_n^T A_n^T $
+  ],
+  [
+    *(2)* #hl(`integral_0^T A^T f(x) dif x`) \
+    $ integral_0^T A^T f(x) dif x $
+  ],
 )
 
 === Tensors

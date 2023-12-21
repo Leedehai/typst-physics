@@ -151,6 +151,7 @@
 
 #let vecrow(..content) = $lr(( #content.pos().join(",") ))$
 
+// Prefer using super-T-as-transpose()
 #let TT = $sans(upright(T))$
 
 #let __vector(a, accent, be_bold) = {
@@ -633,6 +634,18 @@
 //
 // Credit: Enivex in https://github.com/typst/typst/issues/355 was very helpful.
 #let hbar = (sym.wj, move(dy: -0.08em, strike(offset: -0.55em, extent: -0.05em, sym.planck)), sym.wj).join()
+
+#let super-T-as-transpose(document) = {
+  show math.attach: elem => {
+    if elem.base != [∫] and elem.at("t", default: none) == [T] {
+      $attach(elem.base, t: TT, b: elem.at("b", default: #none))$
+    } else {
+      elem
+    }
+  }
+
+  document
+}
 
 #let tensor(T, ..sink) = {
   let args = sink.pos()
