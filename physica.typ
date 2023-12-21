@@ -149,7 +149,7 @@
 
 // == Vector notations
 
-#let vecrow(..content) = $lr(( #content.pos().join(",") ))$
+#let vecrow(..content) = $lr(( #content.pos().join([,]) ))$
 
 // Prefer using super-T-as-transpose()
 #let TT = $sans(upright(T))$

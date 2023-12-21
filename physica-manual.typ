@@ -157,7 +157,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`vecrow(`...`)`],
   [],
   [
-    `vecrow(1,2)` #sym.arrow $vecrow(1,2)$ \
+    `vecrow(alpha, b)` \ #sym.arrow $vecrow(alpha, b)$ \
     `vecrow(sum_0^n a_i, b)` \ #sym.arrow $vecrow(sum_0^n a_i,b)$ \
   ],
   [row vector],
