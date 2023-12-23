@@ -783,7 +783,7 @@ conversion is disabled if the base is either
 - an integration symbol $integral$ or vertical bar $|$, or
 - an equation or `lr(...)` element whose last child is one of the above.
 
-If you really want to:
+Overrides: if you really want to
 - print a transpose explicitly: use symbol `TT`: `A^TT` $=> A^TT$;
 - print a superscript letter $T$: use `scripts(T)`: `2^scripts(T)` $=> 2^scripts(T)$.
 
@@ -859,6 +859,10 @@ block), you may do
   U^+U = U U^+ = I
 ]
 ```
+
+Overrides: if you really want to
+- print a dagger explicitly: use the built-in symbol `dagger` as normal: `A^dagger` $=> A^dagger$;
+- print a superscript plus sign: use `scripts(+)`: `A^scripts(+)` $=> A^scripts(+)$.
 
 #align(center, [*Examples*])
 
