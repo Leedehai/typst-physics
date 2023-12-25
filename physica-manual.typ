@@ -109,10 +109,15 @@ All symbols need to be used in *math mode* `$...$`.
   [`norm(phi(x))`   #sym.arrow $norm(phi(x))$],
   [norm],
 
+  [`Order(`_content_`)`],
+  [],
+  [`Order(x^2)`   #sym.arrow $Order(x^2)$],
+  [big O],
+
   [`order(`_content_`)`],
   [],
-  [`order(x^2)`   #sym.arrow $order(x^2)$],
-  [order of magnitude],
+  [`order(1)`   #sym.arrow $order(1)$],
+  [small O],
 
   [`Set(`_content_`)`],
   [],
@@ -134,9 +139,9 @@ All symbols need to be used in *math mode* `$...$`.
   [`expval`],
   [
     `expval(u)`  #sym.arrow $expval(u)$ \
-    `expval(f/N)`  #sym.arrow $expval(f/N)$ \
+    `expval(p,psi)`  #sym.arrow $expval(p,psi)$ \
   ],
-  [expectation value],
+  [expectation value, also see bra-ket @dirac-braket below],
 )
 
 == Vector notations
@@ -182,13 +187,13 @@ All symbols need to be used in *math mode* `$...$`.
   [`va(a),va(mu_1)` #sym.arrow $va(a),va(mu_1)$],
   [vector, arrow \ #sub[(not bold: see ISO 80000-2:2019)]],
 
-  [`gradient`],
   [`grad`],
+  [],
   [`grad f` #sym.arrow $grad f$],
   [gradient],
 
-  [`divergence`],
   [`div`],
+  [],
   [`div vb(E)` #sym.arrow $div vb(E)$],
   [divergence],
 
@@ -224,6 +229,8 @@ All symbols need to be used in *math mode* `$...$`.
 == Matrix notations
 
 #v(1em)
+
+=== Determinant, (anti-)diagonal, identity, zero matrix
 
 #table(
   columns: (auto, auto, auto, auto),
@@ -279,24 +286,11 @@ All symbols need to be used in *math mode* `$...$`.
     #hl(`zmat(3,delim:"[")`) #sym.arrow \ $zmat(3,delim:"[")$
   ],
   [zero matrix],
-
-  [`jacobianmatrix(`...`)`],
-  [`jmat`],
-  [See below],
-  [Jacobian matrix],
-
-  [`hessianmatrix(`...`)`],
-  [`hmat`],
-  [See below],
-  [Hessian matrix],
-
-  [`xmatrix(`...`)`],
-  [`xmat`],
-  [See below],
-  [Matrix built with an element building function],
 )
 
-Jacobian matrix: `jacobianmatrix(`...`)`, i.e. `jmat(`...`)`.
+=== Jacobian matrix
+
+`jacobianmatrix(`...`)`, i.e. `jmat(`...`)`.
 
 #table(
   columns: (25%, auto, auto),
@@ -328,7 +322,9 @@ Jacobian matrix: `jacobianmatrix(`...`)`, i.e. `jmat(`...`)`.
   ],
 )
 
-Hessian matrix: `hessianmatrix(`...`)`, i.e. `hmat(`...`)`.
+=== Hessian matrix
+
+`hessianmatrix(`...`)`, i.e. `hmat(`...`)`.
 
 #table(
   columns: (25%, auto, auto),
@@ -360,7 +356,10 @@ Hessian matrix: `hessianmatrix(`...`)`, i.e. `hmat(`...`)`.
   ],
 )
 
-Matrix built with an element building function: `xmatrix(`_m, n, func_`)`, i.e. `xmat(`...`)`. The element building function _func_ takes two integers which are the row and column numbers starting from 1.
+=== Matrix with an element builder
+
+`xmatrix(`_m, n, func_`)`, i.e. `xmat(`...`)`. The element building function
+_func_ takes two integers which are the row and column numbers starting from 1.
 
 #table(
   columns: (auto, auto),
@@ -385,7 +384,64 @@ xmat(2, 2, #g)`)
   ],
 )
 
-== Dirac braket notations
+=== Rotation matrices, 2D and 3D
+
+#table(
+  columns: (auto, auto, auto),
+  align: center,
+  stroke: none,
+  column-gutter: 1em,
+
+  [
+    #hl(`rot2mat(theta)`)
+    $ rot2mat(theta) $
+  ],
+  [
+    #hl(`rot2mat(-a/2,delim:"[")`)
+    $ rot2mat(-a/2, delim:"[") $
+  ],
+  [
+    #hl(`rot2mat(display(a/2),delim:"[")`)
+    $ rot2mat(display(a/2),delim:"[") $
+  ],
+
+  [
+    #hl(`rot3xmat(theta)`)
+    $ rot3xmat(theta) $
+  ],
+  [
+    #hl(`rot3ymat(45^degree)`)
+    $ rot3ymat(45^degree) $
+  ],
+  [
+    #hl(`rot3zmat(theta,delim:"[")`)
+    $ rot3zmat(theta,delim:"[") $
+  ],
+)
+
+=== Gram matrix
+
+#table(
+  columns: (auto, auto, auto),
+  align: center,
+  stroke: none,
+  column-gutter: 1em,
+
+  [
+    #hl(`grammat(alpha,beta)`)
+    $ grammat(alpha, beta) $
+  ],
+  [
+    #hl(`grammat(v_1,v_2,v_3, delim:"[")`)
+    $ grammat(v_1,v_2,v_3, delim:"[") $
+  ],
+  [
+    #hl(`grammat(v_1,v_2, norm:#true)`)
+    $ grammat(v_1,v_2, norm:#true) $
+  ],
+)
+
+== Dirac braket notations <dirac-braket>
 
 #v(1em)
 
@@ -411,37 +467,36 @@ xmat(2, 2, #g)`)
   ],
   [ket],
 
+  [`braket(`..`)`],
+  [],
+  [
+    `braket(a), braket(u, v)` \ #sym.arrow $braket(a), braket(u, v)$ \
+    `braket(psi,A/N,phi)` #sym.arrow $braket(psi,A/N,phi)$
+  ],
+  [braket, with 1, 2, or 3 arguments],
+
+  [`ketbra(`..`)`],
+  [],
+  [
+    `ketbra(a), ketbra(u, v)` \ #sym.arrow $ketbra(a), ketbra(u, v)$ \
+    `ketbra(a/N, b)` #sym.arrow $ketbra(a/N, b)$
+  ],
+  [ketbra, with 1 or 2 arguments],
+
   [`expval(`_content_`)`],
   [],
   [
     `expval(u)`  #sym.arrow $expval(u)$ \
-    `expval(vec(1,2))` #sym.arrow $expval(vec(1,2))$
+    `expval(A,psi)` #sym.arrow $expval(A,psi)$
   ],
   [expectation],
 
-  [`braket(`_a_, _b_`)`],
-  [],
-  [
-    `braket(a), braket(u, v)` \ #sym.arrow $braket(a), braket(u, v)$ \
-    `braket(vec(1,2), b)` #sym.arrow $braket(vec(1,2), b)$
-  ],
-  [braket],
-
-  [`ketbra(`_a_, _b_`)`],
-  [],
-  [
-    `ketbra(a), ketbra(u, v)` \ #sym.arrow $ketbra(a), ketbra(u, v)$ \
-    `ketbra(vec(1,2), b)` #sym.arrow $ketbra(vec(1,2), b)$
-  ],
-  [ketbra],
-
-  [`matrixelement(`_n_, _M_, _m_`)`],
+  [`matrixelement(`..`)`],
   [`mel`],
   [
-    `mel(n, diff_nu H, m)` \ #sym.arrow $mel(n, diff_nu H, m)$ \
-    `mel(vec(U,V),A,m)` #sym.arrow $mel(vec(U,V),A,m)$
+    `mel(n, diff_nu H, m)` \ #sym.arrow $mel(n, diff_nu H, m)$
   ],
-  [matrix element],
+  [matrix element, same as `braket(n,M,n)`],
 )
 
 == Math functions
@@ -780,7 +835,7 @@ transposition instead of a normal capital letter $T$.
 This $square.stroked.dotted^T => square.stroked.dotted^TT$
 conversion is disabled if the base is either
 - a `limits(...)` or `scripts(...)` element, or
-- an integration symbol $integral$ or vertical bar $|$, or
+- an integration $integral$ or sum $sum$ (not greek $Sigma$) or product $product$ (not greek $Pi$) or vertical bar $|$, or
 - an equation or `lr(...)` element whose last child is one of the above.
 
 Overrides: if you really want to
@@ -812,20 +867,28 @@ If you only want to enable it within a content block's scope, you may do
 
   [
     *(1)* #hl(`(U V_n W')^T = W'^T V_n^T U^T`) \
-    $ (U V_n W')^T = W'^T V_n^T U^T  $
+    $ (Sigma V_n W')^T = W'^T V_n^T Sigma^T  $
   ],
   [
     *(2)* #hl(`vec(a, b)^T, mat(a, b; c, d)^T`) \
     $ vec(a, b)^T, mat(a, b; c, d)^T $
   ],
   [
-    *(3)* #hl(`limits(sum)^T, scripts(e)^T`) \
-    $ limits(sum)^T, scripts(e)^T $
+    *(3)* #hl(`abs(a)^T, norm(a)^T, eval(F(t))^T_0`) \
+    $ abs(a)^T, norm(a)^T, eval(F(t))^T_0 $
   ],
   [
-    *(4)* #hl(`integral_0^T, abs(a)^T, eval(F(t))^T_0`) \
-    $ integral_0^T, abs(a)^T, eval(F(t))^T_0 $
+    *(4)* #hl(`integral^T, sum^T, product^T`) \
+    $ integral^T, sum^T, product^T $
   ],
+  [
+    *(5)* #hl(`limits(e)^T, scripts(e)^T`) \
+    $ limits(e)^T, scripts(e)^T $
+  ],
+  [
+    *(6)* #hl(`(M+N)^T, (m+n)^scripts(T)`) \
+    $ (M+N)^T, (m+n)^scripts(T) $
+  ]
 )
 
 === Matrix dagger with superscript +
@@ -962,8 +1025,8 @@ Function: `tensor(`_symbol_, \*_args_`)`.
     $ tensor(AA,+a,+b,-c,-d,+e,-f,+g,-h) $
   ],
   [
-    *(7)* #hl(`tensor(R, -a, -b, -c, +d)`) \
-    $ tensor(R, -a, -b, -c, +d) $
+    *(7)* #hl(`tensor(R, -a, -b, +d)`) \
+    $ tensor(R, -a, -b, +d) $
   ],
   [
     *(8)* #hl(`tensor(T,+1,-I(1,-1),+a_bot,-+,+-)`) \
@@ -1001,11 +1064,11 @@ Function: `isotope(`_element_, _a_: ..., _z_: ...`)`.
   ],
 )
 
-*(3)* #hl(`isotope("Bi",a:211,z:83) --> isotope("Tl",a:207,z:81) + isotope("He",a:4,z:2)`)
-$ isotope("Bi",a:211,z:83) --> isotope("Tl",a:207,z:81) + isotope("He",a:4,z:2) $
+*(3)* #hl(`isotope("Bi",a:211,z:83) -> isotope("Tl",a:207,z:81) + isotope("He",a:4,z:2)`)
+$ isotope("Bi",a:211,z:83) -> isotope("Tl",a:207,z:81) + isotope("He",a:4,z:2) $
 
-*(4)* #hl(`isotope("Tl",a:207,z:81) --> isotope("Pb",a:207,z:82) + isotope(e,a:0,z:-1)`)
-$ isotope("Tl",a:207,z:81) --> isotope("Pb",a:207,z:82) + isotope(e,a:0,z:-1) $
+*(4)* #hl(`isotope("Tl",a:207,z:81) -> isotope("Pb",a:207,z:82) + isotope(e,a:0,z:-1)`)
+$ isotope("Tl",a:207,z:81) -> isotope("Pb",a:207,z:82) + isotope(e,a:0,z:-1) $
 
 === The n-th term in Taylor series
 
@@ -1016,8 +1079,8 @@ Function: `taylorterm(`_func_, _x_, _x0_, _idx_`)`.
 - _x_: the variable name e.g. `x`,
 - _x0_: the variable value at the expansion point e.g. `x_0`, `(1+a)`,
 - _idx_: the index of the term, e.g. `0`, `1`, `2`, `n`, `(n+1)`.
-If _x0_ or _idx_ is in a parenthesis e.g. `(1+k)`, then the function
-automatically removes the outer parenthesis where appropriate.
+If _x0_ or _idx_ is an add/sub sequence e.g. `-a`, `a+b`, then the function
+automatically adds a parenthesis where appropriate.
 
 #align(center, [*Examples*])
 
@@ -1034,20 +1097,20 @@ automatically removes the outer parenthesis where appropriate.
     $ taylorterm(f,x,x_0,1) $
   ],
   [
-    *(3)* #hl(`taylorterm(f,x,(1+a),2)`) \
-    $ taylorterm(f,x,(1+a),2) $
+    *(3)* #hl(`taylorterm(F,x^nu,x^nu_0,n)`) \
+    $ taylorterm(F,x^nu,x^nu_0,n) $
   ],
   [
     *(4)* #hl(`taylorterm(f,x,x_0,n)`) \
     $ taylorterm(f,x,x_0,n) $
   ],
   [
-    *(5)* #hl(`taylorterm(F,x^nu,x^nu_0,n)`) \
-    $ taylorterm(F,x^nu,x^nu_0,n) $
+    *(5)* #hl(`taylorterm(f,x,1+a,2)`) \
+    $ taylorterm(f,x,1+a,2) $
   ],
   [
-    *(6)* #hl(`taylorterm(f_p,x,x_0,(n+1))`) \
-    $ taylorterm(f_p,x,x_0,(n+1)) $
+    *(6)* #hl(`taylorterm(f_p,x,x_0,n-1)`) \
+    $ taylorterm(f_p,x,x_0,n-1) $
   ],
 )
 

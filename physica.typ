@@ -3,8 +3,32 @@
 // Repository: https://github.com/Leedehai/typst-physics
 // Please see physica-manual.pdf for user docs.
 
+// Returns whether a Content object is an add/sub sequence, e.g. -a, a+b, a-b.
+// The caller is responsible for ensuring the input is a Content object.
+#let __is_add_sub_sequence(content) = {
+  if not content.has("children") { return false }
+
+  let impl(seq) = {
+    // Only check the top level, don't descend into the child, since we don't
+    // care if the child is a parenthesis group that contains +/-.
+    for child in seq.at("children") {
+      if child == [+] or child == [#sym.minus] { return true }
+    }
+    return false
+  }
+
+  // Before my https://github.com/typst/typst/pull/3063:
+  return impl(content)
+  // After my https://github.com/typst/typst/pull/3063:
+  // if content.func() == math.math-style {
+  //   return impl(content.at("body"))
+  // } else {
+  //   return impl(content)
+  // }
+}
+
 // Returns whether a Content object holds an integer. The caller is responsible
-// for ensuring the input argument is a Content object.
+// for ensuring the input is a Content object.
 #let __content_holds_number(content) = {
   return content.func() == text and regex("^\d+$") in content.text
 }
@@ -123,28 +147,37 @@
 
 // == Braces
 
-#let Set(..sink) = style(styles => {
+#let Set(..sink) = {
   let args = sink.pos()  // array
   let expr = args.at(0, default: none)
   let cond = args.at(1, default: none)
-  let height = measure($ expr cond $, styles).height;
-  let phantom = box(height: height, width: 0pt, inset: 0pt, stroke: none);
 
   if expr == none {
-    if cond == none { ${}$ } else { ${lr(|phantom#h(0pt))#cond}$ }
+    if cond == none { ${}$ } else { ${mid(|) #cond}$ }
   } else {
-    if cond == none { ${#expr}$ } else { ${#expr lr(|phantom#h(0pt))#cond}$ }
+    if cond == none { ${#expr}$ } else { ${#expr mid(|) #cond}$ }
   }
-})
+}
 
-#let order(content) = $cal(O)(content)$
+#let Order(content) = $cal(O)(content)$
+#let order(content) = $cal(o)(content)$
 
 #let evaluated(content) = {
   $lr(zwj#content|)$
 }
 #let eval = evaluated
 
-#let expectationvalue(f) = $lr(angle.l #f angle.r)$
+#let expectationvalue(..sink) = {
+  let args = sink.pos()  // array
+  let expr = args.at(0, default: none)
+  let func = args.at(1, default: none)
+
+  if func == none {
+    $lr(angle.l expr angle.r)$
+  } else {
+    $lr(angle.l func#h(0pt)mid(|)#h(0pt)expr#h(0pt)mid(|)#h(0pt)func angle.r)$
+  }
+}
 #let expval = expectationvalue
 
 // == Vector notations
@@ -196,14 +229,9 @@
 #let vectorarrow(a) = __vector(a, math.arrow, false)
 #let va = vectorarrow
 
-#let gradient = $bold(nabla)$
-#let grad = gradient
-
-#let divergence = $bold(nabla)dot.c$
-#let div = divergence
-
+#let grad = $bold(nabla)$
+#let div = $bold(nabla)dot.c$
 #let curl = $bold(nabla)times$
-
 #let laplacian = $nabla^2$
 
 #let dotproduct = $dot$
@@ -273,11 +301,12 @@
 #let admat = antidiagonalmatrix
 
 #let identitymatrix(order, delim:"(", fill:none) = {
-  let order_num = 1
-  if type(order) == content and __content_holds_number(order) {
-    order_num = int(order.text)
+  let order_num = if type(order) == content and __content_holds_number(order) {
+    int(order.text)
+  } else if type(order) == "integer" {
+    order
   } else {
-    panic("the order shall be an integer, e.g. 2")
+    panic("imat/identitymatrix: the order shall be an integer, e.g. 2")
   }
 
   let ones = range(order_num).map((i) => 1)
@@ -286,11 +315,12 @@
 #let imat = identitymatrix
 
 #let zeromatrix(order, delim:"(") = {
-  let order_num = 1
-  if type(order) == content and __content_holds_number(order) {
-    order_num = int(order.text)
+  let order_num = if type(order) == content and __content_holds_number(order) {
+    int(order.text)
+  } else if type(order) == "integer" {
+    order
   } else {
-    panic("the order shall be an integer, e.g. 2")
+    panic("zmat/zeromatrix: the order shall be an integer, e.g. 2")
   }
 
   let ones = range(order_num).map((i) => 0)
@@ -333,18 +363,22 @@
 #let hmat = hessianmatrix
 
 #let xmatrix(m, n, func, delim:"(") = {
-  let rows = none
-  if type(m) == content and __content_holds_number(m) {
-    rows = int(m.text)
+  let rows = if type(m) == content and __content_holds_number(m) {
+    int(m.text)
+  } else if type(m) == "integer" {
+    m
   } else {
-    panic("the first argument shall be an integer, e.g. 2")
+    panic("xmat/xmatrix: the first argument shall be an integer, e.g. 2")
   }
-  let cols = none
-  if type(n) == content and __content_holds_number(m) {
-    cols = int(n.text)
+
+  let cols = if type(n) == content and __content_holds_number(m) {
+    int(n.text)
+  } else if type(n) == "integer" {
+    n
   } else {
-    panic("the second argument shall be an integer, e.g. 2")
+    panic("xmat/xmatrix: the second argument shall be an integer, e.g. 2")
   }
+
   assert(
     type(func) == function,
     message: "func shall be a function (did you forget to add a preceding '#' before the function name)?"
@@ -361,6 +395,56 @@
 }
 #let xmat = xmatrix
 
+#let rot2mat(theta, delim:"(") = {
+  let operand = if type(theta) == "content" and __is_add_sub_sequence(theta) {
+    $(theta)$
+  } else { theta }
+  $mat(cos operand, -sin operand;
+       sin operand, cos operand; delim: delim)$
+}
+
+#let rot3xmat(theta, delim:"(") = {
+  let operand = if type(theta) == "content" and __is_add_sub_sequence(theta) {
+    $(theta)$
+  } else { theta }
+  $mat(1, 0,           0;
+       0, cos operand, -sin operand;
+       0, sin operand, cos operand; delim: delim)$
+}
+
+#let rot3ymat(theta, delim:"(") = {
+  let operand = if type(theta) == "content" and __is_add_sub_sequence(theta) {
+    $(theta)$
+  } else { theta }
+  $mat(cos operand,  0, sin operand;
+       0,            1, 0;
+       -sin operand, 0, cos operand; delim: delim)$
+}
+
+#let rot3zmat(theta, delim:"(") = {
+  let operand = if type(theta) == "content" and __is_add_sub_sequence(theta) {
+    $(theta)$
+  } else { theta }
+  $mat(cos operand, -sin operand, 0;
+       sin operand, cos operand,  0;
+       0,           0,            1; delim: delim)$
+}
+
+#let grammat(..sink) = {
+  let vs = sink.pos()  // array
+  let delim = sink.named().at("delim", default: "(")
+  let asnorm = sink.named().at("norm", default: false)
+
+  xmat(vs.len(), vs.len(), (i,j) => {
+    if (i == j and (not asnorm)) or i != j {
+      iprod(vs.at(i - 1), vs.at(j - 1))
+    } else {
+      let v = vs.at(i - 1)
+      $norm(#v)^2$
+    }
+  }, delim: delim)
+}
+
 // == Dirac braket notations
 
 #let bra(f) = $lr(angle.l #f|)$
@@ -368,12 +452,16 @@
 
 #let braket(..sink) = style(styles => {
   let args = sink.pos()  // array
-  assert(args.len() == 1 or args.len() == 2, message: "expecting 1 or 2 args")
 
-  let bra = args.at(0)
-  let ket = args.at(1, default: bra)
+  let bra = args.at(0, default: none)
+  let ket = args.at(-1, default: bra)
 
-  $ lr(angle.l bra#h(0pt)mid(bar.v)#h(0pt)ket angle.r) $
+  if args.len() <= 2 {
+    $ lr(angle.l bra#h(0pt)mid(|)#h(0pt)ket angle.r) $
+  } else {
+    let middle = args.at(1)
+    $ lr(angle.l bra#h(0pt)mid(|)#h(0pt)middle#h(0pt)mid(|)#h(0pt)ket angle.r) $
+  }
 })
 
 #let ketbra(..sink) = style(styles => {
@@ -383,11 +471,11 @@
   let ket = args.at(0)
   let bra = args.at(1, default: ket)
 
-  $ lr(bar.v ket#h(0pt)mid(angle.r#h(0pt)angle.l)#h(0pt)bra bar.v) $
+  $ lr(|ket#h(0pt)mid(angle.r#h(0pt)angle.l)#h(0pt)bra|) $
 })
 
 #let matrixelement(n, M, m) = style(styles => {
-  $ lr(angle.l #n#h(0pt)mid(bar.v)#h(0pt)#M#h(0pt)mid(bar.v)#h(0pt)#m angle.r) $
+  $ lr(angle.l #n#h(0pt)mid(|)#h(0pt)#M#h(0pt)mid(|)#h(0pt)#m angle.r) $
 })
 
 #let mel = matrixelement
@@ -664,7 +752,9 @@
       if e.func() == math.equation {
         return __eligible(e.at("body"))
       }
-      (e != [∫]) and (e != [|]) and (e != sym.bar.v.double)
+      ((e != [∫]) and (e != [|]) and (e != [‖])
+        and (e != [∑]/*U+2211, not greek Sigma U+03A3*/)
+        and (e != [∏]/*U+220F, not greek Pi U+03A0 */))
     }
 
     if __eligible(elem.base) and elem.at("t", default: none) == [T] {
@@ -713,7 +803,7 @@
   let args = sink.pos()
 
   let (uppers, lowers) = ((), ())  // array, array
-  let hphantom(s) = { hide(box(height: 0em, s)) }  // Like Latex's \hphantom
+  let hphantom(s) = { hide($#s$) }  // Like Latex's \hphantom
 
   for i in range(args.len()) {
     let arg = args.at(i)
@@ -751,21 +841,17 @@
 }
 
 #let taylorterm(fn, xv, x0, idx) = {
-  let noparen(expr) = {
-    if type(expr) == content and expr.func() == math.lr {
-      let children = expr.at("body").at("children")
-      children.slice(1, children.len() - 1).join()
-    } else {
-      expr
-    }
+  let maybeparen(expr) = {
+    if __is_add_sub_sequence(expr) { $(expr)$ }
+    else { expr }
   }
 
   if idx == [0] or idx == 0 {
-    $fn (noparen(x0))$
+    $fn (x0)$
   } else if idx == [1] or idx == 1 {
-    $fn^((1)) (noparen(x0))(xv - x0)$
+    $fn^((1)) (x0)(xv - maybeparen(x0))$
   } else {
-    $frac(fn^((noparen(idx))) (noparen(x0)), idx !)(xv - x0)^noparen(idx)$
+    $frac(fn^((idx)) (x0), maybeparen(idx) !)(xv - maybeparen(x0))^idx$
   }
 }
 
