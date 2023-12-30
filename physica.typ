@@ -303,7 +303,7 @@
 #let identitymatrix(order, delim:"(", fill:none) = {
   let order_num = if type(order) == content and __content_holds_number(order) {
     int(order.text)
-  } else if type(order) == "integer" {
+  } else if type(order) == int {
     order
   } else {
     panic("imat/identitymatrix: the order shall be an integer, e.g. 2")
@@ -317,7 +317,7 @@
 #let zeromatrix(order, delim:"(") = {
   let order_num = if type(order) == content and __content_holds_number(order) {
     int(order.text)
-  } else if type(order) == "integer" {
+  } else if type(order) == int {
     order
   } else {
     panic("zmat/zeromatrix: the order shall be an integer, e.g. 2")
@@ -365,7 +365,7 @@
 #let xmatrix(m, n, func, delim:"(") = {
   let rows = if type(m) == content and __content_holds_number(m) {
     int(m.text)
-  } else if type(m) == "integer" {
+  } else if type(m) == int {
     m
   } else {
     panic("xmat/xmatrix: the first argument shall be an integer, e.g. 2")
@@ -373,7 +373,7 @@
 
   let cols = if type(n) == content and __content_holds_number(m) {
     int(n.text)
-  } else if type(n) == "integer" {
+  } else if type(n) == int {
     n
   } else {
     panic("xmat/xmatrix: the second argument shall be an integer, e.g. 2")
@@ -396,7 +396,7 @@
 #let xmat = xmatrix
 
 #let rot2mat(theta, delim:"(") = {
-  let operand = if type(theta) == "content" and __is_add_sub_sequence(theta) {
+  let operand = if type(theta) == content and __is_add_sub_sequence(theta) {
     $(theta)$
   } else { theta }
   $mat(cos operand, -sin operand;
@@ -404,7 +404,7 @@
 }
 
 #let rot3xmat(theta, delim:"(") = {
-  let operand = if type(theta) == "content" and __is_add_sub_sequence(theta) {
+  let operand = if type(theta) == content and __is_add_sub_sequence(theta) {
     $(theta)$
   } else { theta }
   $mat(1, 0,           0;
@@ -413,7 +413,7 @@
 }
 
 #let rot3ymat(theta, delim:"(") = {
-  let operand = if type(theta) == "content" and __is_add_sub_sequence(theta) {
+  let operand = if type(theta) == content and __is_add_sub_sequence(theta) {
     $(theta)$
   } else { theta }
   $mat(cos operand,  0, sin operand;
@@ -422,7 +422,7 @@
 }
 
 #let rot3zmat(theta, delim:"(") = {
-  let operand = if type(theta) == "content" and __is_add_sub_sequence(theta) {
+  let operand = if type(theta) == content and __is_add_sub_sequence(theta) {
     $(theta)$
   } else { theta }
   $mat(cos operand, -sin operand, 0;
