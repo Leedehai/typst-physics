@@ -14,7 +14,9 @@ def check_version(args):
     found_old_ver_strs = False
     for filename in os.listdir(Path(__file__).parent):
         path = Path(Path(__file__).parent, filename)
-        if filename.split('.')[-1] not in ["md", "typ", "toml"]:
+        if (
+            filename == "changelog.md" or
+            filename.split('.')[-1] not in ["md", "typ", "toml"]):
             continue
         with open(path, 'r') as f:
             for i, line in enumerate(f.readlines()):

@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.9.2 (pending)
+## 0.9.2
 
 * Let `braket()` take an optional third argument to render `braket(u,A,v)` as
 `⟨u|A|v⟩`. The one argument case `braket(a)` is still rendered as `⟨a|a⟩` and

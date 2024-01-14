@@ -2,7 +2,7 @@
 // This document is shared under the Creative Commons BY-ND 4.0 license.
 #import "physica.typ": *
 
-#let version = "0.9.1"
+#let version = "0.9.2"
 
 #set document(
   title: [physica-manual.typ],
@@ -61,7 +61,7 @@ This manual itself was generated using the Typst CLI and the `physica` package, 
 With `typst`'s #linkurl("package management", "https://github.com/typst/packages"):
 
 ```typst
-#import "@preview/physica:0.9.1": *
+#import "@preview/physica:0.9.2": *
 
 $ curl (grad f), pdv(,x,y,z,[2,k]), tensor(Gamma,+k,-i,-j) = pdv(vb(e_i),x^j)vb(e^k) $
 ```

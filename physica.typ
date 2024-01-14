@@ -17,14 +17,9 @@
     return false
   }
 
-  // Before my https://github.com/typst/typst/pull/3063:
+  // We don't consider math-style: see the reasons in the
+  // closed PR https://github.com/typst/typst/pull/3063
   return impl(content)
-  // After my https://github.com/typst/typst/pull/3063:
-  // if content.func() == math.math-style {
-  //   return impl(content.at("body"))
-  // } else {
-  //   return impl(content)
-  // }
 }
 
 // Returns whether a Content object holds an integer. The caller is responsible
