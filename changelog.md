@@ -15,10 +15,10 @@ parenthesis when needed.
 * Removed the `box(..)` layer from `tensor(...)`'s phantom index.
 * Added 2D and 3D rotation matrix `rot2mat(...)` and `rot3mat(...)`.
 * Added Gram matrix `grammat(...)`.
-* Removed `gradient` and `divergence`, since most users will use the abbreviated
-names `grad` and `div`. This prevents name collisions when users do wildcard
-importing, especially with Typst's built-in `gradient` that shows color
-gradients on texts.
+* **(breaking)** Removed `gradient` and `divergence`, since most users will use
+the abbreviated names `grad` and `div`. This prevents name collisions when users
+do wildcard importing, especially with Typst's built-in `gradient` that shows
+color gradients on texts.
 
 ## 0.9.1
 

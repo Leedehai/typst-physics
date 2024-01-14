@@ -111,6 +111,10 @@ explore the design together. Some features might warrant a package on its own.
 This does not scale well. I plan to add programmatic testing by comparing
 rendered pictures with golden images.
 
+## Change log
+
+[changelog.md](https://github.com/Leedehai/typst-physics/blob/v0.9.2/changelog.md).
+
 ## License
 
 * Code: the [MIT License](LICENSE.txt).
