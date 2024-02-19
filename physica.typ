@@ -193,6 +193,8 @@
     math.italic(e)
   }
   let maybe_accent(e) = if accent != none {
+    show "i": $dotless.i$
+    show "j": $dotless.j$
     math.accent(maybe_bold(e), accent)
   } else {
     maybe_bold(e)
