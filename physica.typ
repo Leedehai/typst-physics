@@ -186,18 +186,21 @@
 // the habitual "A^TT".
 #let TT = $sans(upright(T))$
 
-#let __vector(a, accent, be_bold) = {
+#let __vector(a, accent, be_bold, dotless: false) = {
   let maybe_bold(e) = if be_bold {
     math.bold(math.italic(e))
   } else {
     math.italic(e)
   }
+  let maybe_dotless(e) = if dotless {
+    show "i": sym.dotless.i
+    show "j": sym.dotless.j
+    e
+  } else { e }
   let maybe_accent(e) = if accent != none {
-    show "i": $dotless.i$
-    show "j": $dotless.j$
-    math.accent(maybe_bold(e), accent)
+    math.accent(maybe_bold(maybe_dotless(e)), accent)
   } else {
-    maybe_bold(e)
+    maybe_bold(maybe_dotless(e))
   }
   if type(a) == content and a.func() == math.attach {
     math.attach(
@@ -217,13 +220,13 @@
 #let vectorbold(a) = __vector(a, none, true)
 #let vb = vectorbold
 
-#let vectorunit(a) = __vector(a, math.hat, true)
+#let vectorunit(a, dotless: false) = __vector(a, math.hat, true, dotless: dotless)
 #let vu = vectorunit
 
 // According to "ISO 80000-2:2019 Quantities and units — Part 2: Mathematics"
 // the vector notation should be either bold italic or non-bold italic accented
 // by a right arrow
-#let vectorarrow(a) = __vector(a, math.arrow, false)
+#let vectorarrow(a, dotless: false) = __vector(a, math.arrow, false, dotless: dotless)
 #let va = vectorarrow
 
 #let grad = $bold(nabla)$
