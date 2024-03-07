@@ -177,7 +177,24 @@
 
 // == Vector notations
 
-#let vecrow(..content) = $lr(( #content.pos().join([,]) ))$
+#let vecrow(..sink) = {
+  let (args, kwargs) = (sink.pos(), sink.named())  // array, dictionary
+  let delim = kwargs.at("delim", default:"(")
+  let rdelim = if delim == "(" {
+    ")"
+  } else if delim == "[" {
+    "]"
+  } else if delim == "{" {
+    "}"
+  } else if delim == "|" {
+    "|"
+  } else if delim == "||" {
+    "||"
+  } else { delim }
+  // not math.mat(), because the look would be off: the content
+  // appear smaller than the sorrounding delimiter pair.
+  $lr(#delim #args.join([,]) #rdelim)$
+}
 
 // Prefer using super-T-as-transpose() found below.
 //

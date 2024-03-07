@@ -149,7 +149,7 @@ All symbols need to be used in *math mode* `$...$`.
 #v(1em)
 
 #table(
-  columns: (5fr, 2fr, 6fr, 5fr),
+  columns: (5fr, 2fr, auto, 5fr),
   align: left,
   stroke: none,
   [*Symbol*], [*Abbr.*], [*Example*], [*Notes*],
@@ -163,7 +163,7 @@ All symbols need to be used in *math mode* `$...$`.
   [],
   [
     `vecrow(alpha, b)` \ #sym.arrow $vecrow(alpha, b)$ \
-    `vecrow(sum_0^n a_i, b)` \ #sym.arrow $vecrow(sum_0^n a_i,b)$ \
+    `vecrow(sum_0^n i, b, delim:"[")` \ #sym.arrow $vecrow(sum_0^n i,b,delim:"[")$ \
   ],
   [row vector],
 
@@ -205,7 +205,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`laplacian`],
   [],
   [`diaer(u) = c^2 laplacian u` \ #sym.arrow $diaer(u) = c^2 laplacian u$],
-  [Laplacian, different from #builtin(`laplace`) $laplace$],
+  [Laplacian,\ not #builtin(`laplace`) $laplace$],
 
   [`dotproduct`],
   [`dprod`],
