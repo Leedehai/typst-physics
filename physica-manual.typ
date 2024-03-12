@@ -373,15 +373,6 @@ xmat(2, 2, #g)`)
     $ #let g = (i,j) => $g^(#(i - 1)#(j - 1))$
     xmat(2, 2, #g) $
   ],
-
-  [
-#hl(`xmat(2, 3, #(r, c) => {
-  $"exp"(#r, #c) = #calc.pow(r, c)$
-}, delim:"[")`)
-    $ xmat(2, 3, #(r, c) => {
-      $"exp"(#r, #c) = #calc.pow(r, c)$
-    }, delim:"[") $
-  ],
 )
 
 === Rotation matrices, 2D and 3D
@@ -1229,8 +1220,6 @@ Huge thanks to these LATEX packages, for lighting the way of physics typesetting
 - `physics` by Sergio C. de la Barrera,
 - `derivatives` by Simon Jensen,
 - `tensor` by Philip G. Ratcliffe et al.
-
-#pagebreak()
 
 = License
 
