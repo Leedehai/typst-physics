@@ -633,7 +633,7 @@ Typst built-in math operators: #linkurl(`math.op`, "https://typst.app/docs/refer
 #v(1em)
 
 Functions: `differential(`\*_args_, \*\*_kwargs_`)`, abbreviated as `dd(`...`)`.
-- positional _args_: the variable names, then at the last *optionally* followed by an order number e.g. `2`, or an order array e.g. `[2,3]`, `[k]`, `[m n, lambda+1]`.
+- positional _args_: the variable names, *optionally* followed by an order number e.g. `2`, or an order array e.g. `[2,3]`, `[k]`, `[m n, lambda+1]`.
 - named _kwargs_:
   - `d`: the differential symbol [default: `upright(d)`].
   - `p`: the product symbol connecting the components [default: `none`].
@@ -648,7 +648,7 @@ pass a `compact:#true` argument: $dd(r,theta) "vs." dd(r,theta,compact:#true)$ (
 // #set dd(compact: true) to set this param for all dd() invocations.
 
 *Order assignment algorithm:*
-- If there is no order number or order array, all variables has order 1.
+- If there is no order number or order array, all variables have order 1.
 - If there is an order number (not an array), then this order number is assigned to _every_ variable, e.g. `dd(x,y,2)` assigns $x <- 2, y <- 2$.
 - If there is an order array, then the orders therein are assigned to the variables in order, e.g. `dd(f,x,y,[2,3])` assigns $x <- 2, y <- 3$.
 - If the order array holds fewer elements than the number of variables, then the orders of the remaining variables are 1, e.g. `dd(x,y,z,[2,3])` assigns $x <- 2, y <- 3, z <- 1$.
@@ -701,7 +701,7 @@ pass a `compact:#true` argument: $dd(r,theta) "vs." dd(r,theta,compact:#true)$ (
 
 Function: `derivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `dv(`...`)`.
 - _f_: the function, which can be `#none` or omitted,
-- positional _args_: the variable name, then at the last *optionally* followed by an order number e.g. `2`,
+- positional _args_: the variable name, *optionally* followed by an order number e.g. `2`,
 - named _kwargs_:
   - `d`: the differential symbol [default: `upright(d)`].
   - `s`: the "slash" separating the numerator and denominator [default: `none`], by default it produces the normal fraction form $dv(f,x)$. The most common non-default is `slash` or simply `\/`, so as to create a flat form $dv(f,x,s:\/)$ that fits inline.
@@ -747,14 +747,14 @@ Function: `derivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `dv(`...`)
 
 Function: `partialderivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `pdv(`...`)`.
 - _f_: the function, which can be `#none` or omitted,
-- positional _args_: the variable names, then at last *optionally* followed by an order number e.g. `2`, or an order array e.g. `[2,3]`, `[k]`, `[m n, lambda+1]`.
+- positional _args_: the variable names, *optionally* followed by an order number e.g. `2`, or an order array e.g. `[2,3]`, `[k]`, `[m n, lambda+1]`.
 - named _kwargs_:
   - `s`: the "slash" separating the numerator and denominator [default: `none`], by default it produces the normal fraction form $pdv(f,x)$. The most common non-default is `slash` or simply `\/`, so as to create a flat form $pdv(f,x,s:\/)$ that fits inline.
   - `total`: the user-specified total order.
     - If it is absent, then (1) if the orders assigned to all variables are numeric, the total order number will be *automatically computed*; (2) if non-number symbols are present, computation will be attempted with minimum effort, and a user override with argument `total` may be necessary.
 
 *Order assignment algorithm:*
-- If there is no order number or order array, all variables has order 1.
+- If there is no order number or order array, all variables have order 1.
 - If there is an order number (not an array), then this order number is assigned to _every_ variable, e.g. `pdv(f,x,y,2)` assigns $x <- 2, y <- 2$.
 - If there is an order array, then the orders therein are assigned to the variables in order, e.g. `pdv(f,x,y,[2,3])` assigns $x <- 2, y <- 3$.
 - If the order array holds fewer elements than the number of variables, then the orders of the remaining variables are 1, e.g. `pdv(f,x,y,z,[2,3])` assigns $x <- 2, y <- 3, z <- 1$.
