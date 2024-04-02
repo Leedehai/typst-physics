@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.3
+
+* Add `delim` to `vecrow(..)` to specify the delimiter.
+
 ## 0.9.2
 
 * Let `braket()` take an optional third argument to render `braket(u,A,v)` as
