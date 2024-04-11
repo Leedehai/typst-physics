@@ -27,7 +27,7 @@ natural sciences, including:
 
 ## A quick look
 
-See the [manual](https://github.com/Leedehai/typst-physics/blob/v0.9.3/physica-manual.pdf)for more details and examples.
+See the [manual](https://github.com/Leedehai/typst-physics/blob/v0.9.3/physica-manual.pdf) for more details and examples.
 
 ![demo-quick](https://github.com/Leedehai/typst-physics/assets/18319900/4a9f40df-f753-4324-8114-c682d270e9c7)
 
