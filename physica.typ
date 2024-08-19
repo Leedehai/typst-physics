@@ -540,6 +540,8 @@
 
 #let sgn = $op("sgn")$
 
+#let lb = math.op("lb")
+
 // == Differentials
 
 #let differential(..sink) = {
