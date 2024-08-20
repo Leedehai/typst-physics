@@ -538,7 +538,9 @@
 #let Re = math.op("Re")
 #let Im = math.op("Im")
 
-#let sgn = $op("sgn")$
+#let sgn = math.op("sgn")
+
+#let lb = math.op("lb")
 
 // == Differentials
 

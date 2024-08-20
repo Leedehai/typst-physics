@@ -539,6 +539,10 @@ Typst built-in math operators: #linkurl(`math.op`, "https://typst.app/docs/refer
   [#builtin([`log x, lg x, ln x`])],
   [$log x, lg x, ln x$],
   [logarithmic],
+  
+  [`lb x`],
+  [$lb x$],
+  [binary logarithm],
 
   [#builtin([`det A`])],
   [$det A$],
