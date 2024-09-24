@@ -462,7 +462,7 @@
 #let bra(f) = $lr(angle.l #f|)$
 #let ket(f) = $lr(|#f angle.r)$
 
-#let braket(..sink) = style(styles => {
+#let braket(..sink) = {
   let args = sink.pos()  // array
 
   let bra = args.at(0, default: none)
@@ -474,9 +474,9 @@
     let middle = args.at(1)
     $ lr(angle.l bra#h(0pt)mid(|)#h(0pt)middle#h(0pt)mid(|)#h(0pt)ket angle.r) $
   }
-})
+}
 
-#let ketbra(..sink) = style(styles => {
+#let ketbra(..sink) = {
   let args = sink.pos()  // array
   assert(args.len() == 1 or args.len() == 2, message: "expecting 1 or 2 args")
 
@@ -484,11 +484,11 @@
   let bra = args.at(1, default: ket)
 
   $ lr(|ket#h(0pt)mid(angle.r#h(0pt)angle.l)#h(0pt)bra|) $
-})
+}
 
-#let matrixelement(n, M, m) = style(styles => {
+#let matrixelement(n, M, m) = {
   $ lr(angle.l #n#h(0pt)mid(|)#h(0pt)#M#h(0pt)mid(|)#h(0pt)#m angle.r) $
-})
+}
 
 #let mel = matrixelement
 
