@@ -753,6 +753,7 @@ Function: `partialderivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `pd
 - _f_: the function, which can be `#none` or omitted,
 - positional _args_: the variable names, *optionally* followed by an order number e.g. `2`, or an order array e.g. `[2,3]`, `[k]`, `[m n, lambda+1]`.
 - named _kwargs_:
+  - `d`: the differential symbol [default: `diff`].
   - `s`: the "slash" separating the numerator and denominator [default: `none`], by default it produces the normal fraction form $pdv(f,x)$. The most common non-default is `slash` or simply `\/`, so as to create a flat form $pdv(f,x,s:\/)$ that fits inline.
   - `total`: the user-specified total order.
     - If it is absent, then (1) if the orders assigned to all variables are numeric, the total order number will be *automatically computed*; (2) if non-number symbols are present, computation will be attempted with minimum effort, and a user override with argument `total` may be necessary.
@@ -802,7 +803,7 @@ Function: `partialderivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `pd
     *(8)* #hl(`pdv(phi,x,y,z,tau, [2,2,2,1])`) \
     $ pdv(phi,x,y,z,tau, [2,2,2,1]) $
   ],
-   [
+  [
     *(9)* #hl(`pdv(,x,y,z,t,[1,xi,2,eta+2])`) \
     $ pdv(,x,y,z,t,[1,xi,2,eta+2]) $
   ],
@@ -810,9 +811,17 @@ Function: `partialderivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `pd
     *(10)* #hl(`pdv(,x,y,z,[xi n,n-1],total:(xi+1)n)`) \
     $ pdv(,x,y,z,[xi n,n-1],total:(xi+1)n) $
   ],
+  [
+    *(11)* #hl(`pdv(S, phi.alt, phi.alt, d:delta)`) \
+    $ pdv(S, phi.alt, phi.alt, d:delta) $
+  ],
+  [
+    *(12)* #hl(`pdv(W[J], J^mu (x) J^nu (y), d:delta)`) \
+    $ pdv(W[J], J^mu (x) J^nu (y), d:delta) $
+  ]
 )
 
-*(11)* #hl(`integral_V dd(V) (pdv(cal(L), phi) - diff_mu (pdv(cal(L), (diff_mu phi)))) = 0`) \
+*(13)* #hl(`integral_V dd(V) (pdv(cal(L), phi) - diff_mu (pdv(cal(L), (diff_mu phi)))) = 0`) \
 $ integral_V dd(V) (pdv(cal(L), phi) - diff_mu (pdv(cal(L), (diff_mu phi)))) = 0 $
 
 == Special show rules
