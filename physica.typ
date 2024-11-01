@@ -821,19 +821,20 @@
 
   for i in range(args.len()) {
     let arg = args.at(i)
-    let tuple = if arg.has("children") {
-      arg.at("children")
+    let tuple = if type(arg) == content and arg.has("children") {
+      if arg.children.at(0) in ([+], [-], [#sym.minus]) {
+        arg.children
+      } else {
+        ([+],..arg.children)
+      }
     } else {
-      ([+], sym.square)
+      ([+], arg)
     }
     assert(type(tuple) == array, message: "shall be array")
 
     let pos = tuple.at(0)
-    let symbol = if tuple.len() >= 2 {
-      tuple.slice(1).join()
-    } else {
-      sym.square
-    }
+    let symbol = tuple.slice(1).join()
+    
     if pos == [+] {
       let rendering = $#symbol$
       uppers.push(rendering)
