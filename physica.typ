@@ -693,22 +693,24 @@
     __bare_minimum_effort_symbolic_add(orders)
   }
 
+  let d = kwargs.at("d", default: $diff$)
+  
   let lowers = ()
   for i in range(var_num) {
     let var = args.at(1 + i)  // 1st element is the function name, skip
     let order = orders.at(i)
     if order == [1] {
-      lowers.push($diff#var$)
+      lowers.push($#d#var$)
     } else {
       let varorder = __combine_var_order(var, order)
-      lowers.push($diff#varorder$)
+      lowers.push($#d#varorder$)
     }
   }
 
   let upper = if total_order != 1 and total_order != [1] {  // number or Content
-    if f == none { $diff^#total_order$ } else { $diff^#total_order#f$ }
+    if f == none { $#d^#total_order$ } else { $#d^#total_order#f$ }
   } else {
-    if f == none { $diff$ } else { $diff #f$ }
+    if f == none { $#d$ } else { $#d #f$ }
   }
 
   let display(num, denom, slash) = {
