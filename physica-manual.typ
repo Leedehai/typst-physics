@@ -485,7 +485,7 @@ xmat(2, 2, #g)`)
   [`matrixelement(`..`)`],
   [`mel`],
   [
-    `mel(n, diff_nu H, m)` \ #sym.arrow $mel(n, diff_nu H, m)$
+    `mel(n, partial_nu H, m)` \ #sym.arrow $mel(n, partial_nu H, m)$
   ],
   [matrix element, same as `braket(n,M,n)`],
 )
@@ -753,7 +753,7 @@ Function: `partialderivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `pd
 - _f_: the function, which can be `#none` or omitted,
 - positional _args_: the variable names, *optionally* followed by an order number e.g. `2`, or an order array e.g. `[2,3]`, `[k]`, `[m n, lambda+1]`.
 - named _kwargs_:
-  - `d`: the differential symbol [default: `diff`].
+  - `d`: the differential symbol [default: `partial`].
   - `s`: the "slash" separating the numerator and denominator [default: `none`], by default it produces the normal fraction form $pdv(f,x)$. The most common non-default is `slash` or simply `\/`, so as to create a flat form $pdv(f,x,s:\/)$ that fits inline.
   - `total`: the user-specified total order.
     - If it is absent, then (1) if the orders assigned to all variables are numeric, the total order number will be *automatically computed*; (2) if non-number symbols are present, computation will be attempted with minimum effort, and a user override with argument `total` may be necessary.
@@ -821,8 +821,8 @@ Function: `partialderivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `pd
   ]
 )
 
-*(13)* #hl(`integral_V dd(V) (pdv(cal(L), phi) - diff_mu (pdv(cal(L), (diff_mu phi)))) = 0`) \
-$ integral_V dd(V) (pdv(cal(L), phi) - diff_mu (pdv(cal(L), (diff_mu phi)))) = 0 $
+*(13)* #hl(`integral_V dd(V) (pdv(cal(L), phi) - partial_mu (pdv(cal(L), (partial_mu phi)))) = 0`) \
+$ integral_V dd(V) (pdv(cal(L), phi) - partial_mu (pdv(cal(L), (partial_mu phi)))) = 0 $
 
 == Special show rules
 
@@ -1038,8 +1038,8 @@ Function: `tensor(`_symbol_, \*_args_`)`.
   ],
 )
 
-*(9)* `grad_mu A^nu = diff_mu A^nu + tensor(Gamma,+nu,-mu,-lambda) A^lambda`
-$ grad_mu A^nu = diff_mu A^nu + tensor(Gamma,+nu,-mu,-lambda) A^lambda $
+*(9)* `grad_mu A^nu = partial_mu A^nu + tensor(Gamma,+nu,-mu,-lambda) A^lambda`
+$ grad_mu A^nu = partial_mu A^nu + tensor(Gamma,+nu,-mu,-lambda) A^lambda $
 
 === Isotopes
 
