@@ -987,6 +987,25 @@ In the default font, the Typst built-in symbol `planck.reduce` $planck.reduce$ l
   [$ i hbar pdv(,t) psi = -frac(hbar^2, 2m) laplacian psi $],
 )
 
+*Known limitation*: `hbar` uses the `strike` function, and show rules of `strike` will affect `hbar`.
+Therefore, you may have to revert your show rules for `hbar`. The following is an example.
+// There hardly exists a robust fix before https://github.com/typst/typst/issues/420 is resolved.
+
+#raw(
+  ```typst
+  #import "@preview/physica:{VERSION}": hbar as old-hbar
+
+  #show strike: set text(gray)
+  #let hbar = {
+    show strike: set text(black)
+    old-hbar
+  }
+
+  $hbar$ is black, while $#old-hbar$ is gray.
+  ```.text.replace("{VERSION}", version),
+  lang: "typst",
+)
+
 === Tensors
 
 #v(1em)
