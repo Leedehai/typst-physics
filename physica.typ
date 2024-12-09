@@ -345,7 +345,7 @@
   assert(type(xs) == array, message: "expecting an array of variable names")
   let arrays = ()  // array of arrays
   for f in fs {
-    arrays.push(xs.map((x) => __mate(math.frac($diff#f$, $diff#x$), big)))
+    arrays.push(xs.map((x) => __mate(math.frac($partial#f$, $partial#x$), big)))
   }
   math.mat(delim: delim, ..arrays)
 }
@@ -364,8 +364,8 @@
     for c in range(order) {
       let xc = xs.at(c)
       row_array.push(__mate(math.frac(
-        $diff^2 #f$,
-        if xr == xc { $diff #xr^2$ } else { $diff #xr diff #xc$ }
+        $partial^2 #f$,
+        if xr == xc { $partial #xr^2$ } else { $partial #xr partial #xc$ }
       ), big))
     }
     row_arrays.push(row_array)
@@ -693,7 +693,7 @@
     __bare_minimum_effort_symbolic_add(orders)
   }
 
-  let d = kwargs.at("d", default: $diff$)
+  let d = kwargs.at("d", default: $partial$)
   
   let lowers = ()
   for i in range(var_num) {

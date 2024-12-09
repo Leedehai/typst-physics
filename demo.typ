@@ -29,7 +29,7 @@ Set((x, y), pdv(f,x,y,[2,1]) + pdv(f,x,y,[1,2]) < epsilon) \
 quad
 ket(n^((1))) = sum_(k in.not D) mel(k^((0)), V, n^((0))) / (E_n^((0)) - E_k^((0))) ket(k^((0))),
 quad
-integral_V dd(V) (pdv(cal(L), phi) - diff_mu (pdv(cal(L), (diff_mu phi)))) = 0 \
+integral_V dd(V) (pdv(cal(L), phi) - partial_mu (pdv(cal(L), (partial_mu phi)))) = 0 \
 
 dd(s,2) = -(1-(2G M)/r) dd(t,2) + (1-(2G M)/r)^(-1) dd(r,2) + r^2 dd(Omega,2)
 $
