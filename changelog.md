@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.4
+
+* Add binary logarithm `lb`.
+* Make the differential symbol of `pdv` (partial derivative) customizable.
+* Let `tensor` show everything as a superscript if no `+` or `-` is given.
+* Documentation improvements; internal refactorings and cleanups.
+
 ## 0.9.3
 
 * Add `delim` to `vecrow(..)` to specify the delimiter.
