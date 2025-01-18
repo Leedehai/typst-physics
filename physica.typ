@@ -710,7 +710,7 @@
   let upper = if total_order != 1 and total_order != [1] {  // number or Content
     if f == none { $#d^#total_order$ } else { $#d^#total_order#f$ }
   } else {
-    if f == none { $#d$ } else { $#d #f$ }
+    if f == none { $#d$ } else { $#d#f$ }
   }
 
   let display(num, denom, slash) = {
