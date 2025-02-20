@@ -816,8 +816,8 @@ Function: `partialderivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `pd
     $ pdv(S, phi.alt, phi.alt, d:delta) $
   ],
   [
-    *(12)* #hl(`pdv(W[J], J^mu (x) J^nu (y), d:delta)`) \
-    $ pdv(W[J], J^mu (x) J^nu (y), d:delta) $
+    *(12)* #hl(`pdv(W[J], J^mu (x), J^nu (y), d:delta)`) \
+    $ pdv(W[J], J^mu (x), J^nu (y), d:delta) $
   ]
 )
 
