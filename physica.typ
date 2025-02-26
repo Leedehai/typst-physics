@@ -630,10 +630,20 @@
   let var = args.at(0)
   assert(args.len() >= 1, message: "expecting at least one argument")
 
-  let display(num, denom, slash) = {
+  let display(upper, func, denom, slash) = context {
     if slash == none {
+      let num = $#upper#func$
       $#num/#denom$
+    } else if slash == "large" {
+      let operator = $#upper/#denom$
+      /* Measure in math block mode for correct height
+       * (See eg. https://github.com/ssotoen/gridlock/issues/2) */
+      let size_op   = measure($ #operator $).height
+      let size_func = measure($ #func     $).height
+      let bestsize  = calc.max(size_op, size_func)
+      $#operator lr((#func), size: #bestsize)$
     } else {
+      let num = $#upper#func$
       let sep = (sym.zwj, slash, sym.zwj).join()
       $#num#sep#denom$
     }
@@ -641,12 +651,12 @@
 
   if args.len() >= 2 {  // i.e. specified the order
     let order = args.at(1)  // Not necessarily representing a number
-    let upper = if f == none { $#d^#order$ } else { $#d^#order#f$ }
+    let upper = $#d^#order$
     let varorder = __combine_var_order(var, order)
-    display(upper, $#d#varorder$, slash)
+    display(upper, f, $#d#varorder$, slash)
   } else {  // i.e. no order specified
-    let upper = if f == none { $#d$ } else { $#d#f$ }
-    display(upper, $#d#var$, slash)
+    let upper = $#d$
+    display(upper, f, $#d#var$, slash)
   }
 }
 #let dv = derivative
