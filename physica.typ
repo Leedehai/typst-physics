@@ -618,6 +618,25 @@
   return naive_result
 }
 
+#let __derivative_display(upper, func, denom, slash) = context {
+  if slash == none {
+    let num = $#upper#func$
+    math.frac(num, denom)
+  } else if slash == "large" {
+    let operator = $#upper/#denom$
+    /* Measure in math block mode for correct height
+     * (See eg. https://github.com/ssotoen/gridlock/issues/2) */
+    let size_op   = measure($ #operator $).height
+    let size_func = measure($ #func     $).height
+    let bestsize  = calc.max(size_op, size_func)
+    $#operator lr((#func), size: #bestsize)$
+  } else {
+    let num = $#upper#func$
+    let sep = (sym.zwj, slash, sym.zwj).join()
+    $#num#sep#denom$
+  }
+}
+
 #let derivative(f, ..sink) = {
   if f == [] { f = none }  // Convert empty content to none
 
@@ -630,33 +649,14 @@
   let var = args.at(0)
   assert(args.len() >= 1, message: "expecting at least one argument")
 
-  let display(upper, func, denom, slash) = context {
-    if slash == none {
-      let num = $#upper#func$
-      $#num/#denom$
-    } else if slash == "large" {
-      let operator = $#upper/#denom$
-      /* Measure in math block mode for correct height
-       * (See eg. https://github.com/ssotoen/gridlock/issues/2) */
-      let size_op   = measure($ #operator $).height
-      let size_func = measure($ #func     $).height
-      let bestsize  = calc.max(size_op, size_func)
-      $#operator lr((#func), size: #bestsize)$
-    } else {
-      let num = $#upper#func$
-      let sep = (sym.zwj, slash, sym.zwj).join()
-      $#num#sep#denom$
-    }
-  }
-
   if args.len() >= 2 {  // i.e. specified the order
     let order = args.at(1)  // Not necessarily representing a number
     let upper = $#d^#order$
     let varorder = __combine_var_order(var, order)
-    display(upper, f, $#d#varorder$, slash)
+    __derivative_display(upper, f, $#d#varorder$, slash)
   } else {  // i.e. no order specified
     let upper = $#d$
-    display(upper, f, $#d#var$, slash)
+    __derivative_display(upper, f, $#d#var$, slash)
   }
 }
 #let dv = derivative
@@ -718,22 +718,13 @@
   }
 
   let upper = if total_order != 1 and total_order != [1] {  // number or Content
-    if f == none { $#d^#total_order$ } else { $#d^#total_order#f$ }
+    $#d^#total_order$
   } else {
-    if f == none { $#d$ } else { $#d#f$ }
-  }
-
-  let display(num, denom, slash) = {
-    if slash == none {
-      math.frac(num, denom)
-    } else {
-      let sep = (sym.zwj, slash, sym.zwj).join()
-      $#num#sep#denom$
-    }
+    $#d$
   }
 
   let slash = kwargs.at("s", default: none)
-  display(upper, lowers.join(), slash)
+  __derivative_display(upper, f, lowers.join(), slash)
 }
 #let pdv = partialderivative
 
