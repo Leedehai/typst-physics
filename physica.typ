@@ -629,7 +629,7 @@
     let size_op   = measure($ #operator $).height
     let size_func = measure($ #func     $).height
     let bestsize  = calc.max(size_op, size_func)
-    $#operator lr((#func), size: #bestsize)$
+    $#operator lr(#func, size: #bestsize)$
   } else {
     let num = $#upper#func$
     let sep = (sym.zwj, slash, sym.zwj).join()
