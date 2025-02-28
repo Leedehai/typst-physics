@@ -12,7 +12,7 @@
     // Only check the top level, don't descend into the child, since we don't
     // care if the child is a parenthesis group that contains +/-.
     for child in seq.at("children") {
-      if child == [+] or child == [#sym.minus] { return true }
+      if child == [#math.plus] or child == [#sym.minus] { return true }
     }
     return false
   }
@@ -50,8 +50,8 @@
   for i in range(inner_children.len()) {
     let e = inner_children.at(i)
     if e == [ ] or e == [] { continue; }
-    if e != [,] { current_element_pieces.push(e) }
-    if e == [,] or (i == inner_children.len() - 1) {
+    if e != [#math.comma] { current_element_pieces.push(e) }
+    if e == [#math.comma] or (i == inner_children.len() - 1) {
       if current_element_pieces.len() > 0 {
         result_elements.push(current_element_pieces.join())
         current_element_pieces = ()
@@ -78,7 +78,7 @@
     let children = e.at("children")
     for i in range(children.len()) {
       let child = children.at(i)
-      if child == [+] {
+      if child == [#math.plus] {
         operands.push(current_operand.join())
         current_operand = ()
         continue;
@@ -137,7 +137,7 @@
     expr_terms.push([#num_sum])  // make a Content object holding the number
   }
 
-  return expr_terms.join([+])
+  return expr_terms.join([#math.plus])
 }
 
 // == Braces
@@ -193,7 +193,7 @@
   } else { delim }
   // not math.mat(), because the look would be off: the content
   // appear smaller than the sorrounding delimiter pair.
-  $lr(#delim #args.join([,]) #rdelim)$
+  $lr(#delim #args.join([#math.comma]) #rdelim)$
 }
 
 // Prefer using super-T-as-transpose() found below.
@@ -694,7 +694,7 @@
   }
 
   let d = kwargs.at("d", default: $partial$)
-  
+
   let lowers = ()
   for i in range(var_num) {
     let var = args.at(1 + i)  // 1st element is the function name, skip
@@ -805,7 +805,7 @@
       true
     }
 
-    if __eligible(elem.base) and elem.at("t", default: none) == [+] {
+    if __eligible(elem.base) and elem.at("t", default: none) == [#math.plus] {
       $attach(elem.base, t: dagger, b: elem.at("b", default: #none))$
     } else {
       elem
@@ -824,24 +824,24 @@
   for i in range(args.len()) {
     let arg = args.at(i)
     let tuple = if type(arg) == content and arg.has("children") {
-      if arg.children.at(0) in ([+], [-], [#sym.minus]) {
+      if arg.children.at(0) in ([+], [#math.plus], [-], [#sym.minus]) {
         arg.children
       } else {
-        ([+],..arg.children)
+        ([#math.plus],..arg.children)
       }
     } else {
-      ([+], arg)
+      ([#math.plus], arg)
     }
     assert(type(tuple) == array, message: "shall be array")
 
     let pos = tuple.at(0)
     let symbol = tuple.slice(1).join()
-    
-    if pos == [+] {
+
+    if pos == [#math.plus] {
       let rendering = $#symbol$
       uppers.push(rendering)
       lowers.push(hphantom(rendering))
-    } else {  // Curiously, equality with [-] is always false, so we don't do it
+    } else {
       let rendering = $#symbol$
       uppers.push(hphantom(rendering))
       lowers.push(rendering)

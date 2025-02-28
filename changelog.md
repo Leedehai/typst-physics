@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.5
+
+* Fix [Issue #45](https://github.com/Leedehai/typst-physics/issues/45) caused
+by the new release of Typst 0.13.
+* Replace the call sites of the deprecated Typst builtin `path` with `curve`.
+* Remove the space in `pdv`'s numerator that appears when the function name is text.
+
 ## 0.9.4
 
 * Add binary logarithm `lb`.

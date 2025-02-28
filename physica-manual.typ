@@ -2,7 +2,7 @@
 // This document is shared under the Creative Commons BY-ND 4.0 license.
 #import "physica.typ": *
 
-#let version = "0.9.4"
+#let version = "0.9.5"
 
 #set document(
   title: [physica-manual.typ],
@@ -41,7 +41,7 @@
 
 #v(1em)
 
-#outline(indent: true)
+#outline(indent: auto)
 #pagebreak(weak: true)
 
 = Introduction

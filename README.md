@@ -1,14 +1,14 @@
-:green_book: The [manual](https://github.com/Leedehai/typst-physics/blob/v0.9.4/physica-manual.pdf).
+:green_book: The [manual](https://github.com/Leedehai/typst-physics/blob/v0.9.5/physica-manual.pdf).
 <p align="center">
 <img width="545" alt="logo" src="https://github.com/Leedehai/typst-physics/assets/18319900/ed86198a-8ddb-4473-aed3-8111d5ecde60">
 </p>
 
-# The physica package for Typst (v0.9.4)
+# The physica package for Typst (v0.9.5)
 
 [![CI](https://github.com/Leedehai/typst-physics/actions/workflows/ci.yml/badge.svg)](https://github.com/Leedehai/typst-physics/actions/workflows/ci.yml)
 [![Latest release](https://img.shields.io/github/v/release/Leedehai/typst-physics.svg?color=gold)][latest-release]
 
-Available in the collection of [Typst packages](https://typst.app/docs/packages/): `#import "@preview/physica:0.9.4": *`
+Available in the collection of [Typst packages](https://typst.app/docs/packages/): `#import "@preview/physica:0.9.5": *`
 
 > physica _noun_.
 > * Latin, study of nature
@@ -27,7 +27,7 @@ natural sciences, including:
 
 ## A quick look
 
-See the [manual](https://github.com/Leedehai/typst-physics/blob/v0.9.4/physica-manual.pdf) for more details and examples.
+See the [manual](https://github.com/Leedehai/typst-physics/blob/v0.9.5/physica-manual.pdf) for more details and examples.
 
 ![demo-quick](https://github.com/Leedehai/typst-physics/assets/18319900/4a9f40df-f753-4324-8114-c682d270e9c7)
 
@@ -50,21 +50,21 @@ compiler locally, it downloads packages on-demand and caches them on-disk, see
 
 ```typst
 // Style 1
-#import "@preview/physica:0.9.4": *
+#import "@preview/physica:0.9.5": *
 
 $ curl (grad f), tensor(T, -mu, +nu), pdv(f,x,y,[1,2]) $
 ```
 
 ```typst
 // Style 2
-#import "@preview/physica:0.9.4": curl, grad, tensor, pdv
+#import "@preview/physica:0.9.5": curl, grad, tensor, pdv
 
 $ curl (grad f), tensor(T, -mu, +nu), pdv(f,x,y,[1,2]) $
 ```
 
 ```typst
 // Style 3
-#import "@preview/physica:0.9.4"
+#import "@preview/physica:0.9.5"
 
 $ physica.curl (physica.grad f), physica.tensor(T, -mu, +nu), physica.pdv(f,x,y,[1,2]) $
 ```
@@ -84,12 +84,12 @@ Developed with compiler version:
 
 ```sh
 $ typst --version
-typst 0.12.0 (737895d7)
+typst 0.13.0 (8dce676d)
 ```
 
 ## Manual
 
-See the [manual](https://github.com/Leedehai/typst-physics/blob/v0.9.4/physica-manual.pdf) for a more comprehensive coverage, a PDF file
+See the [manual](https://github.com/Leedehai/typst-physics/blob/v0.9.5/physica-manual.pdf) for a more comprehensive coverage, a PDF file
 generated directly with the [Typst](https://typst.app) binary.
 
 To regenerate the manual, use command
@@ -107,13 +107,13 @@ request. If it is large, the best first step is creating an issue and let us
 explore the design together. Some features might warrant a package on its own.
 
 * Testing: currently testing is done by closely inspecting the generated
-[manual](https://github.com/Leedehai/typst-physics/blob/v0.9.4/physica-manual.pdf).
+[manual](https://github.com/Leedehai/typst-physics/blob/v0.9.5/physica-manual.pdf).
 This does not scale well. I plan to add programmatic testing by comparing
 rendered pictures with golden images.
 
 ## Change log
 
-[changelog.md](https://github.com/Leedehai/typst-physics/blob/v0.9.4/changelog.md).
+[changelog.md](https://github.com/Leedehai/typst-physics/blob/v0.9.5/changelog.md).
 
 ## License
 
