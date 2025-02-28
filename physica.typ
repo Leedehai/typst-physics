@@ -768,12 +768,12 @@
       if e.func() == math.equation {
         return __eligible(e.at("body"))
       }
-      ((e != [∫]) and (e != [|]) and (e != [‖])
-        and (e != [∑]/*U+2211, not greek Sigma U+03A3*/)
-        and (e != [∏]/*U+220F, not greek Pi U+03A0 */))
+      ((e != $∫$.body) and (e != $|$.body) and (e != $‖$.body)
+        and (e != $∑$.body/*U+2211, not greek Sigma U+03A3*/)
+        and (e != $∏$.body/*U+220F, not greek Pi U+03A0 */))
     }
 
-    if __eligible(elem.base) and elem.at("t", default: none) == [T] {
+    if __eligible(elem.base) and elem.at("t", default: none) == $T$.body {
       $attach(elem.base, t: TT, b: elem.at("b", default: #none))$
     } else {
       elem
