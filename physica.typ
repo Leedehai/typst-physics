@@ -903,9 +903,10 @@
   } else if e == "=" {
     return rect(width: W, height: 1em, stroke: (top: style, bottom: style))
   } else if e == "#" {
-    return path(stroke: style, closed: false,
-      (0em, 0em), (W * 50%, 0em), (0em, 1em), (W, 1em),
-      (W * 50%, 1em), (W, 0em), (W * 50%, 0em),
+    return curve(stroke: style,
+      curve.move((0em, 0em)), curve.line((W * 50%, 0em)), curve.line((0em, 1em)),
+      curve.line((W, 1em)), curve.line((W * 50%, 1em)), curve.line((W, 0em)),
+      curve.line((W * 50%, 0em)),
     )
   } else if e == "|" {
     return line(start: (0em, 0em), end: (0em, 1em), stroke: style)
@@ -918,21 +919,22 @@
   } else if e == "F" {
     return line(start: (0em, 0em), end: (W, 1em), stroke: style)
   } else if e == "<" {
-    return path(stroke: style, closed: false, (W, 0em), (0em, 0.5em), (W, 1em))
+    return curve(stroke: style,
+      curve.move((W, 0em)), curve.line((0em, 0.5em)), curve.line((W, 1em)))
   } else if e == ">" {
-    return path(stroke: style, closed: false, (0em, 0em), (W, 0.5em), (0em, 1em))
+    return curve(stroke: style,
+      curve.move((0em, 0em)), curve.line((W, 0.5em)), curve.line((0em, 1em)))
   } else if e == "C" {
-    return path(stroke: style, closed: false, (0em, 1em), ((W, 0em), (-W * 75%, 0.05em)))
-  } else if e == "c" {
-    return path(stroke: style, closed: false, (0em, 1em), ((W * 50%, 0em), (-W * 38%, 0.05em)))
+    return curve(stroke: style,
+      curve.move((0em, 1em)), curve.quad((W * 20%, 0.2em), (W, 0em)))
   } else if e == "D" {
-    return path(stroke: style, closed: false, (0em, 0em), ((W, 1em), (-W * 75%, -0.05em)))
-  } else if e == "d" {
-    return path(stroke: style, closed: false, (0em, 0em), ((W * 50%, 1em), (-W * 38%, -0.05em)))
+    return curve(stroke: style,
+      curve.move((0em, 0em)), curve.quad((W * 20%, 0.8em), (W, 1em)))
   } else if e == "X" {
-    return path(stroke: style, closed: false,
-      (0em, 0em), (W * 50%, 0.5em), (0em, 1em),
-      (W, 0em), (W * 50%, 0.5em), (W, 1em),
+    return curve(stroke: style,
+      curve.move((0em, 0em)), curve.line((W, 1em)),
+      curve.line((W * 50%, 0.5em)), curve.line((W, 0em)),
+      curve.line((0em, 1em))
     )
   } else {
     return "[" + e + "]"
