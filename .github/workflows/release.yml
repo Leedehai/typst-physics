@@ -12,15 +12,15 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: yusancky/setup-typst@v2
+      - uses: actions/checkout@v4
+      - uses: typst-community/setup-typst@v4
         with:
             version: latest
       - name: Compile the manual
         run: typst compile physica-manual.typ
       - name: Release
         id: release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
             name: Physica ${{ github.ref_name }}
             files: physica-manual.pdf

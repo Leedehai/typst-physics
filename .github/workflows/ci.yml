@@ -13,15 +13,15 @@ jobs:
   compile:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: yusancky/setup-typst@v2
+      - uses: actions/checkout@v4
+      - uses: typst-community/setup-typst@v4
         with:
             version: latest
       - name: Compile
         run: |
           typst compile physica-manual.typ
           typst compile demo.typ
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: PDF
           path: '*.pdf'
