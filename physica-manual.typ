@@ -128,10 +128,10 @@ All symbols need to be used in *math mode* `$...$`.
   [math set, use `Set` not `set` since the latter is a Typst keyword],
 
   [`evaluated(`_content_`)`],
-  [`eval`],
+  [],
   [
-    `eval(f(x))_0^infinity` \ #sym.arrow $eval(f(x))_0^infinity$ \
-    `eval(f(x)/g(x))_0^1` \ #sym.arrow $eval(f(x)/g(x))_0^1$
+    `evaluated(f(x))_0^oo` \ #sym.arrow $evaluated(f(x))_0^oo$ \
+    `evaluated(f(x)/g(x))_0^1` \ #sym.arrow $evaluated(f(x)/g(x))_0^1$
   ],
   [attach a vertical bar on the right to denote evaluation boundaries],
 
@@ -878,8 +878,8 @@ If you only want to enable it within a content block's scope, you may do
     $ vec(a, b)^T, mat(a, b; c, d)^T $
   ],
   [
-    *(3)* #hl(`abs(a)^T, norm(a)^T, eval(F(t))^T_0`) \
-    $ abs(a)^T, norm(a)^T, eval(F(t))^T_0 $
+    *(3)* #hl(`abs(a)^T, norm(a)^T, evaluated(F(t))^T_0`) \
+    $ abs(a)^T, norm(a)^T, evaluated(F(t))^T_0 $
   ],
   [
     *(4)* #hl(`integral^T, sum^T, product^T`) \

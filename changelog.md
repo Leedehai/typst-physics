@@ -6,7 +6,10 @@
 [Issue #47](https://github.com/Leedehai/typst-physics/issues/47) caused
 by the new release of Typst 0.13.
 * Replace the call sites of the deprecated Typst builtin `path` with `curve`.
-* Remove the space in `pdv`'s numerator that appears when the function name is text.
+* Remove the space in `pdv`'s numerator that appears when the function name is
+text.
+* **(breaking)** Remove `eval` (the abbreviation of `evaluated`) to avoid
+colliding with Typst. `evaluated` still remains available.
 
 ## 0.9.4
 

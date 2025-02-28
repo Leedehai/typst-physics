@@ -160,7 +160,6 @@
 #let evaluated(content) = {
   $lr(zwj#content|)$
 }
-#let eval = evaluated
 
 #let expectationvalue(..sink) = {
   let args = sink.pos()  // array
