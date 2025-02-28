@@ -179,21 +179,23 @@
 
 #let vecrow(..sink) = {
   let (args, kwargs) = (sink.pos(), sink.named())  // array, dictionary
-  let delim = kwargs.at("delim", default:"(")
-  let rdelim = if delim == "(" {
-    ")"
+  let delim = kwargs.at("delim", default: "(")
+  let (ldelim, rdelim) = if delim == "(" {
+    (math.paren.l, math.paren.r)
   } else if delim == "[" {
-    "]"
+    (math.bracket.l, math.bracket.r)
   } else if delim == "{" {
-    "}"
+    (math.brace.l, math.brace.r)
   } else if delim == "|" {
-    "|"
+    (math.bar.v, math.bar.v)
   } else if delim == "||" {
-    "||"
-  } else { delim }
+    (math.bar.v.double, math.bar.v.double)
+  } else {
+    (delim, delim)
+  }
   // not math.mat(), because the look would be off: the content
   // appear smaller than the sorrounding delimiter pair.
-  $lr(#delim #args.join([#math.comma]) #rdelim)$
+  $lr(#ldelim #args.join([#math.comma]) #rdelim)$
 }
 
 // Prefer using super-T-as-transpose() found below.
