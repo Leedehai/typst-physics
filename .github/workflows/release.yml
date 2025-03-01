@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: typst-community/setup-typst@v4
         with:
-            version: latest
+            typst-version: latest
       - name: Compile the manual
         run: typst compile physica-manual.typ
       - name: Release
