@@ -874,6 +874,15 @@
 }
 
 #let isotope(element, /*atomic mass*/a: none, /*atomic number*/z: none) = {
+  if type(element) == dictionary{
+    a = str(element.at("mass-number", default: element.at("atomic-mass", default: element.at("most-common-isotope", default: ""))))
+    z = str(element.at("atomic-number", default: ""))
+    element = element.at("symbol", default: none)
+  } else if type(element) == content and element.func() == metadata and type(element.value) == dictionary{
+    a = str(element.value.at("mass-number", default: element.value.at("atomic-mass", default: element.value.at("most-common-isotope", default: ""))))
+    z = str(element.value.at("atomic-number", default: ""))
+    element = element.value.at("symbol", default: none)
+  }
   $attach(upright(element), tl: #a, bl: #z)$
 }
 
