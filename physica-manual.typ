@@ -1093,6 +1093,18 @@ $ isotope("Bi",a:211,z:83) -> isotope("Tl",a:207,z:81) + isotope("He",a:4,z:2) $
 *(4)* #hl(`isotope("Tl",a:207,z:81) -> isotope("Pb",a:207,z:82) + isotope(e,a:0,z:-1)`)
 $ isotope("Tl",a:207,z:81) -> isotope("Pb",a:207,z:82) + isotope(e,a:0,z:-1) $
 
+*(5)* #hl(`#let c14 = (symbol: "C", atomic-number: 6, atomic-mass: 14)`) \
+#hl(`#isotope(c14)`)
+#let c14 = (symbol: "C", atomic-number: 6, atomic-mass: 14)
+$ isotope(#c14) $
+
+*(6)* #hl(` #import "@preview/typsium:0.2.0": get-element `)\
+#hl(`#let carbon = get-element(symbol:"C")`)\
+#hl(`#isotope(carbon)`)
+#import "@preview/typsium:0.2.0": get-element
+#let carbon = get-element(symbol:"C")
+$ isotope(carbon) $
+
 === The n-th term in Taylor series
 
 #v(1em)
