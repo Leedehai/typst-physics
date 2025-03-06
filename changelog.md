@@ -8,6 +8,8 @@ by the new release of Typst 0.13.
 * Replace the call sites of the deprecated Typst builtin `path` with `curve`.
 * Remove the space in `pdv`'s numerator that appears when the function name is
 text.
+* Add a `"large"` slash option to ordinary and partial derivatives, in which
+the d/dx operator is put in front of the (potentially very large) function.
 * **(breaking)** Remove `eval` (the abbreviation of `evaluated`) to avoid
 colliding with Typst. `evaluated` still remains available.
 
