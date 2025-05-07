@@ -246,6 +246,7 @@
 #let div = $bold(nabla)dot.c$
 #let curl = $bold(nabla)times$
 #let laplacian = $nabla^2$
+#let dalembert = $square$
 
 #let dotproduct = $dot$
 #let dprod = dotproduct
