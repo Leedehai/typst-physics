@@ -209,7 +209,7 @@ All symbols need to be used in *math mode* `$...$`.
 
   [`dalembert`],
   [],
-  [`dalambert u = u_(t t) - c^2 u_(x x)` \ #sym.arrow $dalambert u = u_(t t) - c^2 u_(x x)$],
+  [`dalembert u = u_(t t) - c^2 u_(x x)` \ #sym.arrow $dalembert u = u_(t t) - c^2 u_(x x)$],
   [wave operator],
   
   [`dotproduct`],
