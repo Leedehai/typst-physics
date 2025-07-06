@@ -147,6 +147,13 @@
   let expr = args.at(0, default: none)
   let cond = args.at(1, default: none)
 
+  if type(expr) == array {
+    expr = $#expr.join($,$)$
+  }
+  if type(cond) == array {
+    cond = $#cond.join($,$)$
+  }
+
   if expr == none {
     if cond == none { ${}$ } else { ${mid(|) #cond}$ }
   } else {
