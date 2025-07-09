@@ -207,6 +207,11 @@ All symbols need to be used in *math mode* `$...$`.
   [`diaer(u) = c^2 laplacian u` \ #sym.arrow $diaer(u) = c^2 laplacian u$],
   [Laplacian,\ not #builtin(`laplace`) $laplace$],
 
+  [`dalembert`],
+  [],
+  [`dalembert u = u_(t t) - c^2 u_(x x)` \ #sym.arrow $dalembert u = u_(t t) - c^2 u_(x x)$],
+  [wave operator],
+  
   [`dotproduct`],
   [`dprod`],
   [`a dprod b` #sym.arrow $a dprod b$],
