@@ -945,6 +945,30 @@
       curve.line((W * 50%, 0.5em)), curve.line((W, 0em)),
       curve.line((0em, 1em))
     )
+  } else if e == "r" {
+    return box(width: 0pt, curve(
+      stroke: style,
+      fill: color,
+      curve.move(((0em + 1pt, 0.4em))),
+      curve.line((-0.1em + 1pt, 0.6em)),
+      curve.line((0.1em + 1pt, 0.6em)),
+
+      curve.close(),
+      curve.move((0em + 1pt, 0em)),
+      curve.line((0em + 1pt,  1em)),
+    ))
+  } else if e == "f" {
+    return box(width: 0pt, curve(
+      stroke: style,
+      fill: color,
+      curve.move(((0em + 1pt, 0.6em))),
+      curve.line((-0.1em + 1pt, 0.4em)),
+      curve.line((0.1em + 1pt, 0.4em)),
+
+      curve.close(),
+      curve.move((0em + 1pt, 0em)),
+      curve.line((0em + 1pt,  1em)),
+    ))
   } else {
     return "[" + e + "]"
   }
