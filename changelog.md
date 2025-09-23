@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.6
+
+* Fix differential's smart spacing -- though this space is recommended by TeXBook, it creates a bug https://github.com/Leedehai/typst-physics/issues/63.
+* *Adding rising and falling edge support (#62)
+* Allow passing multiple conditions to Set by using the array syntax (#59)
+
 ## 0.9.5
 
 * Fix [Issue #45](https://github.com/Leedehai/typst-physics/issues/45) and

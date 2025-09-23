@@ -2,11 +2,11 @@
 // This document is shared under the Creative Commons BY-ND 4.0 license.
 #import "physica.typ": *
 
-#let version = "0.9.5"
+#let version = "0.9.6"
 
 #set document(
   title: [physica-manual.typ],
-  author: ("Leedehai"),
+  author: "Leedehai",
   // Prevents setting the creation date to PDF metadata, so the same *.typ
   // file content will result in the same *.pdf binary.
   date: none,
@@ -36,7 +36,7 @@
 #v(1em)
 
 #align(center)[
-/ physica: _noun_. Latin, study of nature.
+  / physica: _noun_. Latin, study of nature.
 ]
 
 #v(1em)
@@ -61,12 +61,12 @@ This manual itself was generated using the Typst CLI and the `physica` package, 
 With `typst`'s #linkurl("package management", "https://github.com/typst/packages"):
 
 ```typst
-#import "@preview/physica:0.9.5": *
+#import "@preview/physica:0.9.6": *
 
 $ curl (grad f), pdv(,x,y,z,[2,k]), tensor(Gamma,+k,-i,-j) = pdv(vb(e_i),x^j)vb(e^k) $
 ```
 
-$ curl (grad f), pdv(,x,y,z,[2,k]), tensor(Gamma,+k,-i,-j)=pdv(vb(e_i),x^j)vb(e^k) $
+$ curl (grad f), pdv(, x, y, z, [2,k]), tensor(Gamma, +k, -i, -j)=pdv(vb(e_i), x^j)vb(e^k) $
 
 = The symbols
 
@@ -75,7 +75,8 @@ $ curl (grad f), pdv(,x,y,z,[2,k]), tensor(Gamma,+k,-i,-j)=pdv(vb(e_i),x^j)vb(e^
 // Put the superscript *before* the symbol, in case there are symbols after it.
 #let builtin(symbol) = [#super(text(fill: blue, "typst "))#symbol]
 
-#let hl(s) = {  // Highlight. Usage: hl("..."), hl(`...`)
+#let hl(s) = {
+  // Highlight. Usage: hl("..."), hl(`...`)
   show regex("#\(.+?\)|#(\d|\w)+"): set text(eastern)
   show regex("\[|\]"): set text(red)
   show regex("\w+:"): set text(blue)
@@ -99,31 +100,19 @@ All symbols need to be used in *math mode* `$...$`.
   stroke: none,
   [*Symbol*], [*Abbr.*], [*Example*], [*Notes*],
 
-  [#builtin([`abs(`_content_`)`])],
-  [],
-  [`abs(phi(x))`   #sym.arrow $abs(phi(x))$],
-  [absolute],
+  [#builtin([`abs(`_content_`)`])], [], [`abs(phi(x))`   #sym.arrow $abs(phi(x))$], [absolute],
 
-  [#builtin([`norm(`_content_`)`])],
-  [],
-  [`norm(phi(x))`   #sym.arrow $norm(phi(x))$],
-  [norm],
+  [#builtin([`norm(`_content_`)`])], [], [`norm(phi(x))`   #sym.arrow $norm(phi(x))$], [norm],
 
-  [`Order(`_content_`)`],
-  [],
-  [`Order(x^2)`   #sym.arrow $Order(x^2)$],
-  [big O],
+  [`Order(`_content_`)`], [], [`Order(x^2)`   #sym.arrow $Order(x^2)$], [big O],
 
-  [`order(`_content_`)`],
-  [],
-  [`order(1)`   #sym.arrow $order(1)$],
-  [small O],
+  [`order(`_content_`)`], [], [`order(1)`   #sym.arrow $order(1)$], [small O],
 
   [`Set(`_content_`)`],
   [],
   [
     `Set(a_n), Set(a_i, forall i)` \ #sym.arrow $Set(a_n), Set(a_i, forall i)$ \
-    `Set(vec(1,n), forall n)` \ #sym.arrow $Set(vec(1,n), forall n)$
+    `Set(vec(1,n), forall n)` \ #sym.arrow $Set(vec(1, n), forall n)$
   ],
   [math set, use `Set` not `set` since the latter is a Typst keyword],
 
@@ -139,7 +128,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`expval`],
   [
     `expval(u)`  #sym.arrow $expval(u)$ \
-    `expval(p,psi)`  #sym.arrow $expval(p,psi)$ \
+    `expval(p,psi)`  #sym.arrow $expval(p, psi)$ \
   ],
   [expectation value, also see bra-ket @dirac-braket below],
 )
@@ -154,68 +143,41 @@ All symbols need to be used in *math mode* `$...$`.
   stroke: none,
   [*Symbol*], [*Abbr.*], [*Example*], [*Notes*],
 
-  [#builtin([`vec(`...`)`])],
-  [],
-  [`vec(1,2)` #sym.arrow $vec(1,2)$],
-  [column vector],
+  [#builtin([`vec(`...`)`])], [], [`vec(1,2)` #sym.arrow $vec(1, 2)$], [column vector],
 
   [`vecrow(`...`)`],
   [],
   [
     `vecrow(alpha, b)` \ #sym.arrow $vecrow(alpha, b)$ \
-    `vecrow(sum_0^n i, b, delim:"[")` \ #sym.arrow $vecrow(sum_0^n i,b,delim:"[")$ \
+    `vecrow(sum_0^n i, b, delim:"[")` \ #sym.arrow $vecrow(sum_0^n i, b, delim: "[")$ \
   ],
   [row vector],
 
-  [`TT`],
-  [],
-  [`v^TT, A^TT` #sym.arrow $v^TT, A^TT$],
-  [transpose, also see\ @matrix-transpose],
+  [`TT`], [], [`v^TT, A^TT` #sym.arrow $v^TT, A^TT$], [transpose, also see\ @matrix-transpose],
 
-  [`vectorbold(`_content_`)`],
-  [`vb`],
-  [`vb(a),vb(mu_1)` #sym.arrow $vb(a),vb(mu_1)$],
-  [vector, bold],
+  [`vectorbold(`_content_`)`], [`vb`], [`vb(a),vb(mu_1)` #sym.arrow $vb(a),vb(mu_1)$], [vector, bold],
 
-  [`vectorunit(`_content_`)`],
-  [`vu`],
-  [`vu(a),vu(mu_1)` #sym.arrow $vu(a),vu(mu_1)$],
-  [unit vector],
+  [`vectorunit(`_content_`)`], [`vu`], [`vu(a),vu(mu_1)` #sym.arrow $vu(a),vu(mu_1)$], [unit vector],
 
   [`vectorarrow(`_content_`)`],
   [`va`],
   [`va(a),va(mu_1)` #sym.arrow $va(a),va(mu_1)$],
   [vector, arrow \ #sub[(not bold: see ISO 80000-2:2019)]],
 
-  [`grad`],
-  [],
-  [`grad f` #sym.arrow $grad f$],
-  [gradient],
+  [`grad`], [], [`grad f` #sym.arrow $grad f$], [gradient],
 
-  [`div`],
-  [],
-  [`div vb(E)` #sym.arrow $div vb(E)$],
-  [divergence],
+  [`div`], [], [`div vb(E)` #sym.arrow $div vb(E)$], [divergence],
 
-  [`curl`],
-  [],
-  [`curl vb(B)` #sym.arrow $curl vb(B)$],
-  [curl],
+  [`curl`], [], [`curl vb(B)` #sym.arrow $curl vb(B)$], [curl],
 
   [`laplacian`],
   [],
   [`diaer(u) = c^2 laplacian u` \ #sym.arrow $diaer(u) = c^2 laplacian u$],
   [Laplacian,\ not #builtin(`laplace`) $laplace$],
 
-  [`dotproduct`],
-  [`dprod`],
-  [`a dprod b` #sym.arrow $a dprod b$],
-  [dot product],
+  [`dotproduct`], [`dprod`], [`a dprod b` #sym.arrow $a dprod b$], [dot product],
 
-  [`crossproduct`],
-  [`cprod`],
-  [`a cprod b` #sym.arrow $a cprod b$],
-  [cross product],
+  [`crossproduct`], [`cprod`], [`a cprod b` #sym.arrow $a cprod b$], [cross product],
 
   [`innerproduct`],
   [`iprod`],
@@ -238,36 +200,30 @@ All symbols need to be used in *math mode* `$...$`.
   stroke: none,
   [*Symbol*], [*Abbr.*], [*Example*], [*Notes*],
 
-  [`TT`],
-  [],
-  [`v^TT, A^TT` #sym.arrow $v^TT, A^TT$],
-  [transpose, also see\ @matrix-transpose],
+  [`TT`], [], [`v^TT, A^TT` #sym.arrow $v^TT, A^TT$], [transpose, also see\ @matrix-transpose],
 
-  [#builtin([`mat(`...`)`])],
-  [],
-  [`mat(1,2;3,4)` #sym.arrow $mat(1,2;3,4)$],
-  [matrix],
+  [#builtin([`mat(`...`)`])], [], [`mat(1,2;3,4)` #sym.arrow $mat(1, 2; 3, 4)$], [matrix],
 
   [`matrixdet(`...`)`],
   [`mdet`],
   [
-    #hl(`mdet(1,x;1,y)`) #sym.arrow $mdet(1,x;1,y)$
+    #hl(`mdet(1,x;1,y)`) #sym.arrow $mdet(1, x; 1, y)$
   ],
   [matrix determinant],
 
   [`diagonalmatrix(`...`)`],
   [`dmat`],
   [
-    `dmat(1,2)` #sym.arrow $dmat(1,2)$ \
-    #hl(`dmat(1,a,xi,delim:"[",fill:0)`) \ #sym.arrow $dmat(1,a,xi,delim:"[",fill:0)$
+    `dmat(1,2)` #sym.arrow $dmat(1, 2)$ \
+    #hl(`dmat(1,a,xi,delim:"[",fill:0)`) \ #sym.arrow $dmat(1, a, xi, delim: "[", fill: 0)$
   ],
   [diagonal matrix],
 
   [`antidiagonalmatrix(`...`)`],
   [`admat`],
   [
-    `admat(1,2)` #sym.arrow $admat(1,2)$ \
-    #hl(`admat(1,a,xi,delim:"[",fill:dot)`) \ #sym.arrow $admat(1,a,xi,delim:"[",fill:dot)$
+    `admat(1,2)` #sym.arrow $admat(1, 2)$ \
+    #hl(`admat(1,a,xi,delim:"[",fill:dot)`) \ #sym.arrow $admat(1, a, xi, delim: "[", fill: dot)$
   ],
   [anti-diagonal matrix],
 
@@ -275,7 +231,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`imat`],
   [
     `imat(2)` #sym.arrow $imat(2)$ \
-    #hl(`imat(3,delim:"[",fill:*)`) #sym.arrow \ $imat(3,delim:"[",fill:*)$
+    #hl(`imat(3,delim:"[",fill:*)`) #sym.arrow \ $imat(3, delim: "[", fill: *)$
   ],
   [identity matrix],
 
@@ -283,7 +239,7 @@ All symbols need to be used in *math mode* `$...$`.
   [`zmat`],
   [
     `zmat(2)` #sym.arrow $zmat(2)$ \
-    #hl(`zmat(3,delim:"[")`) #sym.arrow \ $zmat(3,delim:"[")$
+    #hl(`zmat(3,delim:"[")`) #sym.arrow \ $zmat(3, delim: "[")$
   ],
   [zero matrix],
 )
@@ -303,22 +259,23 @@ All symbols need to be used in *math mode* `$...$`.
   ],
   [
     #hl(`jmat(f_1,f_2; x,y)`)
-    $ jmat(f_1,f_2;x,y) $
+    $ jmat(f_1, f_2; x, y) $
   ],
   [
     #hl(`jmat(f,g; x,y,z; delim:"[")`)
-    $ jmat(f,g;x,y,z;delim:"[") $
+    $ jmat(f, g; x, y, z; delim: "[") $
   ],
+
   [
     \ ...but you can uncramp them using argument #hl(`big:#true`) here
   ],
   [
     #hl(`jmat(f_1,f_2;x,y;big:#true)`)
-    $ jmat(f_1,f_2;x,y;big:#true) $
+    $ jmat(f_1, f_2; x, y; big: #true) $
   ],
   [
     #hl(`jmat(f,g;x,y,z;delim:"|",big:#true)`)
-    $ jmat(f,g;x,y,z;delim:"|",big:#true) $
+    $ jmat(f, g; x, y, z; delim: "|", big: #true) $
   ],
 )
 
@@ -337,22 +294,23 @@ All symbols need to be used in *math mode* `$...$`.
   ],
   [
     #hl(`hmat(f; x,y)`)
-    $ hmat(f; x,y) $
+    $ hmat(f; x, y) $
   ],
   [
     #hl(`hmat(; x,y,z; delim:"[")`)
-    $ hmat(; x,y,z; delim:"[") $
+    $ hmat(; x, y, z; delim: "[") $
   ],
+
   [
     \ ...but you can uncramp them using argument #hl(`big:#true`) here
   ],
   [
     #hl(`hmat(f;x,y;big:#true)`)
-    $ hmat(f;x,y;big:#true) $
+    $ hmat(f; x, y; big: #true) $
   ],
   [
     #hl(`hmat(;x,y,z;delim:"|",big:#true)`)
-    $ hmat(; x,y,z;delim:"|",big:#true) $
+    $ hmat(; x, y, z; delim: "|", big: #true) $
   ],
 )
 
@@ -368,10 +326,14 @@ _func_ takes two integers which are the row and column numbers starting from 1.
   column-gutter: 1em,
 
   [
-#hl(`#let g = (i,j) => $g^(#(i - 1)#(j - 1))$
-xmat(2, 2, #g)`)
-    $ #let g = (i,j) => $g^(#(i - 1)#(j - 1))$
-    xmat(2, 2, #g) $
+    #hl(
+      `#let g = (i,j) => $g^(#(i - 1)#(j - 1))$
+xmat(2, 2, #g)`,
+    )
+    $
+      #let g = (i, j) => $g^(#(i - 1)#(j - 1))$
+      xmat(2, 2, #g)
+    $
   ],
 )
 
@@ -389,11 +351,11 @@ xmat(2, 2, #g)`)
   ],
   [
     #hl(`rot2mat(-a/2,delim:"[")`)
-    $ rot2mat(-a/2, delim:"[") $
+    $ rot2mat(-a/2, delim: "[") $
   ],
   [
     #hl(`rot2mat(display(a/2),delim:"[")`)
-    $ rot2mat(display(a/2),delim:"[") $
+    $ rot2mat(display(a/2), delim: "[") $
   ],
 
   [
@@ -406,7 +368,7 @@ xmat(2, 2, #g)`)
   ],
   [
     #hl(`rot3zmat(theta,delim:"[")`)
-    $ rot3zmat(theta,delim:"[") $
+    $ rot3zmat(theta, delim: "[") $
   ],
 )
 
@@ -424,11 +386,11 @@ xmat(2, 2, #g)`)
   ],
   [
     #hl(`grammat(v_1,v_2,v_3, delim:"[")`)
-    $ grammat(v_1,v_2,v_3, delim:"[") $
+    $ grammat(v_1, v_2, v_3, delim: "[") $
   ],
   [
     #hl(`grammat(v_1,v_2, norm:#true)`)
-    $ grammat(v_1,v_2, norm:#true) $
+    $ grammat(v_1, v_2, norm: #true) $
   ],
 )
 
@@ -446,7 +408,7 @@ xmat(2, 2, #g)`)
   [],
   [
     `bra(u)`  #sym.arrow $bra(u)$ \
-    `bra(vec(1,2))` #sym.arrow $bra(vec(1,2))$
+    `bra(vec(1,2))` #sym.arrow $bra(vec(1, 2))$
   ],
   [bra],
 
@@ -454,7 +416,7 @@ xmat(2, 2, #g)`)
   [],
   [
     `ket(u)`  #sym.arrow $ket(u)$ \
-    `ket(vec(1,2))` #sym.arrow $ket(vec(1,2))$
+    `ket(vec(1,2))` #sym.arrow $ket(vec(1, 2))$
   ],
   [ket],
 
@@ -462,7 +424,7 @@ xmat(2, 2, #g)`)
   [],
   [
     `braket(a), braket(u, v)` \ #sym.arrow $braket(a), braket(u, v)$ \
-    `braket(psi,A/N,phi)` #sym.arrow $braket(psi,A/N,phi)$
+    `braket(psi,A/N,phi)` #sym.arrow $braket(psi, A/N, phi)$
   ],
   [braket, with 1, 2, or 3 arguments],
 
@@ -478,7 +440,7 @@ xmat(2, 2, #g)`)
   [],
   [
     `expval(u)`  #sym.arrow $expval(u)$ \
-    `expval(A,psi)` #sym.arrow $expval(A,psi)$
+    `expval(A,psi)` #sym.arrow $expval(A, psi)$
   ],
   [expectation],
 
@@ -503,23 +465,17 @@ Typst built-in math operators: #linkurl(`math.op`, "https://typst.app/docs/refer
   column-gutter: 25pt,
   [*Expressions*], [*Results*],
 
-  [`sin(x), sinh(x), arcsin(x), asin(x)`],
-  [$sin(x), sinh(x), arcsin(x), asin(x)$],
+  [`sin(x), sinh(x), arcsin(x), asin(x)`], [$sin(x), sinh(x), arcsin(x), asin(x)$],
 
-  [`cos(x), cosh(x), arccos(x), acos(x)`],
-  [$cos(x), cosh(x), arccos(x), acos(x)$],
+  [`cos(x), cosh(x), arccos(x), acos(x)`], [$cos(x), cosh(x), arccos(x), acos(x)$],
 
-  [`tan(x), tanh(x), arctan(x), atan(x)`],
-  [$tan(x), tanh(x), arctan(x), atan(x)$],
+  [`tan(x), tanh(x), arctan(x), atan(x)`], [$tan(x), tanh(x), arctan(x), atan(x)$],
 
-  [`sec(x), sech(x), arcsec(x), asec(x)`],
-  [$sec(x), sech(x), arcsec(x), asec(x)$],
+  [`sec(x), sech(x), arcsec(x), asec(x)`], [$sec(x), sech(x), arcsec(x), asec(x)$],
 
-  [`csc(x), csch(x), arccsc(x), acsc(x)`],
-  [$csc(x), csch(x), arccsc(x), acsc(x)$],
+  [`csc(x), csch(x), arccsc(x), acsc(x)`], [$csc(x), csch(x), arccsc(x), acsc(x)$],
 
-  [`cot(x), coth(x), arccot(x), acot(x)`],
-  [$cot(x), coth(x), arccot(x), acot(x)$],
+  [`cot(x), coth(x), arccot(x), acot(x)`], [$cot(x), coth(x), arccot(x), acot(x)$],
 )
 
 #table(
@@ -528,57 +484,31 @@ Typst built-in math operators: #linkurl(`math.op`, "https://typst.app/docs/refer
   stroke: none,
   [*Expressions*], [*Results*], [*Notes*],
 
-  [#builtin([`Pr(x)`])],
-  [$Pr(x)$],
-  [probability],
+  [#builtin([`Pr(x)`])], [$Pr(x)$], [probability],
 
-  [#builtin([`exp x`])],
-  [$exp x$],
-  [exponential],
+  [#builtin([`exp x`])], [$exp x$], [exponential],
 
-  [#builtin([`log x, lg x, ln x`])],
-  [$log x, lg x, ln x$],
-  [logarithmic],
-  
-  [`lb x`],
-  [$lb x$],
-  [binary logarithm],
+  [#builtin([`log x, lg x, ln x`])], [$log x, lg x, ln x$], [logarithmic],
 
-  [#builtin([`det A`])],
-  [$det A$],
-  [matrix determinant],
+  [`lb x`], [$lb x$], [binary logarithm],
 
-  [`diag(-1,1,1,1)`],
-  [$diag(-1,1,1,1)$],
-  [diagonal matrix, compact form (use `dmat` for the "real" matrix form)],
+  [#builtin([`det A`])], [$det A$], [matrix determinant],
 
-  [`trace A, tr A`],
-  [$trace A, tr A$],
-  [matrix trace],
+  [`diag(-1,1,1,1)`], [$diag(-1, 1, 1, 1)$], [diagonal matrix, compact form (use `dmat` for the "real" matrix form)],
 
-  [`Trace A, Tr A`],
-  [$Trace A, Tr A$],
-  [matrix trace, alt.],
+  [`trace A, tr A`], [$trace A, tr A$], [matrix trace],
 
-  [`rank A`],
-  [$rank A$],
-  [matrix rank],
+  [`Trace A, Tr A`], [$Trace A, Tr A$], [matrix trace, alt.],
 
-  [`erf(x)`],
-  [$erf(x)$],
-  [Gauss error function],
+  [`rank A`], [$rank A$], [matrix rank],
 
-  [`Res A`],
-  [$Res A$],
-  [residue (complex analysis)],
+  [`erf(x)`], [$erf(x)$], [Gauss error function],
 
-  [`Re z, Im z `],
-  [$Re z, Im z$],
-  [real, imaginary (complex analysis)],
+  [`Res A`], [$Res A$], [residue (complex analysis)],
 
-  [`sgn x`],
-  [$sgn x$],
-  [sign function],
+  [`Re z, Im z `], [$Re z, Im z$], [real, imaginary (complex analysis)],
+
+  [`sgn x`], [$sgn x$], [sign function],
 )
 
 == Differentials and derivatives
@@ -594,7 +524,7 @@ Typst built-in math operators: #linkurl(`math.op`, "https://typst.app/docs/refer
   [`differential(`...`)`],
   [`dd`],
   [
-    e.g. $dd(f), dd(x,y), dd(x,3), dd(x,y,p:and)$ \
+    e.g. $dd(f), dd(x, y), dd(x, 3), dd(x, y, p: and)$ \
     See @differentials
   ],
   [differential],
@@ -603,7 +533,7 @@ Typst built-in math operators: #linkurl(`math.op`, "https://typst.app/docs/refer
   [`var`],
   [
     `var(f)` #sym.arrow $var(f)$ \
-    `var(x,y)` #sym.arrow $var(x,y)$ \
+    `var(x,y)` #sym.arrow $var(x, y)$ \
   ],
   [variation, shorthand of \ `dd(..., d: delta)`],
 
@@ -611,14 +541,14 @@ Typst built-in math operators: #linkurl(`math.op`, "https://typst.app/docs/refer
   [],
   [
     `difference(f)` #sym.arrow $difference(f)$ \
-    `difference(x,y)` #sym.arrow $difference(x,y)$ \
+    `difference(x,y)` #sym.arrow $difference(x, y)$ \
   ],
   [difference, shorthand of \ `dd(..., d: Delta)`],
 
   [`derivative(`...`)`],
   [`dv`],
   [
-    e.g. $dv(,x), dv(f,x), dv(f,x,k,d:Delta), dv(f,x,s:\/)$ \
+    e.g. $dv(, x), dv(f, x), dv(f, x, k, d: Delta), dv(f, x, s: \/)$ \
     See @ordinary-derivatives
   ],
   [derivative],
@@ -626,7 +556,7 @@ Typst built-in math operators: #linkurl(`math.op`, "https://typst.app/docs/refer
   [`partialderivative(`...`)`],
   [`pdv`],
   [
-    e.g. $pdv(,x), pdv(f,x), pdv(f,x,y,2), pdv(f,x,y,[2,3]), pdv(f,x,s:\/)$ \
+    e.g. $pdv(, x), pdv(f, x), pdv(f, x, y, 2), pdv(f, x, y, [2,3]), pdv(f, x, s: \/)$ \
     See @partial-derivatives
   ],
   [partial derivative, could be mixed order],
@@ -644,9 +574,9 @@ Functions: `differential(`\*_args_, \*\*_kwargs_`)`, abbreviated as `dd(`...`)`.
   - `compact`: only effective if `p` is `none`. If `#true`, will remove the TeXBook-advised thin spaces between the d-units [default: `#false`].
 
 TeXBook advises _[f]ormulas involving calculus look best when an extra thin space
-appears before dx or dy or d whatever_ (Chapter 18 p.168), and this package
+  appears before dx or dy or d whatever_ (Chapter 18 p.168), and this package
 heeds this advice. If you don't want the spaces between the d-units, you may
-pass a `compact:#true` argument: $dd(r,theta) "vs." dd(r,theta,compact:#true)$ (compact).
+pass a `compact:#true` argument: $dd(r, theta) "vs." dd(r, theta, compact: #true)$ (compact).
 // https://github.com/typst/typst/issues/147 advocates for set rules for
 // non built-in functions. When that's implemented, user can do a
 // #set dd(compact: true) to set this param for all dd() invocations.
@@ -666,37 +596,45 @@ pass a `compact:#true` argument: $dd(r,theta) "vs." dd(r,theta,compact:#true)$ (
   column-gutter: 2em,
 
   [
-    *(1)* #hl(`dd(f), f(r,theta) dd(r,theta)`) \
-    $ dd(f), f(r,theta) dd(r,theta) $
+    *(1)* #hl(`dd(f), r dd(r), f(r,theta) dd(r,theta)`) \
+    $ dd(f), r dd(r), f(r,theta) dd(r, theta) $
   ],
   [
     *(2)* #hl(`dd(x,3), dd(f,[k]), dd(f,[k],d:delta)`) \
-    $ dd(x,3), dd(f,[k]), dd(f,[k],d:delta) $
+    $ dd(x, 3), dd(f, [k]), dd(f, [k], d: delta) $
   ],
+
   [
     *(3)* #hl(`dd(f,2), dd(vb(x),t,[3,])`) \
-    $ dd(f,2), dd(vb(x),t,[3,]) $
+    $ dd(f, 2), dd(vb(x), t, [3,]) $
   ],
   [
     *(4)* #hl(`dd(x,y), dd(x,y,[2,3]), dd(x,y,z,[2,3])`) \
-    $ dd(x,y), dd(x,y,[2,3]), dd(x,y,z,[2,3]) $
+    $ dd(x, y), dd(x, y, [2,3]), dd(x, y, z, [2,3]) $
   ],
+
   [
     *(5)* #hl(`dd(x, y, z, [[1,1],rho+1,n_1])`) \
     $ dd(x, y, z, [[1,1],rho+1,n_1]) $
   ],
   [
     *(6)* #hl(`dd(x,y,d:Delta), dd(x,y,2,d:Delta)`) \
-    $ dd(x,y,d:Delta), dd(x,y,2,d:Delta) $
+    $ dd(x, y, d: Delta), dd(x, y, 2, d: Delta) $
   ],
+
   [
     *(7)* #hl(`dd(t,x_1,x_2,x_3,p:and)`) \
-    $ dd(t,x_1,x_2,x_3,p:and) $
+    $ dd(t, x_1, x_2, x_3, p: and) $
   ],
   [
     *(7)* #hl(`dd(t,x_1,x_2,x_3,d:upright(D))`) \
-    $ dd(t,x_1,x_2,x_3,d:upright(D)) $
-  ]
+    $ dd(t, x_1, x_2, x_3, d: upright(D)) $
+  ],
+
+  [
+    *(8)* #hl(`a dd(x) + b dd(y)`) \
+    $ a dd(x) + b dd(y) $
+  ],
 )
 
 === Ordinary derivatives <ordinary-derivatives>
@@ -708,7 +646,7 @@ Function: `derivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `dv(`...`)
 - positional _args_: the variable name, *optionally* followed by an order number e.g. `2`,
 - named _kwargs_:
   - `d`: the differential symbol [default: `upright(d)`].
-  - `s`: the "slash" separating the numerator and denominator [default: `none`], by default it produces the normal fraction form $dv(f,x)$. The most common non-defaults are (1) `\/`, so as to create a flat form $dv(f,x,s:\/)$ that fits inline; and (2) `large`, so that "d/dx" operator is put in front of the (potentially very large) function expression, and the size of the parentheses are adapted to match the highest of the operator and the function expression.
+  - `s`: the "slash" separating the numerator and denominator [default: `none`], by default it produces the normal fraction form $dv(f, x)$. The most common non-defaults are (1) `\/`, so as to create a flat form $dv(f, x, s: \/)$ that fits inline; and (2) `large`, so that "d/dx" operator is put in front of the (potentially very large) function expression, and the size of the parentheses are adapted to match the highest of the operator and the function expression.
 
 *Order assignment algorithm:* there is just one variable, so the assignment is trivial: simply assign the order number (default to 1) to the variable. If a variable $x$ has order 1, it is rendered as $x$ not $x^1$.
 
@@ -721,35 +659,38 @@ Function: `derivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `dv(`...`)
 
   [
     *(1)* #hl(`dv(,x), dv(,x,2), dv(f,x,k+1)`) \
-    $ dv(,x), dv(,x,2), dv(f,x,k+1) $
+    $ dv(, x), dv(, x, 2), dv(f, x, k+1) $
   ],
   [
     *(2)* #hl(`dv(, vb(r)), dv(f, vb(r)_e, 2)`) \
     $ dv(, vb(r)), dv(, vb(r)_e, 2) $
   ],
+
   [
     *(3)* #hl(`dv(f,x,2,s:\/), dv(f,xi,k+1,s:\/)`) \
-    $ dv(f,x,2,s:\/), dv(f,xi,k+1,s:\/) $
+    $ dv(f, x, 2, s: \/), dv(f, xi, k+1, s: \/) $
   ],
   [
     *(4)* #hl(`dv((sum f_i (x) dd(x)),x,s:"large")`) \
-    $ dv((sum f_i (x) dd(x)),x,s:"large") $
+    $ dv((sum f_i (x) dd(x)), x, s: "large") $
   ],
+
   [
     *(5)* #hl(`dv(, x, d:delta), dv(, x, 2, d:Delta)`) \
-    $ dv(, x, d:delta), dv(, x, 2, d:Delta) $
+    $ dv(, x, d: delta), dv(, x, 2, d: Delta) $
   ],
   [
     *(6)* #hl(`dv(vb(u), t, 2, d: upright(D))`) \
     $ dv(vb(u), t, 2, d: upright(D)) $
   ],
+
   [
     *(7)* #hl(`dv(vb(u),t,2,d:upright(D),s:\/)`) \
-    $ dv(vb(u),t,2,d:upright(D),s:\/) $
+    $ dv(vb(u), t, 2, d: upright(D), s: \/) $
   ],
-   [
+  [
     *(7)* #hl(`dv((u+v),t,2,d:upright(D),s:"large")`) \
-    $ dv((u+v),t,2,d:upright(D),s:"large") $
+    $ dv((u+v), t, 2, d: upright(D), s: "large") $
   ],
 )
 
@@ -762,7 +703,7 @@ Function: `partialderivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `pd
 - positional _args_: the variable names, *optionally* followed by an order number e.g. `2`, or an order array e.g. `[2,3]`, `[k]`, `[m n, lambda+1]`.
 - named _kwargs_:
   - `d`: the differential symbol [default: `partial`].
-  - `s`: the "slash" separating the numerator and denominator [default: `none`], by default it produces the normal fraction form $pdv(f,x)$. The most common non-defaults non-defaults are (1) `\/`, so as to create a flat form $dv(f,x,s:\/)$ that fits inline, and (2) `"large"`, so that "d/dx" operator is put in front of the (potentially very large) function expression, and the size of the parentheses are adapted to match the highest of the operator and the function expression.
+  - `s`: the "slash" separating the numerator and denominator [default: `none`], by default it produces the normal fraction form $pdv(f, x)$. The most common non-defaults non-defaults are (1) `\/`, so as to create a flat form $dv(f, x, s: \/)$ that fits inline, and (2) `"large"`, so that "d/dx" operator is put in front of the (potentially very large) function expression, and the size of the parentheses are adapted to match the highest of the operator and the function expression.
   - `total`: the user-specified total order.
     - If it is absent, then (1) if the orders assigned to all variables are numeric, the total order number will be *automatically computed*; (2) if non-number symbols are present, computation will be attempted with minimum effort, and a user override with argument `total` may be necessary.
 
@@ -781,60 +722,66 @@ Function: `partialderivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `pd
   column-gutter: 2em,
   [
     *(1)* #hl(`pdv(,x), pdv(,t,2), pdv(,lambda,[k])`) \
-    $ pdv(,x), pdv(,t,2), pdv(,lambda,[k]) $
+    $ pdv(, x), pdv(, t, 2), pdv(, lambda, [k]) $
   ],
   [
     *(2)* #hl(`pdv(f,vb(r)), pdv(phi,vb(r)_e,2)`) \
-    $ pdv(phi,vb(r)), pdv(phi,vb(r)_e,2) $
+    $ pdv(phi, vb(r)), pdv(phi, vb(r)_e, 2) $
   ],
+
   [
     *(3)* #hl(`pdv(,x,y), pdv(,x,y,2)`) \
-    $ pdv(,x,y), pdv(,x,y,2) $
+    $ pdv(, x, y), pdv(, x, y, 2) $
   ],
   [
     *(4)* #hl(`pdv(f,x,y,2), pdv(f,x,y,3)`) \
-    $ pdv(phi,x,y,2), pdv(phi,x,y,3) $
+    $ pdv(phi, x, y, 2), pdv(phi, x, y, 3) $
   ],
+
   [
     *(5)* #hl(`pdv(,x,y,[2,]), pdv(,x,y,[1,2])`) \
-    $ pdv(,x,y,[2,]), pdv(,x,y,[1,2]) $
+    $ pdv(, x, y, [2,]), pdv(, x, y, [1,2]) $
   ],
   [
     *(6)* #hl(`pdv(,t,2,s:\/), pdv(f,x,y,s:\/)`) \
-    $ pdv(,t,2,s:\/), pdv(f,x,y,s:\/) $
+    $ pdv(, t, 2, s: \/), pdv(f, x, y, s: \/) $
   ],
+
   [
     *(7)* #hl(`pdv(,y)(pdv((x+y),x,s:"large"))`) \
-    $ pdv(,y)(pdv((x+y),x,s:"large")) $
+    $ pdv(, y)(pdv((x+y), x, s: "large")) $
   ],
   [
     *(8)* #hl(`pdv(,x)[integral_0^x f(x,y) dd(x,y)]`) \
-    $ pdv(,z)[integral_0^z f(x) dd(x,y)] $
+    $ pdv(, z)[integral_0^z f(x) dd(x, y)] $
   ],
+
   [
     *(9)* #hl(`pdv(, (x^1), (x^2), (x^3), [1,3])`) \
     $ pdv(, (x^1), (x^2), (x^3), [1,3]) $
   ],
   [
     *(10)* #hl(`pdv(phi,x,y,z,tau, [2,2,2,1])`) \
-    $ pdv(phi,x,y,z,tau, [2,2,2,1]) $
+    $ pdv(phi, x, y, z, tau, [2,2,2,1]) $
   ],
+
   [
     *(11)* #hl(`pdv(,x,y,z,t,[1,xi,2,eta+2])`) \
-    $ pdv(,x,y,z,t,[1,xi,2,eta+2]) $
+    $ pdv(, x, y, z, t, [1,xi,2,eta+2]) $
   ],
   [
     *(12)* #hl(`pdv(,x,y,z,[xi n,n-1],total:(xi+1)n)`) \
-    $ pdv(,x,y,z,[xi n,n-1],total:(xi+1)n) $
+    $ pdv(, x, y, z, [xi n,n-1], total: (xi+1)n) $
   ],
+
   [
     *(13)* #hl(`pdv(S, phi.alt, phi.alt, d:delta)`) \
-    $ pdv(S, phi.alt, phi.alt, d:delta) $
+    $ pdv(S, phi.alt, phi.alt, d: delta) $
   ],
   [
     *(14)* #hl(`pdv(W[J], J^mu (x), J^nu (y), d:delta)`) \
-    $ pdv(W[J], J^mu (x), J^nu (y), d:delta) $
-  ]
+    $ pdv(W[J], J^mu (x), J^nu (y), d: delta) $
+  ],
 )
 
 *(15)* #hl(`integral_V dd(V) (pdv(cal(L), phi) - partial_mu (pdv(cal(L), (partial_mu phi)))) = 0`) \
@@ -887,12 +834,13 @@ If you only want to enable it within a content block's scope, you may do
 
   [
     *(1)* #hl(`(U V_n W')^T = W'^T V_n^T U^T`) \
-    $ (Sigma V_n W')^T = W'^T V_n^T Sigma^T  $
+    $ (Sigma V_n W')^T = W'^T V_n^T Sigma^T $
   ],
   [
     *(2)* #hl(`vec(a, b)^T, mat(a, b; c, d)^T`) \
     $ vec(a, b)^T, mat(a, b; c, d)^T $
   ],
+
   [
     *(3)* #hl(`abs(a)^T, norm(a)^T, evaluated(F(t))^T_0`) \
     $ abs(a)^T, norm(a)^T, evaluated(F(t))^T_0 $
@@ -901,6 +849,7 @@ If you only want to enable it within a content block's scope, you may do
     *(4)* #hl(`integral^T, sum^T, product^T`) \
     $ integral^T, sum^T, product^T $
   ],
+
   [
     *(5)* #hl(`limits(e)^T, scripts(e)^T`) \
     $ limits(e)^T, scripts(e)^T $
@@ -908,7 +857,7 @@ If you only want to enable it within a content block's scope, you may do
   [
     *(6)* #hl(`(M+N)^T, (m+n)^scripts(T)`) \
     $ (M+N)^T, (m+n)^scripts(T) $
-  ]
+  ],
 )
 
 === Matrix dagger with superscript +
@@ -958,12 +907,13 @@ Overrides: if you really want to
 
   [
     *(1)* #hl(`U^+U = U U^+ = I`) \
-    $ U^+U = U U^+ = I  $
+    $ U^+U = U U^+ = I $
   ],
   [
     *(2)* #hl(`mat(1+i,1;2-i,1)^+ = mat(1-i,2+i;1,1)`) \
-    $ mat(1+i,1;2-i,1)^+ = mat(1-i,2+i;1,1) $
+    $ mat(1+i, 1; 2-i, 1)^+ = mat(1-i, 2+i; 1, 1) $
   ],
+
   [
     *(3)* #hl(`limits(N)^+, scripts(N)^+`) \
     $ limits(N)^+, scripts(N)^+ $
@@ -994,13 +944,13 @@ In the default font, the Typst built-in symbol `planck.reduce` $planck.reduce$ l
   [$ E = planck.reduce omega $],
   [$ (pi G^2) / (planck.reduce c^4) $],
   [$ A e^(frac(i(p x - E t), planck.reduce)) $],
-  [$ i planck.reduce pdv(,t) psi = -frac(planck.reduce^2, 2m) laplacian psi $],
+  [$ i planck.reduce pdv(, t) psi = -frac(planck.reduce^2, 2m) laplacian psi $],
 
   [this package's `hbar`],
   [$ E = hbar omega $],
   [$ (pi G^2) / (hbar c^4) $],
   [$ A e^(frac(i(p x - E t), hbar)) $],
-  [$ i hbar pdv(,t) psi = -frac(hbar^2, 2m) laplacian psi $],
+  [$ i hbar pdv(, t) psi = -frac(hbar^2, 2m) laplacian psi $],
 )
 
 *Known limitation*: `hbar` uses the `strike` function, and show rules of `strike` will affect `hbar`.
@@ -1018,7 +968,9 @@ Therefore, you may have to revert your show rules for `hbar`. The following is a
   }
 
   $hbar$ is black, while $#old-hbar$ is gray.
-  ```.text.replace("{VERSION}", version),
+  ```
+    .text
+    .replace("{VERSION}", version),
   lang: "typst",
 )
 
@@ -1026,7 +978,7 @@ Therefore, you may have to revert your show rules for `hbar`. The following is a
 
 #v(1em)
 
-Tensors are often expressed using the #linkurl("abstract index notation", "https://en.wikipedia.org/wiki/Abstract_index_notation"), which makes the contravariant and covariant "slots" explicit. The intuitive solution of using superscripts and subscripts do not suffice if both upper (contravariant) and lower (covariant) indices exist, because the notation rules require the indices be vertically separated: e.g. $tensor(T,+a,-b)$ and $tensor(T,-a,+b)$, which are of different shapes. "$T^a_b$" is flatly wrong, and `T^(space w)_(i space j)` produces a weird-looking "$T^(space w)_(i space j)$" (note $w,j$ vertically overlap).
+Tensors are often expressed using the #linkurl("abstract index notation", "https://en.wikipedia.org/wiki/Abstract_index_notation"), which makes the contravariant and covariant "slots" explicit. The intuitive solution of using superscripts and subscripts do not suffice if both upper (contravariant) and lower (covariant) indices exist, because the notation rules require the indices be vertically separated: e.g. $tensor(T, +a, -b)$ and $tensor(T, -a, +b)$, which are of different shapes. "$T^a_b$" is flatly wrong, and `T^(space w)_(i space j)` produces a weird-looking "$T^(space w)_(i space j)$" (note $w,j$ vertically overlap).
 
 Function: `tensor(`_symbol_, \*_args_`)`.
 - _symbol_: the tensor symbol,
@@ -1041,40 +993,43 @@ Function: `tensor(`_symbol_, \*_args_`)`.
 
   [
     *(1)* #hl(`tensor(u,+a), tensor(v,-a)`) \
-    $ tensor(u,+a), tensor(v,-a) $
+    $ tensor(u, +a), tensor(v, -a) $
   ],
   [
     *(2)* #hl(`tensor(h,+mu,+nu), tensor(g,-mu,-nu)`) \
     $ tensor(h, +mu, +nu), tensor(g, -mu, -nu) $
   ],
+
   [
     *(3)* #hl(`tensor(T,+a,-b), tensor(T,-a,+b)`) \
-    $ tensor(T,+a,-b), tensor(T,-a,+b) $
+    $ tensor(T, +a, -b), tensor(T, -a, +b) $
   ],
   [
     *(4)* #hl(`tensor(T, -i, +w, -j)`) \
     $ tensor(T, -i, +w, -j) $
   ],
+
   [
     *(5)* #hl(`tensor((dd(x^lambda)),-a)`) \
-    $ tensor((dd(x^lambda)),-a) $
+    $ tensor((dd(x^lambda)), -a) $
   ],
   [
     *(6)* #hl(`tensor(AA,+a,+b,-c,-d,+e,-f,+g,-h)`) \
-    $ tensor(AA,+a,+b,-c,-d,+e,-f,+g,-h) $
+    $ tensor(AA, +a, +b, -c, -d, +e, -f, +g, -h) $
   ],
+
   [
     *(7)* #hl(`tensor(R, -a, -b, +d)`) \
     $ tensor(R, -a, -b, +d) $
   ],
   [
     *(8)* #hl(`tensor(T,+1,-I(1,-1),+a_bot,-+,+-)`) \
-    $ tensor(T,+1,-I(1,-1),+a_bot,-+,+-) $
+    $ tensor(T, +1, -I(1,-1), +a_bot, -+, +-) $
   ],
 )
 
 *(9)* `grad_mu A^nu = partial_mu A^nu + tensor(Gamma,+nu,-mu,-lambda) A^lambda`
-$ grad_mu A^nu = partial_mu A^nu + tensor(Gamma,+nu,-mu,-lambda) A^lambda $
+$ grad_mu A^nu = partial_mu A^nu + tensor(Gamma, +nu, -mu, -lambda) A^lambda $
 
 === Isotopes
 
@@ -1095,19 +1050,19 @@ Function: `isotope(`_element_, _a_: ..., _z_: ...`)`.
   column-gutter: 2em,
   [
     *(1)* #hl(`isotope(I, a:127)`) \
-    $ isotope(I, a:127) $
+    $ isotope(I, a: 127) $
   ],
   [
     *(2)* #hl(`isotope("Fe", z:26)`) \
-    $ isotope("Fe", z:26) $
+    $ isotope("Fe", z: 26) $
   ],
 )
 
 *(3)* #hl(`isotope("Bi",a:211,z:83) -> isotope("Tl",a:207,z:81) + isotope("He",a:4,z:2)`)
-$ isotope("Bi",a:211,z:83) -> isotope("Tl",a:207,z:81) + isotope("He",a:4,z:2) $
+$ isotope("Bi", a: 211, z: 83) -> isotope("Tl", a: 207, z: 81) + isotope("He", a: 4, z: 2) $
 
 *(4)* #hl(`isotope("Tl",a:207,z:81) -> isotope("Pb",a:207,z:82) + isotope(e,a:0,z:-1)`)
-$ isotope("Tl",a:207,z:81) -> isotope("Pb",a:207,z:82) + isotope(e,a:0,z:-1) $
+$ isotope("Tl", a: 207, z: 81) -> isotope("Pb", a: 207, z: 82) + isotope(e, a: 0, z: -1) $
 
 === The n-th term in Taylor series
 
@@ -1129,27 +1084,29 @@ automatically adds a parenthesis where appropriate.
   column-gutter: 2em,
   [
     *(1)* #hl(`taylorterm(f,x,x_0,0)`) \
-    $ taylorterm(f,x,x_0,0) $
+    $ taylorterm(f, x, x_0, 0) $
   ],
   [
     *(2)* #hl(`taylorterm(f,x,x_0,1)`) \
-    $ taylorterm(f,x,x_0,1) $
+    $ taylorterm(f, x, x_0, 1) $
   ],
+
   [
     *(3)* #hl(`taylorterm(F,x^nu,x^nu_0,n)`) \
-    $ taylorterm(F,x^nu,x^nu_0,n) $
+    $ taylorterm(F, x^nu, x^nu_0, n) $
   ],
   [
     *(4)* #hl(`taylorterm(f,x,x_0,n)`) \
-    $ taylorterm(f,x,x_0,n) $
+    $ taylorterm(f, x, x_0, n) $
   ],
+
   [
     *(5)* #hl(`taylorterm(f,x,1+a,2)`) \
-    $ taylorterm(f,x,1+a,2) $
+    $ taylorterm(f, x, 1+a, 2) $
   ],
   [
     *(6)* #hl(`taylorterm(f_p,x,x_0,n-1)`) \
-    $ taylorterm(f_p,x,x_0,n-1) $
+    $ taylorterm(f_p, x, x_0, n-1) $
   ],
 )
 
@@ -1180,13 +1137,9 @@ Function: `signals(str`, `step:`:..., `style`:...`)`.
   [`C` (charge) \ $ signals("C") $],
   [`D` (drain) \ $ signals("D") $],
 
-  [`<` \ $ signals("<") $],
-  [`>` \ $ signals(">") $],
-  [`X` \ $ signals("X") $],
-  [],
+  [`<` \ $ signals("<") $], [`>` \ $ signals(">") $], [`X` \ $ signals("X") $], [],
 
-  [ignore: (blankspace) \ separate: `&`],
-  [repeat: `.` (dot)],
+  [ignore: (blankspace) \ separate: `&`], [repeat: `.` (dot)],
 )
 
 #align(center, [*Examples*])
@@ -1201,7 +1154,7 @@ $ signals("M'H|L|h|l|^|v,&|H'M'H|l,m,l|") $
 $ signals("-|=|-", step: #2em), signals("-|#|-"), signals("-<=>-<=") $
 
 *(4)* `signals("R1..F0..", step: #.5em)signals("R1.|v|1", step: #.5em, color:#fuchsia)`
-$ signals("R1..F0..", step: #.5em)signals("R1.|v|1", step: #.5em, color:#fuchsia) $
+$ signals("R1..F0..", step: #.5em)signals("R1.|v|1", step: #.5em, color: #fuchsia) $
 
 *(5)*
 ```typst
@@ -1209,8 +1162,8 @@ $ signals("R1..F0..", step: #.5em)signals("R1.|v|1", step: #.5em, color:#fuchsia
 "bus:" & signals(" #.... X=... ..... ..... X=... ..... ..... X#.", step: #0.5em)
 ```
 $
-"clk:" & signals("|1....|0....|1....|0....|1....|0....|1....|0..", step: #0.5em) \
-"bus:" & signals(" #.... X=... ..... ..... X=... ..... ..... X#.", step: #0.5em)
+  "clk:" & signals("|1....|0....|1....|0....|1....|0....|1....|0..", step: #0.5em) \
+  "bus:" & signals(" #.... X=... ..... ..... X=... ..... ..... X#.", step: #0.5em)
 $
 
 == Symbolic addition
@@ -1229,33 +1182,19 @@ Function: `BMEsymadd([`...`])`.
   row-gutter: 1em,
   column-gutter: 2em,
 
-  [*(1)* #hl(`BMEsymadd([1]), BMEsymadd([2, 3])`)],
-  [#sym.arrow],
-  [$BMEsymadd([1]), BMEsymadd([2, 3])$],
+  [*(1)* #hl(`BMEsymadd([1]), BMEsymadd([2, 3])`)], [#sym.arrow], [$BMEsymadd([1]), BMEsymadd([2, 3])$],
 
-  [*(2)* #hl(`BMEsymadd([a, b^2, 1])`)],
-  [#sym.arrow],
-  [$BMEsymadd([a, b^2, 1])$],
+  [*(2)* #hl(`BMEsymadd([a, b^2, 1])`)], [#sym.arrow], [$BMEsymadd([a, b^2, 1])$],
 
-  [*(3)* #hl(`BMEsymadd([a+1,2c,b,2,b])`)],
-  [#sym.arrow],
-  [$BMEsymadd([a+1,2c,b,2,b])$],
+  [*(3)* #hl(`BMEsymadd([a+1,2c,b,2,b])`)], [#sym.arrow], [$BMEsymadd([a+1,2c,b,2,b])$],
 
-  [*(4)* #hl(`BMEsymadd([a+1,2(b+1),1,b+1,15])`)],
-  [#sym.arrow],
-  [$BMEsymadd([a+1,2(b+1),1,b+1,15])$],
+  [*(4)* #hl(`BMEsymadd([a+1,2(b+1),1,b+1,15])`)], [#sym.arrow], [$BMEsymadd([a+1,2(b+1),1,b+1,15])$],
 
-  [*(5)* #hl(`BMEsymadd([a+1,2(b+1),1,(b+1),15])`)],
-  [#sym.arrow],
-  [$BMEsymadd([a+1,2(b+1),1,(b+1),15])$],
+  [*(5)* #hl(`BMEsymadd([a+1,2(b+1),1,(b+1),15])`)], [#sym.arrow], [$BMEsymadd([a+1,2(b+1),1,(b+1),15])$],
 
-  [*(6)* #hl(`BMEsymadd([a+1,2(b+1),1,3(b+1),15])`)],
-  [#sym.arrow],
-  [$BMEsymadd([a+1,2(b+1),1,3(b+1),15])$],
+  [*(6)* #hl(`BMEsymadd([a+1,2(b+1),1,3(b+1),15])`)], [#sym.arrow], [$BMEsymadd([a+1,2(b+1),1,3(b+1),15])$],
 
-  [*(7)* #hl(`BMEsymadd([2a+1,xi,b+1,a xi + 2b+a,2b+1])`)],
-  [#sym.arrow],
-  [$BMEsymadd([2a+1,xi,b+1,a xi + 2b+a,2b+1])$],
+  [*(7)* #hl(`BMEsymadd([2a+1,xi,b+1,a xi + 2b+a,2b+1])`)], [#sym.arrow], [$BMEsymadd([2a+1,xi,b+1,a xi + 2b+a,2b+1])$],
 )
 
 #pagebreak()

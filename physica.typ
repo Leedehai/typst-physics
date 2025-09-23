@@ -38,7 +38,7 @@
   // starting with a Content holding "(" and ending with a Content holding ")".
   let children = input.at("body").at("children")
 
-  let result_elements = ()  // array of Content objects
+  let result_elements = () // array of Content objects
 
   // Skip the delimiters at the two ends.
   let inner_children = children.slice(1, children.len() - 1)
@@ -46,27 +46,27 @@
   // because they are syntactically meaningful in Typst. However, things like
   // "a+b", "a*b" are recognized as 3 nodes, respectively, because in Typst's
   // view they are just plain sequences of symbols. We need to join the symbols.
-  let current_element_pieces = ()  // array of Content objects
+  let current_element_pieces = () // array of Content objects
   for i in range(inner_children.len()) {
     let e = inner_children.at(i)
-    if e == [ ] or e == [] { continue; }
+    if e == [ ] or e == [] { continue }
     if e != [#math.comma] { current_element_pieces.push(e) }
     if e == [#math.comma] or (i == inner_children.len() - 1) {
       if current_element_pieces.len() > 0 {
         result_elements.push(current_element_pieces.join())
         current_element_pieces = ()
       }
-      continue;
+      continue
     }
   }
 
-  return result_elements;
+  return result_elements
 }
 
 // A bare-minimum-effort symbolic addition.
 #let __bare_minimum_effort_symbolic_add(elements) = {
   assert(type(elements) == array, message: "expecting an array of content")
-  let operands = ()  // array
+  let operands = () // array
   for e in elements {
     if not e.has("children") {
       operands.push(e)
@@ -81,7 +81,7 @@
       if child == [#math.plus] {
         operands.push(current_operand.join())
         current_operand = ()
-        continue;
+        continue
       }
       current_operand.push(child)
     }
@@ -89,21 +89,22 @@
   }
 
   let num_sum = 0
-  let map_id_to_sym = (:)  // dictionary, symbol repr to symbol
-  let map_id_to_sym_sum = (:)  // dictionary, symbol repr to number
+  let map_id_to_sym = (:) // dictionary, symbol repr to symbol
+  let map_id_to_sym_sum = (:) // dictionary, symbol repr to number
   for e in operands {
     if __content_holds_number(e) {
       num_sum += int(e.text)
       continue
     }
     let is_num_times_sth = (
-      e.has("children") and __content_holds_number(e.at("children").at(0)))
+      e.has("children") and __content_holds_number(e.at("children").at(0))
+    )
     if is_num_times_sth {
       let leading_num = int(e.at("children").at(0).text)
-      let sym = e.at("children").slice(1).join()  // join to one symbol
-      let sym_id = repr(sym)  // string
+      let sym = e.at("children").slice(1).join() // join to one symbol
+      let sym_id = repr(sym) // string
       if sym_id in map_id_to_sym {
-        let sym_sum_so_far = map_id_to_sym_sum.at(sym_id)  // number
+        let sym_sum_so_far = map_id_to_sym_sum.at(sym_id) // number
         map_id_to_sym_sum.insert(sym_id, sym_sum_so_far + leading_num)
       } else {
         map_id_to_sym.insert(sym_id, sym)
@@ -111,9 +112,9 @@
       }
     } else {
       let sym = e
-      let sym_id = repr(sym)  // string
+      let sym_id = repr(sym) // string
       if repr(e) in map_id_to_sym {
-        let sym_sum_so_far = map_id_to_sym_sum.at(sym_id)  // number
+        let sym_sum_so_far = map_id_to_sym_sum.at(sym_id) // number
         map_id_to_sym_sum.insert(sym_id, sym_sum_so_far + 1)
       } else {
         map_id_to_sym.insert(sym_id, sym)
@@ -122,11 +123,11 @@
     }
   }
 
-  let expr_terms = ()  // array of Content object
+  let expr_terms = () // array of Content object
   let sorted_sym_ids = map_id_to_sym.keys().sorted()
   for sym_id in sorted_sym_ids {
     let sym = map_id_to_sym.at(sym_id)
-    let sym_sum = map_id_to_sym_sum.at(sym_id)  // number
+    let sym_sum = map_id_to_sym_sum.at(sym_id) // number
     if sym_sum == 1 {
       expr_terms.push(sym)
     } else if sym_sum != 0 {
@@ -134,7 +135,7 @@
     }
   }
   if num_sum != 0 {
-    expr_terms.push([#num_sum])  // make a Content object holding the number
+    expr_terms.push([#num_sum]) // make a Content object holding the number
   }
 
   return expr_terms.join([#math.plus])
@@ -143,7 +144,7 @@
 // == Braces
 
 #let Set(..sink) = {
-  let args = sink.pos()  // array
+  let args = sink.pos() // array
   let expr = args.at(0, default: none)
   let cond = args.at(1, default: none)
 
@@ -169,7 +170,7 @@
 }
 
 #let expectationvalue(..sink) = {
-  let args = sink.pos()  // array
+  let args = sink.pos() // array
   let expr = args.at(0, default: none)
   let func = args.at(1, default: none)
 
@@ -184,7 +185,7 @@
 // == Vector notations
 
 #let vecrow(..sink) = {
-  let (args, kwargs) = (sink.pos(), sink.named())  // array, dictionary
+  let (args, kwargs) = (sink.pos(), sink.named()) // array, dictionary
   let delim = kwargs.at("delim", default: "(")
   let (ldelim, rdelim) = if delim == "(" {
     (math.paren.l, math.paren.r)
@@ -279,19 +280,19 @@
 }
 
 #let matrixdet(..sink) = {
-  math.mat(..sink, delim:"|")
+  math.mat(..sink, delim: "|")
 }
 #let mdet = matrixdet
 
 #let diagonalmatrix(..sink) = {
-  let (args, kwargs) = (sink.pos(), sink.named())  // array, dictionary
-  let delim = kwargs.at("delim", default:"(")
+  let (args, kwargs) = (sink.pos(), sink.named()) // array, dictionary
+  let delim = kwargs.at("delim", default: "(")
   let fill = kwargs.at("fill", default: none)
 
-  let arrays = ()  // array of arrays
+  let arrays = () // array of arrays
   let n = args.len()
   for i in range(n) {
-    let array = range(n).map((j) => {
+    let array = range(n).map(j => {
       let e = if j == i { args.at(i) } else { fill }
       return e
     })
@@ -302,14 +303,14 @@
 #let dmat = diagonalmatrix
 
 #let antidiagonalmatrix(..sink) = {
-  let (args, kwargs) = (sink.pos(), sink.named())  // array, dictionary
-  let delim = kwargs.at("delim", default:"(")
+  let (args, kwargs) = (sink.pos(), sink.named()) // array, dictionary
+  let delim = kwargs.at("delim", default: "(")
   let fill = kwargs.at("fill", default: none)
 
-  let arrays = ()  // array of arrays
+  let arrays = () // array of arrays
   let n = args.len()
   for i in range(n) {
-    let array = range(n).map((j) => {
+    let array = range(n).map(j => {
       let complement = n - 1 - i
       let e = if j == complement { args.at(i) } else { fill }
       return e
@@ -320,7 +321,7 @@
 }
 #let admat = antidiagonalmatrix
 
-#let identitymatrix(order, delim:"(", fill:none) = {
+#let identitymatrix(order, delim: "(", fill: none) = {
   let order_num = if type(order) == content and __content_holds_number(order) {
     int(order.text)
   } else if type(order) == int {
@@ -329,12 +330,12 @@
     panic("imat/identitymatrix: the order shall be an integer, e.g. 2")
   }
 
-  let ones = range(order_num).map((i) => 1)
+  let ones = range(order_num).map(i => 1)
   diagonalmatrix(..ones, delim: delim, fill: fill)
 }
 #let imat = identitymatrix
 
-#let zeromatrix(order, delim:"(") = {
+#let zeromatrix(order, delim: "(") = {
   let order_num = if type(order) == content and __content_holds_number(order) {
     int(order.text)
   } else if type(order) == int {
@@ -343,38 +344,41 @@
     panic("zmat/zeromatrix: the order shall be an integer, e.g. 2")
   }
 
-  let ones = range(order_num).map((i) => 0)
+  let ones = range(order_num).map(i => 0)
   diagonalmatrix(..ones, delim: delim, fill: 0)
 }
 #let zmat = zeromatrix
 
-#let jacobianmatrix(fs, xs, delim:"(", big: false) = {
+#let jacobianmatrix(fs, xs, delim: "(", big: false) = {
   assert(type(fs) == array, message: "expecting an array of function names")
   assert(type(xs) == array, message: "expecting an array of variable names")
-  let arrays = ()  // array of arrays
+  let arrays = () // array of arrays
   for f in fs {
-    arrays.push(xs.map((x) => __mate(math.frac($partial#f$, $partial#x$), big)))
+    arrays.push(xs.map(x => __mate(math.frac($partial#f$, $partial#x$), big)))
   }
   math.mat(delim: delim, ..arrays)
 }
 #let jmat = jacobianmatrix
 
-#let hessianmatrix(fs, xs, delim:"(", big: false) = {
+#let hessianmatrix(fs, xs, delim: "(", big: false) = {
   assert(type(fs) == array, message: "usage: hessianmatrix(f; x, y...)")
   assert(fs.len() == 1, message: "usage: hessianmatrix(f; x, y...)")
   let f = fs.at(0)
   assert(type(xs) == array, message: "expecting an array of variable names")
-  let row_arrays = ()  // array of arrays
+  let row_arrays = () // array of arrays
   let order = xs.len()
   for r in range(order) {
-    let row_array = ()  // array
+    let row_array = () // array
     let xr = xs.at(r)
     for c in range(order) {
       let xc = xs.at(c)
-      row_array.push(__mate(math.frac(
-        $partial^2 #f$,
-        if xr == xc { $partial #xr^2$ } else { $partial #xr partial #xc$ }
-      ), big))
+      row_array.push(__mate(
+        math.frac(
+          $partial^2 #f$,
+          if xr == xc { $partial #xr^2$ } else { $partial #xr partial #xc$ },
+        ),
+        big,
+      ))
     }
     row_arrays.push(row_array)
   }
@@ -382,7 +386,7 @@
 }
 #let hmat = hessianmatrix
 
-#let xmatrix(m, n, func, delim:"(") = {
+#let xmatrix(m, n, func, delim: "(") = {
   let rows = if type(m) == content and __content_holds_number(m) {
     int(m.text)
   } else if type(m) == int {
@@ -401,11 +405,11 @@
 
   assert(
     type(func) == function,
-    message: "func shall be a function (did you forget to add a preceding '#' before the function name)?"
+    message: "func shall be a function (did you forget to add a preceding '#' before the function name)?",
   )
-  let row_arrays = ()  // array of arrays
+  let row_arrays = () // array of arrays
   for i in range(1, rows + 1) {
-    let row_array = ()  // array
+    let row_array = () // array
     for j in range(1, cols + 1) {
       row_array.push(func(i, j))
     }
@@ -415,54 +419,67 @@
 }
 #let xmat = xmatrix
 
-#let rot2mat(theta, delim:"(") = {
+#let rot2mat(theta, delim: "(") = {
   let operand = if type(theta) == content and __is_add_sub_sequence(theta) {
     $(theta)$
   } else { theta }
-  $mat(cos operand, -sin operand;
-       sin operand, cos operand; delim: delim)$
+  $mat(
+    cos operand, -sin operand;
+    sin operand, cos operand; delim: delim
+  )$
 }
 
-#let rot3xmat(theta, delim:"(") = {
+#let rot3xmat(theta, delim: "(") = {
   let operand = if type(theta) == content and __is_add_sub_sequence(theta) {
     $(theta)$
   } else { theta }
-  $mat(1, 0,           0;
-       0, cos operand, -sin operand;
-       0, sin operand, cos operand; delim: delim)$
+  $mat(
+    1, 0, 0;
+    0, cos operand, -sin operand;
+    0, sin operand, cos operand; delim: delim
+  )$
 }
 
-#let rot3ymat(theta, delim:"(") = {
+#let rot3ymat(theta, delim: "(") = {
   let operand = if type(theta) == content and __is_add_sub_sequence(theta) {
     $(theta)$
   } else { theta }
-  $mat(cos operand,  0, sin operand;
-       0,            1, 0;
-       -sin operand, 0, cos operand; delim: delim)$
+  $mat(
+    cos operand, 0, sin operand;
+    0, 1, 0;
+    -sin operand, 0, cos operand; delim: delim
+  )$
 }
 
-#let rot3zmat(theta, delim:"(") = {
+#let rot3zmat(theta, delim: "(") = {
   let operand = if type(theta) == content and __is_add_sub_sequence(theta) {
     $(theta)$
   } else { theta }
-  $mat(cos operand, -sin operand, 0;
-       sin operand, cos operand,  0;
-       0,           0,            1; delim: delim)$
+  $mat(
+    cos operand, -sin operand, 0;
+    sin operand, cos operand, 0;
+    0, 0, 1; delim: delim
+  )$
 }
 
 #let grammat(..sink) = {
-  let vs = sink.pos()  // array
+  let vs = sink.pos() // array
   let delim = sink.named().at("delim", default: "(")
   let asnorm = sink.named().at("norm", default: false)
 
-  xmat(vs.len(), vs.len(), (i,j) => {
-    if (i == j and (not asnorm)) or i != j {
-      iprod(vs.at(i - 1), vs.at(j - 1))
-    } else {
-      let v = vs.at(i - 1)
-      $norm(#v)^2$
-    }
-  }, delim: delim)
+  xmat(
+    vs.len(),
+    vs.len(),
+    (i, j) => {
+      if (i == j and (not asnorm)) or i != j {
+        iprod(vs.at(i - 1), vs.at(j - 1))
+      } else {
+        let v = vs.at(i - 1)
+        $norm(#v)^2$
+      }
+    },
+    delim: delim,
+  )
 }
 
 // == Dirac braket notations
@@ -471,7 +488,7 @@
 #let ket(f) = $lr(|#f angle.r)$
 
 #let braket(..sink) = {
-  let args = sink.pos()  // array
+  let args = sink.pos() // array
 
   let bra = args.at(0, default: none)
   let ket = args.at(-1, default: bra)
@@ -485,7 +502,7 @@
 }
 
 #let ketbra(..sink) = {
-  let args = sink.pos()  // array
+  let args = sink.pos() // array
   assert(args.len() == 1 or args.len() == 2, message: "expecting 1 or 2 args")
 
   let ket = args.at(0)
@@ -553,24 +570,24 @@
 // == Differentials
 
 #let differential(..sink) = {
-  let (args, kwargs) = (sink.pos(), sink.named())  // array, dictionary
+  let (args, kwargs) = (sink.pos(), sink.named()) // array, dictionary
 
   let orders = ()
   let var_num = args.len()
-  let default_order = [1]  // a Content holding "1"
+  let default_order = [1] // a Content holding "1"
   let last = args.at(args.len() - 1)
   if type(last) == content {
     if last.func() == math.lr and last.at("body").at("children").at(0) == [\[] {
       var_num -= 1
-      orders = __extract_array_contents(last)  // array
+      orders = __extract_array_contents(last) // array
     } else if __content_holds_number(last) {
       var_num -= 1
-      default_order = last  // treat as a single element
+      default_order = last // treat as a single element
       orders.push(default_order)
     }
   } else if type(last) == int {
     var_num -= 1
-    default_order = [#last]  // make it a Content
+    default_order = [#last] // make it a Content
     orders.push(default_order)
   }
 
@@ -580,7 +597,7 @@
   // math.thin (1/6 em, thinspace in typography) is used to separate the
   // differential with the preceding function, so to keep visual cohesion, the
   // width of this joiner inside the differential shall be smaller.
-  let prod = kwargs.at("p", default: if compact { none } else { h(0.09em) })
+  let prod = kwargs.at("p", default: if compact { none } else { h(0.09em, weak: true) })
 
   let difference = var_num - orders.len()
   while difference > 0 {
@@ -598,9 +615,9 @@
     }
   }
   // Smart spacing, like Typst's built-in "dif" symbol. See TeXBook, Chapter 18.
-  // This behavior is reverted because of issue #63.
-  // $op(#arr.join(prod))$
-  $#arr.join(prod)$
+  // The width is math.thin (1/6 em, thinspace in typography).
+  // $#arr.join(prod)$
+  $#h(0.16em, weak: true)#arr.join(prod)$
 }
 #let dd = differential
 
@@ -636,9 +653,9 @@
     let operator = $#upper/#denom$
     /* Measure in math block mode for correct height
      * (See eg. https://github.com/ssotoen/gridlock/issues/2) */
-    let size_op   = measure($ #operator $).height
-    let size_func = measure($ #func     $).height
-    let bestsize  = calc.max(size_op, size_func)
+    let size_op = measure($ #operator $).height
+    let size_func = measure($ #func $).height
+    let bestsize = calc.max(size_op, size_func)
     $#operator lr(#func, size: #bestsize)$
   } else {
     let num = $#upper#func$
@@ -648,9 +665,9 @@
 }
 
 #let derivative(f, ..sink) = {
-  if f == [] { f = none }  // Convert empty content to none
+  if f == [] { f = none } // Convert empty content to none
 
-  let (args, kwargs) = (sink.pos(), sink.named())  // array, dictionary
+  let (args, kwargs) = (sink.pos(), sink.named()) // array, dictionary
   assert(args.len() > 0, message: "variable name expected")
 
   let d = kwargs.at("d", default: $upright(d)$)
@@ -659,12 +676,14 @@
   let var = args.at(0)
   assert(args.len() >= 1, message: "expecting at least one argument")
 
-  if args.len() >= 2 {  // i.e. specified the order
-    let order = args.at(1)  // Not necessarily representing a number
+  if args.len() >= 2 {
+    // i.e. specified the order
+    let order = args.at(1) // Not necessarily representing a number
     let upper = $#d^#order$
     let varorder = __combine_var_order(var, order)
     __derivative_display(upper, f, $#d#varorder$, slash)
-  } else {  // i.e. no order specified
+  } else {
+    // i.e. no order specified
     let upper = $#d$
     __derivative_display(upper, f, $#d#var$, slash)
   }
@@ -672,29 +691,29 @@
 #let dv = derivative
 
 #let partialderivative(..sink) = {
-  let (args, kwargs) = (sink.pos(), sink.named())  // array, dictionary
+  let (args, kwargs) = (sink.pos(), sink.named()) // array, dictionary
   assert(args.len() >= 2, message: "expecting one function name and at least one variable name")
 
   let f = args.at(0)
-  if f == [] { f = none }  // Convert empty content to none
+  if f == [] { f = none } // Convert empty content to none
   let var_num = args.len() - 1
   let orders = ()
-  let default_order = [1]  // a Content holding "1"
+  let default_order = [1] // a Content holding "1"
 
   // The last argument might be the order numbers, let's check.
   let last = args.at(args.len() - 1)
   if type(last) == content {
     if last.func() == math.lr and last.at("body").at("children").at(0) == [\[] {
       var_num -= 1
-      orders = __extract_array_contents(last)  // array
-    } else if  __content_holds_number(last) {
+      orders = __extract_array_contents(last) // array
+    } else if __content_holds_number(last) {
       var_num -= 1
       default_order = last
       orders.push(default_order)
     }
   } else if type(last) == int {
     var_num -= 1
-    default_order = [#last]  // make it a Content
+    default_order = [#last] // make it a Content
     orders.push(default_order)
   }
 
@@ -704,7 +723,7 @@
     difference -= 1
   }
 
-  let total_order = none  // any type, could be a number
+  let total_order = none // any type, could be a number
   // Do not use kwargs.at("total", default: ...), so as to avoid unnecessary
   // premature evaluation of the default param.
   total_order = if "total" in kwargs {
@@ -717,7 +736,7 @@
 
   let lowers = ()
   for i in range(var_num) {
-    let var = args.at(1 + i)  // 1st element is the function name, skip
+    let var = args.at(1 + i) // 1st element is the function name, skip
     let order = orders.at(i)
     if order == [1] {
       lowers.push($#d#var$)
@@ -727,7 +746,8 @@
     }
   }
 
-  let upper = if total_order != 1 and total_order != [1] {  // number or Content
+  let upper = if total_order != 1 and total_order != [1] {
+    // number or Content
     $#d^#total_order$
   } else {
     $#d$
@@ -779,9 +799,13 @@
       if e.func() == math.equation {
         return __eligible(e.at("body"))
       }
-      ((e != $∫$.body) and (e != $|$.body) and (e != $‖$.body)
-        and (e != $∑$.body/*U+2211, not greek Sigma U+03A3*/)
-        and (e != $∏$.body/*U+220F, not greek Pi U+03A0 */))
+      (
+        (e != $∫$.body)
+          and (e != $|$.body)
+          and (e != $‖$.body)
+          and (e != $∑$.body /*U+2211, not greek Sigma U+03A3*/)
+          and (e != $∏$.body /*U+220F, not greek Pi U+03A0 */)
+      )
     }
 
     if __eligible(elem.base) and elem.at("t", default: none) == $T$.body {
@@ -829,8 +853,8 @@
 #let tensor(T, ..sink) = {
   let args = sink.pos()
 
-  let (uppers, lowers) = ((), ())  // array, array
-  let hphantom(s) = { hide($#s$) }  // Like Latex's \hphantom
+  let (uppers, lowers) = ((), ()) // array, array
+  let hphantom(s) = { hide($#s$) } // Like Latex's \hphantom
 
   for i in range(args.len()) {
     let arg = args.at(i)
@@ -838,7 +862,7 @@
       if arg.children.at(0) in ([+], [#math.plus], [-], [#sym.minus]) {
         arg.children
       } else {
-        ([#math.plus],..arg.children)
+        ([#math.plus], ..arg.children)
       }
     } else {
       ([#math.plus], arg)
@@ -865,13 +889,12 @@
   // starting points of the upper and lower indices. Also, we put T inside
   // the first argument of attach(), so that the indices' vertical position
   // auto-adjusts with T's height.
-  math.attach((T,hphantom(sym.zwj)).join(), t: uppers.join(), b: lowers.join())
+  math.attach((T, hphantom(sym.zwj)).join(), t: uppers.join(), b: lowers.join())
 }
 
 #let taylorterm(fn, xv, x0, idx) = {
   let maybeparen(expr) = {
-    if __is_add_sub_sequence(expr) { $(expr)$ }
-    else { expr }
+    if __is_add_sub_sequence(expr) { $(expr)$ } else { expr }
   }
 
   if idx == [0] or idx == 0 {
@@ -883,7 +906,7 @@
   }
 }
 
-#let isotope(element, /*atomic mass*/a: none, /*atomic number*/z: none) = {
+#let isotope(element, /*atomic mass*/ a: none, /*atomic number*/ z: none) = {
   $attach(upright(element), tl: #a, bl: #z)$
 }
 
@@ -914,9 +937,14 @@
   } else if e == "=" {
     return rect(width: W, height: 1em, stroke: (top: style, bottom: style))
   } else if e == "#" {
-    return curve(stroke: style,
-      curve.move((0em, 0em)), curve.line((W * 50%, 0em)), curve.line((0em, 1em)),
-      curve.line((W, 1em)), curve.line((W * 50%, 1em)), curve.line((W, 0em)),
+    return curve(
+      stroke: style,
+      curve.move((0em, 0em)),
+      curve.line((W * 50%, 0em)),
+      curve.line((0em, 1em)),
+      curve.line((W, 1em)),
+      curve.line((W * 50%, 1em)),
+      curve.line((W, 0em)),
       curve.line((W * 50%, 0em)),
     )
   } else if e == "|" {
@@ -930,46 +958,45 @@
   } else if e == "F" {
     return line(start: (0em, 0em), end: (W, 1em), stroke: style)
   } else if e == "<" {
-    return curve(stroke: style,
-      curve.move((W, 0em)), curve.line((0em, 0.5em)), curve.line((W, 1em)))
+    return curve(stroke: style, curve.move((W, 0em)), curve.line((0em, 0.5em)), curve.line((W, 1em)))
   } else if e == ">" {
-    return curve(stroke: style,
-      curve.move((0em, 0em)), curve.line((W, 0.5em)), curve.line((0em, 1em)))
+    return curve(stroke: style, curve.move((0em, 0em)), curve.line((W, 0.5em)), curve.line((0em, 1em)))
   } else if e == "C" {
-    return curve(stroke: style,
-      curve.move((0em, 1em)), curve.quad((W * 20%, 0.2em), (W, 0em)))
+    return curve(stroke: style, curve.move((0em, 1em)), curve.quad((W * 20%, 0.2em), (W, 0em)))
   } else if e == "D" {
-    return curve(stroke: style,
-      curve.move((0em, 0em)), curve.quad((W * 20%, 0.8em), (W, 1em)))
+    return curve(stroke: style, curve.move((0em, 0em)), curve.quad((W * 20%, 0.8em), (W, 1em)))
   } else if e == "X" {
-    return curve(stroke: style,
-      curve.move((0em, 0em)), curve.line((W, 1em)),
-      curve.line((W * 50%, 0.5em)), curve.line((W, 0em)),
-      curve.line((0em, 1em))
+    return curve(
+      stroke: style,
+      curve.move((0em, 0em)),
+      curve.line((W, 1em)),
+      curve.line((W * 50%, 0.5em)),
+      curve.line((W, 0em)),
+      curve.line((0em, 1em)),
     )
   } else if e == "r" {
     return box(width: 0pt, curve(
       stroke: style,
       fill: color,
-      curve.move(((0em + 1pt, 0.4em))),
+      curve.move((0em + 1pt, 0.4em)),
       curve.line((-0.1em + 1pt, 0.6em)),
       curve.line((0.1em + 1pt, 0.6em)),
 
       curve.close(),
       curve.move((0em + 1pt, 0em)),
-      curve.line((0em + 1pt,  1em)),
+      curve.line((0em + 1pt, 1em)),
     ))
   } else if e == "f" {
     return box(width: 0pt, curve(
       stroke: style,
       fill: color,
-      curve.move(((0em + 1pt, 0.6em))),
+      curve.move((0em + 1pt, 0.6em)),
       curve.line((-0.1em + 1pt, 0.4em)),
       curve.line((0.1em + 1pt, 0.4em)),
 
       curve.close(),
       curve.move((0em + 1pt, 0em)),
-      curve.line((0em + 1pt,  1em)),
+      curve.line((0em + 1pt, 1em)),
     ))
   } else {
     return "[" + e + "]"
@@ -979,10 +1006,10 @@
 #let signals(input, step: 1em, color: black) = {
   assert(type(input) == str, message: "input needs to be a string")
 
-  let elements = ()  // array
+  let elements = () // array
   let previous = " "
   for e in input {
-    if e == " " { continue; }
+    if e == " " { continue }
     if e == "." {
       elements.push(__signal_element(previous, step, color))
     } else {

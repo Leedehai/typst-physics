@@ -1,6 +1,6 @@
 [package]
 name = "physica"
-version = "0.9.5"
+version = "0.9.6"
 description = "Math constructs for science and engineering: derivative, differential, vector field, matrix, tensor, Dirac braket, hbar, transpose, conjugate, many operators, and more."
 authors = ["Leedehai"]
 repository = "https://github.com/Leedehai/typst-physics"
