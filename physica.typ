@@ -598,7 +598,9 @@
     }
   }
   // Smart spacing, like Typst's built-in "dif" symbol. See TeXBook, Chapter 18.
-  $op(#arr.join(prod))$
+  // This behavior is reverted because of issue #63.
+  // $op(#arr.join(prod))$
+  $#arr.join(prod)$
 }
 #let dd = differential
 
