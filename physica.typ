@@ -778,7 +778,7 @@
 // spaces that manifests when using the symbol in math mode.
 //
 // Credit: Enivex in https://github.com/typst/typst/issues/355 was very helpful.
-#let hbar = (sym.wj, move(dy: -0.08em, strike(offset: -0.55em, extent: -0.05em, sym.planck)), sym.wj).join()
+#let hbar = (sym.wj, strike(offset: -0.55em, extent: -0.05em, "ℎ"), sym.wj).join()
 
 // A show rule, should be used like:
 //   #show: super-T-as-transpose
