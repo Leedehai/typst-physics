@@ -910,33 +910,33 @@
   $attach(upright(element), tl: #a, bl: #z)$
 }
 
-#let __signal_element(e, W, color) = {
+#let __signal_element(e, W, color, character: "") = {
   let style = 0.5pt + color
-  if e == "&" {
+  if e == "&" { // utility: separator
     return rect(width: W, height: 1em, stroke: none)
-  } else if e == "n" {
+  } else if e == "n" { // signal: pi
     return rect(width: 1em, height: W, stroke: (left: style, top: style, right: style))
-  } else if e == "u" {
-    return rect(width: W, height: 1em, stroke: (left: style, bottom: style, right: style))
+  } else if e == "u" { // signal: inverted pi
+    return rect(width: W, height: 1em, stroke: (left: style, bottom: style, right: style)) // logic: hi
   } else if (e == "H" or e == "1") {
     return rect(width: W, height: 1em, stroke: (top: style))
   } else if e == "h" {
     return rect(width: W * 50%, height: 1em, stroke: (top: style))
   } else if e == "^" {
     return rect(width: W * 10%, height: 1em, stroke: (top: style))
-  } else if (e == "M" or e == "-") {
+  } else if (e == "M" or e == "-") { // logic: mid
     return line(start: (0em, 0.5em), end: (W, 0.5em), stroke: style)
   } else if e == "m" {
     return line(start: (0em, 0.5em), end: (W * 0.5, 0.5em), stroke: style)
-  } else if (e == "L" or e == "0") {
+  } else if (e == "L" or e == "0") { // logic: lo
     return rect(width: W, height: 1em, stroke: (bottom: style))
   } else if e == "l" {
     return rect(width: W * 50%, height: 1em, stroke: (bottom: style))
   } else if e == "v" {
     return rect(width: W * 10%, height: 1em, stroke: (bottom: style))
-  } else if e == "=" {
-    return rect(width: W, height: 1em, stroke: (top: style, bottom: style))
-  } else if e == "#" {
+  } else if e == "=" { // utility: any (empty)
+    return rect(width: W, height: 1em, stroke: (top: style, bottom: style))[#text(character, baseline: -3.5pt)]
+  } else if e == "#" { // logic: invalid (shade)
     return curve(
       stroke: style,
       curve.move((0em, 0em)),
@@ -947,25 +947,25 @@
       curve.line((W, 0em)),
       curve.line((W * 50%, 0em)),
     )
-  } else if e == "|" {
+  } else if e == "|" { // edge: full
     return line(start: (0em, 0em), end: (0em, 1em), stroke: style)
-  } else if e == "'" {
+  } else if e == "'" { // edge: hi 
     return line(start: (0em, 0em), end: (0em, 0.5em), stroke: style)
-  } else if e == "," {
+  } else if e == "," { // edge: lo 
     return line(start: (0em, 0.5em), end: (0em, 1em), stroke: style)
   } else if e == "R" {
     return line(start: (0em, 1em), end: (W, 0em), stroke: style)
   } else if e == "F" {
     return line(start: (0em, 0em), end: (W, 1em), stroke: style)
-  } else if e == "<" {
+  } else if e == "<" { // edge: open 
     return curve(stroke: style, curve.move((W, 0em)), curve.line((0em, 0.5em)), curve.line((W, 1em)))
-  } else if e == ">" {
+  } else if e == ">" { // edge: close
     return curve(stroke: style, curve.move((0em, 0em)), curve.line((W, 0.5em)), curve.line((0em, 1em)))
-  } else if e == "C" {
+  } else if e == "C" { 
     return curve(stroke: style, curve.move((0em, 1em)), curve.quad((W * 20%, 0.2em), (W, 0em)))
   } else if e == "D" {
     return curve(stroke: style, curve.move((0em, 0em)), curve.quad((W * 20%, 0.8em), (W, 1em)))
-  } else if e == "X" {
+  } else if e == "X" { // edge: advance
     return curve(
       stroke: style,
       curve.move((0em, 0em)),
@@ -974,7 +974,7 @@
       curve.line((W, 0em)),
       curve.line((0em, 1em)),
     )
-  } else if e == "r" {
+  } else if e == "r" { // edge decorator: rising edge
     return box(width: 0pt, curve(
       stroke: style,
       fill: color,
@@ -986,7 +986,7 @@
       curve.move((0em + 1pt, 0em)),
       curve.line((0em + 1pt, 1em)),
     ))
-  } else if e == "f" {
+  } else if e == "f" { // edge decorator: falling edge
     return box(width: 0pt, curve(
       stroke: style,
       fill: color,
@@ -998,24 +998,57 @@
       curve.move((0em + 1pt, 0em)),
       curve.line((0em + 1pt, 1em)),
     ))
-  } else {
+  } else { // character
     return "[" + e + "]"
   }
 }
 
-#let signals(input, step: 1em, color: black) = {
+#let signals(input, step: 1em, color: black, labels: ()) = {
   assert(type(input) == str, message: "input needs to be a string")
+  assert(type(labels) == array, message: "labels needs to be an array but it is " + str(type(labels)))
 
   let elements = () // array
   let previous = " "
+  let label_mode = false
+  let label_index = -1
+  let signal_count = 0
   for e in input {
-    if e == " " { continue }
-    if e == "." {
-      elements.push(__signal_element(previous, step, color))
-    } else {
-      elements.push(__signal_element(e, step, color))
-      previous = e
+    if e == " " { 
+      continue
     }
+    else if e == "." { // repeat previous
+      if label_mode and previous == "=" {
+        signal_count += 1
+      } else {
+        elements.push(__signal_element(previous, step, color))
+      }
+      continue
+    } else if e == "#" { // enter label mode
+      elements.push(__signal_element(e, step, color))
+      label_mode = not label_mode // flip label_mode
+      signal_count = 0 // reset
+    } else if label_mode {
+      if e == "X" { // advance array index
+        let label = labels.at(label_index)
+        let label_length = label.len()
+        let left = calc.ceil((signal_count - label_length)/2)
+        for index in range(signal_count) {
+            let character = ""
+            if index >= left {
+              character = label.at(index - calc.max(left, 0), default: "")
+            }
+            elements.push(__signal_element(previous, step, color, character: character))
+      }
+        label_index += 1
+        signal_count = 0 // reset
+        elements.push(__signal_element(e, step, color))
+      } else if e == "=" { // advance string index
+        signal_count += 1
+      }  
+    } else { // everything else
+      elements.push(__signal_element(e, step, color))
+    }
+    previous = e
   }
 
   grid(
