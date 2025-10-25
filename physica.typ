@@ -907,7 +907,9 @@
 }
 
 #let isotope(element, /*atomic mass*/ a: none, /*atomic number*/ z: none) = {
-  $attach(upright(element), tl: #a, bl: #z)$
+  let a_content = if type(a) == int { [#a] } else { a }
+  let z_content = if type(z) == int { [#z] } else { z }
+  $attach(upright(element), tl: #a_content, bl: #z_content)$
 }
 
 #let __signal_element(e, W, color) = {
