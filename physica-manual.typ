@@ -452,6 +452,15 @@ xmat(2, 2, #g)`,
   [matrix element, same as `braket(n,M,n)`],
 )
 
+Of course, expanded form is still supported if you put the equation in a single
+line, e.g.
+
+`$ bra(vec(1,2)), braket(psi, A/N, phi) $`
+$ bra(vec(1, 2)), braket(psi, A/N, phi) $
+
+instead of `$bra(vec(1,2)), braket(psi, A/N, phi)$`, which leads to an inline form
+$bra(vec(1, 2)), braket(psi, A/N, phi)$.
+
 == Math functions
 
 #v(1em)
@@ -648,7 +657,7 @@ Function: `derivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `dv(`...`)
   - `d`: the differential symbol [default: `upright(d)`].
   - `s`: the "slash" separating the numerator and denominator [default: `none`], by default it produces the normal fraction form $dv(f, x)$. The most common non-defaults are (1) `horizontal`, so as to create a flat form $dv(f, x, s: "horizontal")$ that fits inline; and (2) `large`, so that "d/dx" operator is put in front of the (potentially very large) function expression, and the size of the parentheses are adapted to match the highest of the operator and the function expression.
 
-*Order assignment algorithm:* there is just one variable, so the assignment is trivial: simply assign the order number (default to 1) to the variable. If a variable $x$ has order 1, it is rendered as $x$ not $x^1$.
+*Order assignment algorithm:* there is just one variable, so the assignment is trivial: simply assign the order number (default to 1) to the variable.
 
 #align(center, [*Examples*])
 
@@ -712,7 +721,6 @@ Function: `partialderivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `pd
 - If there is an order number (not an array), then this order number is assigned to _every_ variable, e.g. `pdv(f,x,y,2)` assigns $x <- 2, y <- 2$.
 - If there is an order array, then the orders therein are assigned to the variables in order, e.g. `pdv(f,x,y,[2,3])` assigns $x <- 2, y <- 3$.
 - If the order array holds fewer elements than the number of variables, then the orders of the remaining variables are 1, e.g. `pdv(f,x,y,z,[2,3])` assigns $x <- 2, y <- 3, z <- 1$.
-- If a variable $x$ has order 1, it is rendered as $x$, not $x^1$.
 
 #align(center, [*Examples*])
 
@@ -725,7 +733,7 @@ Function: `partialderivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `pd
     $ pdv(, x), pdv(, t, 2), pdv(, lambda, [k]) $
   ],
   [
-    *(2)* #hl(`pdv(f,vb(r)), pdv(phi,vb(r)_e,2)`) \
+    *(2)* #hl(`pdv(phi,vb(r)), pdv(phi,vb(r)_e,2)`) \
     $ pdv(phi, vb(r)), pdv(phi, vb(r)_e, 2) $
   ],
 
@@ -743,8 +751,8 @@ Function: `partialderivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `pd
     $ pdv(, x, y, [2,]), pdv(, x, y, [1,2]) $
   ],
   [
-    *(6)* #hl(`pdv(f,x,y,s:"horizontal")`) \
-    $ pdv(f, x, y, s: "horizontal") $
+    *(6)* #hl(`pdv(,x)[integral_0^x f(x,y) dd(x,y)]`) \
+    $ pdv(, z)[integral_0^z f(x) dd(x, y)] $
   ],
 
   [
@@ -752,8 +760,8 @@ Function: `partialderivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `pd
     $ pdv(, y)(pdv((x+y), x, s: "large")) $
   ],
   [
-    *(8)* #hl(`pdv(,x)[integral_0^x f(x,y) dd(x,y)]`) \
-    $ pdv(, z)[integral_0^z f(x) dd(x, y)] $
+    *(8)* #hl(`pdv(f,x,y,s:"horizontal")`) \
+    $ pdv(f, x, y, s: "horizontal") $
   ],
 
   [
