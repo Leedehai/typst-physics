@@ -175,9 +175,9 @@
   let func = args.at(1, default: none)
 
   if func == none {
-    $lr(angle.l expr angle.r)$
+    $lr(chevron.l expr chevron.r)$
   } else {
-    $lr(angle.l func#h(0pt)mid(|)#h(0pt)expr#h(0pt)mid(|)#h(0pt)func angle.r)$
+    $lr(chevron.l func#h(0pt)mid(|)#h(0pt)expr#h(0pt)mid(|)#h(0pt)func chevron.r)$
   }
 }
 #let expval = expectationvalue
@@ -261,7 +261,7 @@
 #let cprod = crossproduct
 
 #let innerproduct(u, v) = {
-  $lr(angle.l #u, #v angle.r)$
+  $lr(chevron.l #u, #v chevron.r)$
 }
 #let iprod = innerproduct
 
@@ -484,8 +484,8 @@
 
 // == Dirac braket notations
 
-#let bra(f) = $lr(angle.l #f|)$
-#let ket(f) = $lr(|#f angle.r)$
+#let bra(f) = $lr(chevron.l #f|)$
+#let ket(f) = $lr(|#f chevron.r)$
 
 #let braket(..sink) = {
   let args = sink.pos() // array
@@ -494,10 +494,10 @@
   let ket = args.at(-1, default: bra)
 
   if args.len() <= 2 {
-    $ lr(angle.l bra#h(0pt)mid(|)#h(0pt)ket angle.r) $
+    $ lr(chevron.l bra#h(0pt)mid(|)#h(0pt)ket chevron.r) $
   } else {
     let middle = args.at(1)
-    $ lr(angle.l bra#h(0pt)mid(|)#h(0pt)middle#h(0pt)mid(|)#h(0pt)ket angle.r) $
+    $ lr(chevron.l bra#h(0pt)mid(|)#h(0pt)middle#h(0pt)mid(|)#h(0pt)ket chevron.r) $
   }
 }
 
@@ -508,11 +508,11 @@
   let ket = args.at(0)
   let bra = args.at(1, default: ket)
 
-  $ lr(|ket#h(0pt)mid(angle.r#h(0pt)angle.l)#h(0pt)bra|) $
+  $ lr(|ket#h(0pt)mid(chevron.r#h(0pt)chevron.l)#h(0pt)bra|) $
 }
 
 #let matrixelement(n, M, m) = {
-  $ lr(angle.l #n#h(0pt)mid(|)#h(0pt)#M#h(0pt)mid(|)#h(0pt)#m angle.r) $
+  $ lr(chevron.l #n#h(0pt)mid(|)#h(0pt)#M#h(0pt)mid(|)#h(0pt)#m chevron.r) $
 }
 
 #let mel = matrixelement
@@ -645,11 +645,11 @@
   return naive_result
 }
 
-#let __derivative_display(upper, func, denom, slash) = context {
-  if slash == none {
+#let __derivative_display(upper, func, denom, style) = context {
+  if style == none {
     let num = $#upper#func$
     math.frac(num, denom)
-  } else if slash == "large" {
+  } else if style == "large" {
     let operator = $#upper/#denom$
     /* Measure in math block mode for correct height
      * (See eg. https://github.com/ssotoen/gridlock/issues/2) */
@@ -657,10 +657,12 @@
     let size_func = measure($ #func $).height
     let bestsize = calc.max(size_op, size_func)
     $#operator lr(#func, size: #bestsize)$
-  } else {
+  } else if style == "horizontal" or style == sym.slash {
     let num = $#upper#func$
-    let sep = (sym.zwj, slash, sym.zwj).join()
-    $#num#sep#denom$
+    math.frac(num, denom, style: "horizontal")
+  } else if style == "skewed" {
+    let num = $#upper#func$
+    math.frac(num, denom, style: style)
   }
 }
 
@@ -671,7 +673,7 @@
   assert(args.len() > 0, message: "variable name expected")
 
   let d = kwargs.at("d", default: $upright(d)$)
-  let slash = kwargs.at("s", default: none)
+  let style = kwargs.at("s", default: none)
 
   let var = args.at(0)
   assert(args.len() >= 1, message: "expecting at least one argument")
@@ -681,11 +683,11 @@
     let order = args.at(1) // Not necessarily representing a number
     let upper = $#d^#order$
     let varorder = __combine_var_order(var, order)
-    __derivative_display(upper, f, $#d#varorder$, slash)
+    __derivative_display(upper, f, $#d#varorder$, style)
   } else {
     // i.e. no order specified
     let upper = $#d$
-    __derivative_display(upper, f, $#d#var$, slash)
+    __derivative_display(upper, f, $#d#var$, style)
   }
 }
 #let dv = derivative
@@ -760,7 +762,7 @@
 
 // == Miscellaneous
 
-// With the default font, the original symbol `planck.reduce` has a slash on the
+// With the default font, the original symbol `planck` has a slash on the
 // letter "h", and it is different from the usual "hbar" symbol, which has a
 // horizontal bar on the letter "h".
 //

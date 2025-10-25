@@ -548,7 +548,7 @@ Typst built-in math operators: #linkurl(`math.op`, "https://typst.app/docs/refer
   [`derivative(`...`)`],
   [`dv`],
   [
-    e.g. $dv(, x), dv(f, x), dv(f, x, k, d: Delta), dv(f, x, s: \/)$ \
+    e.g. $dv(, x), dv(f, x), dv(f, x, k, d: Delta), dv(f, x, s: "horizontal")$ \
     See @ordinary-derivatives
   ],
   [derivative],
@@ -556,7 +556,7 @@ Typst built-in math operators: #linkurl(`math.op`, "https://typst.app/docs/refer
   [`partialderivative(`...`)`],
   [`pdv`],
   [
-    e.g. $pdv(, x), pdv(f, x), pdv(f, x, y, 2), pdv(f, x, y, [2,3]), pdv(f, x, s: \/)$ \
+    e.g. $pdv(, x), pdv(f, x), pdv(f, x, y, 2), pdv(f, x, y, [2,3]), pdv(f, x, s: "horizontal")$ \
     See @partial-derivatives
   ],
   [partial derivative, could be mixed order],
@@ -646,7 +646,7 @@ Function: `derivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `dv(`...`)
 - positional _args_: the variable name, *optionally* followed by an order number e.g. `2`,
 - named _kwargs_:
   - `d`: the differential symbol [default: `upright(d)`].
-  - `s`: the "slash" separating the numerator and denominator [default: `none`], by default it produces the normal fraction form $dv(f, x)$. The most common non-defaults are (1) `\/`, so as to create a flat form $dv(f, x, s: \/)$ that fits inline; and (2) `large`, so that "d/dx" operator is put in front of the (potentially very large) function expression, and the size of the parentheses are adapted to match the highest of the operator and the function expression.
+  - `s`: the "slash" separating the numerator and denominator [default: `none`], by default it produces the normal fraction form $dv(f, x)$. The most common non-defaults are (1) `horizontal`, so as to create a flat form $dv(f, x, s: "horizontal")$ that fits inline; and (2) `large`, so that "d/dx" operator is put in front of the (potentially very large) function expression, and the size of the parentheses are adapted to match the highest of the operator and the function expression.
 
 *Order assignment algorithm:* there is just one variable, so the assignment is trivial: simply assign the order number (default to 1) to the variable. If a variable $x$ has order 1, it is rendered as $x$ not $x^1$.
 
@@ -667,12 +667,12 @@ Function: `derivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `dv(`...`)
   ],
 
   [
-    *(3)* #hl(`dv(f,x,2,s:\/), dv(f,xi,k+1,s:\/)`) \
-    $ dv(f, x, 2, s: \/), dv(f, xi, k+1, s: \/) $
+    *(3)* #hl(`dv((sum f_i (x) dd(x)),x,s:"large")`) \
+    $ dv((sum f_i (x) dd(x)), x, s: "large") $
   ],
   [
-    *(4)* #hl(`dv((sum f_i (x) dd(x)),x,s:"large")`) \
-    $ dv((sum f_i (x) dd(x)), x, s: "large") $
+    *(4)* #hl(`dv((u+v),t,2,d:upright(D),s:"large")`) \
+    $ dv((u+v), t, 2, d: upright(D), s: "large") $
   ],
 
   [
@@ -685,12 +685,12 @@ Function: `derivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `dv(`...`)
   ],
 
   [
-    *(7)* #hl(`dv(vb(u),t,2,d:upright(D),s:\/)`) \
-    $ dv(vb(u), t, 2, d: upright(D), s: \/) $
+    *(7)* #hl(`dv(f,xi,k+1,s:"horizontal")`) \
+    $ dv(f, xi, k+1, s: "horizontal") $
   ],
   [
-    *(7)* #hl(`dv((u+v),t,2,d:upright(D),s:"large")`) \
-    $ dv((u+v), t, 2, d: upright(D), s: "large") $
+    *(8)* #hl(`dv(vb(u),t,2,d:upright(D),s:"skewed")`) \
+    $ dv(vb(u), t, 2, d: upright(D), s: "skewed") $
   ],
 )
 
@@ -703,9 +703,9 @@ Function: `partialderivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `pd
 - positional _args_: the variable names, *optionally* followed by an order number e.g. `2`, or an order array e.g. `[2,3]`, `[k]`, `[m n, lambda+1]`.
 - named _kwargs_:
   - `d`: the differential symbol [default: `partial`].
-  - `s`: the "slash" separating the numerator and denominator [default: `none`], by default it produces the normal fraction form $pdv(f, x)$. The most common non-defaults non-defaults are (1) `\/`, so as to create a flat form $dv(f, x, s: \/)$ that fits inline, and (2) `"large"`, so that "d/dx" operator is put in front of the (potentially very large) function expression, and the size of the parentheses are adapted to match the highest of the operator and the function expression.
+  - `s`: the "slash" separating the numerator and denominator [default: `none`], by default it produces the normal fraction form $pdv(f, x)$. The most common non-defaults non-defaults are (1) `horizontal`, so as to create a flat form $dv(f, x, s: "horizontal")$ that fits inline, and (2) `"large"`, so that "d/dx" operator is put in front of the (potentially very large) function expression, and the size of the parentheses are adapted to match the highest of the operator and the function expression.
   - `total`: the user-specified total order.
-    - If it is absent, then (1) if the orders assigned to all variables are numeric, the total order number will be *automatically computed*; (2) if non-number symbols are present, computation will be attempted with minimum effort, and a user override with argument `total` may be necessary.
+    - If it is absent, then (1) if the orders assigned to all variables are numeric, the total order number will be *automatically computed*; (2) if non-number symbols are present, computation will be attempted with minimum effort, and a user override with argument `total` might be necessary.
 
 *Order assignment algorithm:*
 - If there is no order number or order array, all variables have order 1.
@@ -743,8 +743,8 @@ Function: `partialderivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `pd
     $ pdv(, x, y, [2,]), pdv(, x, y, [1,2]) $
   ],
   [
-    *(6)* #hl(`pdv(,t,2,s:\/), pdv(f,x,y,s:\/)`) \
-    $ pdv(, t, 2, s: \/), pdv(f, x, y, s: \/) $
+    *(6)* #hl(`pdv(f,x,y,s:"horizontal")`) \
+    $ pdv(f, x, y, s: "horizontal") $
   ],
 
   [
@@ -775,8 +775,8 @@ Function: `partialderivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `pd
   ],
 
   [
-    *(13)* #hl(`pdv(S, phi.alt, phi.alt, d:delta)`) \
-    $ pdv(S, phi.alt, phi.alt, d: delta) $
+    *(13)* #hl(`pdv(S, phi.alt, phi, d:delta)`) \
+    $ pdv(S, phi.alt, phi, d: delta) $
   ],
   [
     *(14)* #hl(`pdv(W[J], J^mu (x), J^nu (y), d:delta)`) \
@@ -784,7 +784,7 @@ Function: `partialderivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `pd
   ],
 )
 
-*(15)* #hl(`integral_V dd(V) (pdv(cal(L), phi) - partial_mu (pdv(cal(L), (partial_mu phi)))) = 0`) \
+*(15)* #hl(`integral_V dd(V)(pdv(cal(L), phi) - partial_mu (pdv(cal(L), (partial_mu phi)))) = 0`) \
 $ integral_V dd(V) (pdv(cal(L), phi) - partial_mu (pdv(cal(L), (partial_mu phi)))) = 0 $
 
 == Special show rules
@@ -932,7 +932,7 @@ Overrides: if you really want to
 
 #v(1em)
 
-In the default font, the Typst built-in symbol `planck.reduce` $planck.reduce$ looks a bit off: on letter "h" there is a slash instead of a horizontal bar, contrary to the symbol's colloquial name "h-bar". This package offers `hbar` to render the symbol in the familiar form: $hbar$. Contrast:
+In the default font, the Typst built-in symbol `planck` $planck$ looks a bit off: on letter "h" there is a slash instead of a horizontal bar, contrary to the symbol's colloquial name "h-bar". This package offers `hbar` to render the symbol in the familiar form: $hbar$. Contrast:
 
 #table(
   columns: (auto, auto, auto, auto, auto),
@@ -940,11 +940,11 @@ In the default font, the Typst built-in symbol `planck.reduce` $planck.reduce$ l
   column-gutter: 1em,
   stroke: none,
 
-  [Typst's `planck.reduce`],
-  [$ E = planck.reduce omega $],
-  [$ (pi G^2) / (planck.reduce c^4) $],
-  [$ A e^(frac(i(p x - E t), planck.reduce)) $],
-  [$ i planck.reduce pdv(, t) psi = -frac(planck.reduce^2, 2m) laplacian psi $],
+  [Typst's `planck`],
+  [$ E = planck omega $],
+  [$ (pi G^2) / (planck c^4) $],
+  [$ A e^(frac(i(p x - E t), planck)) $],
+  [$ i planck pdv(, t) psi = -frac(planck^2, 2m) laplacian psi $],
 
   [this package's `hbar`],
   [$ E = hbar omega $],
