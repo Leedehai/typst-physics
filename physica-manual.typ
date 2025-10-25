@@ -2,7 +2,7 @@
 // This document is shared under the Creative Commons BY-ND 4.0 license.
 #import "physica.typ": *
 
-#let version = "0.9.6"
+#let version = "0.9.7"
 
 #set document(
   title: [physica-manual.typ],
@@ -28,7 +28,7 @@
 #align(center)[
   Leedehai \
   #linkurl("GitHub", "https://github.com/leedehai/typst-physics") |
-  #linkurl("Typst", "https://typst.app/docs/packages/")
+  #linkurl("Typst", "https://typst.app/universe/package/physica")
 ]
 
 #set par(justify: true)
@@ -61,12 +61,18 @@ This manual itself was generated using the Typst CLI and the `physica` package, 
 With `typst`'s #linkurl("package management", "https://github.com/typst/packages"):
 
 ```typst
-#import "@preview/physica:0.9.6": *
+#import "@preview/physica:0.9.7": *
 
-$ curl (grad f), pdv(,x,y,z,[2,k]), tensor(Gamma,+k,-i,-j) = pdv(vb(e_i),x^j)vb(e^k) $
+$
+curl(grad f), dd(x,y), pdv(,x,y,z,[2,k]), pdv(vb(e_i),x^j), \
+tensor(Gamma,+k,-i,-j), braket(a, phi, b), imat(2, fill:*)
+$
 ```
 
-$ curl (grad f), pdv(, x, y, z, [2,k]), tensor(Gamma, +k, -i, -j)=pdv(vb(e_i), x^j)vb(e^k) $
+$
+  curl(grad f), dd(x, y), pdv(, x, y, z, [2,k]), pdv(vb(e_i), x^j), \
+  tensor(Gamma, +k, -i, -j), braket(a, phi, b), imat(2, fill: *)
+$
 
 = The symbols
 
@@ -100,23 +106,23 @@ All symbols need to be used in *math mode* `$...$`.
   stroke: none,
   [*Symbol*], [*Abbr.*], [*Example*], [*Notes*],
 
-  [#builtin([`abs(`_content_`)`])], [], [`abs(phi(x))`   #sym.arrow $abs(phi(x))$], [absolute],
+  [#builtin([`abs(`_expr_`)`])], [], [`abs(phi(x))`   #sym.arrow $abs(phi(x))$], [absolute],
 
-  [#builtin([`norm(`_content_`)`])], [], [`norm(phi(x))`   #sym.arrow $norm(phi(x))$], [norm],
+  [#builtin([`norm(`_expr_`)`])], [], [`norm(phi(x))`   #sym.arrow $norm(phi(x))$], [norm],
 
-  [`Order(`_content_`)`], [], [`Order(x^2)`   #sym.arrow $Order(x^2)$], [big O],
+  [`Order(`_expr_`)`], [], [`Order(x^2)`   #sym.arrow $Order(x^2)$], [big O],
 
-  [`order(`_content_`)`], [], [`order(1)`   #sym.arrow $order(1)$], [small O],
+  [`order(`_expr_`)`], [], [`order(1)`   #sym.arrow $order(1)$], [small O],
 
-  [`Set(`_content_`)`],
+  [`Set(`_expr_ ; _condition_`)`],
   [],
   [
-    `Set(a_n), Set(a_i, forall i)` \ #sym.arrow $Set(a_n), Set(a_i, forall i)$ \
-    `Set(vec(1,n), forall n)` \ #sym.arrow $Set(vec(1, n), forall n)$
+    `Set(a_n), Set(a_i; forall i)` \ #sym.arrow $Set(a_n), Set(a_i; forall i)$ \
+    `Set(vec(1,n); forall n, n|2)` \ #sym.arrow $Set(vec(1, n); forall n, n|2)$
   ],
   [math set, use `Set` not `set` since the latter is a Typst keyword],
 
-  [`evaluated(`_content_`)`],
+  [`evaluated(`_expr_`)`],
   [],
   [
     `evaluated(f(x))_0^oo` \ #sym.arrow $evaluated(f(x))_0^oo$ \
@@ -155,11 +161,11 @@ All symbols need to be used in *math mode* `$...$`.
 
   [`TT`], [], [`v^TT, A^TT` #sym.arrow $v^TT, A^TT$], [transpose, also see\ @matrix-transpose],
 
-  [`vectorbold(`_content_`)`], [`vb`], [`vb(a),vb(mu_1)` #sym.arrow $vb(a),vb(mu_1)$], [vector, bold],
+  [`vectorbold(`_symbol_`)`], [`vb`], [`vb(a),vb(mu_1)` #sym.arrow $vb(a),vb(mu_1)$], [vector, bold],
 
-  [`vectorunit(`_content_`)`], [`vu`], [`vu(a),vu(mu_1)` #sym.arrow $vu(a),vu(mu_1)$], [unit vector],
+  [`vectorunit(`_symbol_`)`], [`vu`], [`vu(a),vu(mu_1)` #sym.arrow $vu(a),vu(mu_1)$], [unit vector],
 
-  [`vectorarrow(`_content_`)`],
+  [`vectorarrow(`_symbol_`)`],
   [`va`],
   [`va(a),va(mu_1)` #sym.arrow $va(a),va(mu_1)$],
   [vector, arrow \ #sub[(not bold: see ISO 80000-2:2019)]],
@@ -579,7 +585,7 @@ Functions: `differential(`\*_args_, \*\*_kwargs_`)`, abbreviated as `dd(`...`)`.
 - positional _args_: the variable names, *optionally* followed by an order number e.g. `2`, or an order array e.g. `[2,3]`, `[k]`, `[m n, lambda+1]`.
 - named _kwargs_:
   - `d`: the differential symbol [default: `upright(d)`].
-  - `p`: the product symbol connecting the components [default: `none`].
+  - `prod`: the product symbol connecting the components [default: `none`].
   - `compact`: only effective if `p` is `none`. If `#true`, will remove the TeXBook-advised thin spaces between the d-units [default: `#false`].
 
 TeXBook advises _[f]ormulas involving calculus look best when an extra thin space
@@ -655,7 +661,7 @@ Function: `derivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `dv(`...`)
 - positional _args_: the variable name, *optionally* followed by an order number e.g. `2`,
 - named _kwargs_:
   - `d`: the differential symbol [default: `upright(d)`].
-  - `s`: the "slash" separating the numerator and denominator [default: `none`], by default it produces the normal fraction form $dv(f, x)$. The most common non-defaults are (1) `horizontal`, so as to create a flat form $dv(f, x, s: "horizontal")$ that fits inline; and (2) `large`, so that "d/dx" operator is put in front of the (potentially very large) function expression, and the size of the parentheses are adapted to match the highest of the operator and the function expression.
+  - `style`: the "slash" separating the numerator and denominator [default: `none`], by default it produces the normal fraction form $dv(f, x)$. The most common non-defaults are (1) `horizontal`, so as to create a flat form $dv(f, x, s: "horizontal")$ that fits inline; and (2) `large`, so that "d/dx" operator is put in front of the (potentially very large) function expression, and the size of the parentheses are adapted to match the highest of the operator and the function expression.
 
 *Order assignment algorithm:* there is just one variable, so the assignment is trivial: simply assign the order number (default to 1) to the variable.
 
@@ -676,12 +682,12 @@ Function: `derivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `dv(`...`)
   ],
 
   [
-    *(3)* #hl(`dv((sum f_i (x) dd(x)),x,s:"large")`) \
-    $ dv((sum f_i (x) dd(x)), x, s: "large") $
+    *(3)* #hl(`dv((sum f_i (x) dd(x)),x,style:"large")`) \
+    $ dv((sum f_i (x) dd(x)), x, style: "large") $
   ],
   [
-    *(4)* #hl(`dv((u+v),t,2,d:upright(D),s:"large")`) \
-    $ dv((u+v), t, 2, d: upright(D), s: "large") $
+    *(4)* #hl(`dv((u+v),t,2,d:upright(D),style:"large")`) \
+    $ dv((u+v), t, 2, d: upright(D), style: "large") $
   ],
 
   [
@@ -694,12 +700,12 @@ Function: `derivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `dv(`...`)
   ],
 
   [
-    *(7)* #hl(`dv(f,xi,k+1,s:"horizontal")`) \
-    $ dv(f, xi, k+1, s: "horizontal") $
+    *(7)* #hl(`dv(f,xi,k+1,style:"horizontal")`) \
+    $ dv(f, xi, k+1, style: "horizontal") $
   ],
   [
-    *(8)* #hl(`dv(vb(u),t,2,d:upright(D),s:"skewed")`) \
-    $ dv(vb(u), t, 2, d: upright(D), s: "skewed") $
+    *(8)* #hl(`dv(vb(u),t,2,d:upright(D),style:"skewed")`) \
+    $ dv(vb(u), t, 2, d: upright(D), style: "skewed") $
   ],
 )
 
@@ -712,7 +718,7 @@ Function: `partialderivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `pd
 - positional _args_: the variable names, *optionally* followed by an order number e.g. `2`, or an order array e.g. `[2,3]`, `[k]`, `[m n, lambda+1]`.
 - named _kwargs_:
   - `d`: the differential symbol [default: `partial`].
-  - `s`: the "slash" separating the numerator and denominator [default: `none`], by default it produces the normal fraction form $pdv(f, x)$. The most common non-defaults non-defaults are (1) `horizontal`, so as to create a flat form $dv(f, x, s: "horizontal")$ that fits inline, and (2) `"large"`, so that "d/dx" operator is put in front of the (potentially very large) function expression, and the size of the parentheses are adapted to match the highest of the operator and the function expression.
+  - `style`: the "slash" separating the numerator and denominator [default: `none`], by default it produces the normal fraction form $pdv(f, x)$. The most common non-defaults non-defaults are (1) `horizontal`, so as to create a flat form $dv(f, x, s: "horizontal")$ that fits inline, and (2) `"large"`, so that "d/dx" operator is put in front of the (potentially very large) function expression, and the size of the parentheses are adapted to match the highest of the operator and the function expression.
   - `total`: the user-specified total order.
     - If it is absent, then (1) if the orders assigned to all variables are numeric, the total order number will be *automatically computed*; (2) if non-number symbols are present, computation will be attempted with minimum effort, and a user override with argument `total` might be necessary.
 
@@ -751,17 +757,17 @@ Function: `partialderivative(`_f_, \*_args_, \*\*_kwargs_`)`, abbreviated as `pd
     $ pdv(, x, y, [2,]), pdv(, x, y, [1,2]) $
   ],
   [
-    *(6)* #hl(`pdv(,x)[integral_0^x f(x,y) dd(x,y)]`) \
+    *(6)* #hl(`pdv(,z)[integral_0^x f(x,y) dd(x,y)]`) \
     $ pdv(, z)[integral_0^z f(x) dd(x, y)] $
   ],
 
   [
-    *(7)* #hl(`pdv(,y)(pdv((x+y),x,s:"large"))`) \
-    $ pdv(, y)(pdv((x+y), x, s: "large")) $
+    *(7)* #hl(`pdv(,y)[pdv((x+y),x,style:"large")]`) \
+    $ pdv(, y)[pdv((x+y), x, style: "large")] $
   ],
   [
-    *(8)* #hl(`pdv(f,x,y,s:"horizontal")`) \
-    $ pdv(f, x, y, s: "horizontal") $
+    *(8)* #hl(`pdv(f,x,y,style:"horizontal")`) \
+    $ pdv(f, x, y, style: "horizontal") $
   ],
 
   [
@@ -1038,6 +1044,8 @@ Function: `tensor(`_symbol_, \*_args_`)`.
 
 *(9)* `grad_mu A^nu = partial_mu A^nu + tensor(Gamma,+nu,-mu,-lambda) A^lambda`
 $ grad_mu A^nu = partial_mu A^nu + tensor(Gamma, +nu, -mu, -lambda) A^lambda $
+#text(size: 8pt)[(Though for those of you who are studying for math exams, I'd
+  like to remind you Christoffel symbol $Gamma$ is technically not a tensor!)]
 
 === Isotopes
 
@@ -1047,8 +1055,6 @@ Function: `isotope(`_element_, _a_: ..., _z_: ...`)`.
 - _element_: the chemical element (use `".."` for multi-letter symbols)
 - _a_: the mass number _A_ [default: `none`].
 - _z_: the atomic number _Z_ [default: `none`].
-
-*Change log*: Typst merged my #linkurl("PR", "https://github.com/typst/typst/pull/825"), which fixed a misalignment issue with the surrounding text.
 
 #align(center, [*Examples*])
 
@@ -1167,11 +1173,11 @@ $ signals("R1..F0..", step: #.5em)signals("R1.|v|1", step: #.5em, color: #fuchsi
 *(5)*
 ```typst
 "clk:" & signals("|1....|0....|1....|0....|1....|0....|1....|0..", step: #0.5em) \
-"bus:" & signals(" #.... X=... ..... ..... X=... ..... ..... X#.", step: #0.5em)
+"bustyle:" & signals(" #.... X=... ..... ..... X=... ..... ..... X#.", step: #0.5em)
 ```
 $
-  "clk:" & signals("|1....|0....|1....|0....|1....|0....|1....|0..", step: #0.5em) \
-  "bus:" & signals(" #.... X=... ..... ..... X=... ..... ..... X#.", step: #0.5em)
+      "clk:" & signals("|1....|0....|1....|0....|1....|0....|1....|0..", step: #0.5em) \
+  "bustyle:" & signals(" #.... X=... ..... ..... X=... ..... ..... X#.", step: #0.5em)
 $
 
 == Symbolic addition

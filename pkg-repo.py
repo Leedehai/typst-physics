@@ -26,7 +26,7 @@ def check_version(args):
                 if (filename.endswith(".toml") and
                     re.match(r"^compiler = \".+\"", line)):
                     continue
-                if re.match(r"[Tt]ypst v?.+", line):
+                if re.match(r".*[Tt]ypst v?.+", line):
                     continue
                 old_vers = list(
                     filter(lambda e: e != args.version,

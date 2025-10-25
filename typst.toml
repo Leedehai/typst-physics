@@ -1,13 +1,14 @@
 [package]
 name = "physica"
-version = "0.9.6"
+version = "0.9.7"
+compiler = "0.14.0"
 description = "Math constructs for science and engineering: derivative, differential, vector field, matrix, tensor, Dirac braket, hbar, transpose, conjugate, many operators, and more."
 authors = ["Leedehai"]
 repository = "https://github.com/Leedehai/typst-physics"
 categories = ["components", "utility"]
 disciplines = [
-  "chemistry", "communication", "economics", "education", "engineering",
-  "geology", "mathematics", "physics",
+  "mathematics", "physics", "chemistry", "economics", "education",
+  "engineering"
 ]
 keywords = [
   "physics", "mathematics", "brace", "set", "product", "evaluate", "restrict",
@@ -18,7 +19,6 @@ keywords = [
   "isotope", "signal", "electromagnetism", "mechanics", "quantum", "relativity",
   "imaginary", "notation",
 ]
-compiler = "0.13.0"
 exclude = ["*.pdf", "*.py"]
 entrypoint = "physica.typ"
 license = "MIT"

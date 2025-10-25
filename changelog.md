@@ -1,8 +1,24 @@
 # Changelog
 
+## 0.9.7
+
+* **(breaking)** In derivative `dv` and partial derivative `pdv`, rename
+argument `s` to `style`. For the original argument value `s:\/`, write
+`style:"horizontal"` instead, just like what you would write in
+[`math.frac`](https://staging.typst.app/docs/reference/math/frac/) starting from
+Typst 0.14.0.
+* **(breaking)** In differential `dd`, rename argument `p` to `prod`.
+* Fix isotope so that it can also be rendered in text mode (#71)
+* Make hbar based on `U+210e` directly instead of on `sym.planck`, because since
+Typst 0.14.0 `sym.planck` is the reduced Planck constant, taking the place of
+the deprecated `sym.planck.reduced` (#67)
+* Replace `angle.r` and `angle.l` with `chevron.r` and `chevron.l`, as required
+by the deprecation notice of Typst 0.14.0.
+
 ## 0.9.6
 
-* Fix differential's smart spacing -- though this space is recommended by TeXBook, it creates a bug https://github.com/Leedehai/typst-physics/issues/63.
+* Fix differential's smart spacing -- though this space is recommended by
+TeXBook, it creates a bug https://github.com/Leedehai/typst-physics/issues/63.
 * *Adding rising and falling edge support (#62)
 * Allow passing multiple conditions to Set by using the array syntax (#59)
 
