@@ -166,10 +166,12 @@
 #let Order(expr) = $cal(O)(expr)$
 #let order(expr) = $cal(o)(expr)$
 
+/// Evaluating a function at a given point: evaluated(f(x))_(x_0)
 #let evaluated(expr) = {
   $lr(zws#expr|)$
 }
 
+/// Expectation value.
 #let expectationvalue(..args) = {
   let expr = args.pos().at(0, default: none)
   let func = args.pos().at(1, default: none)
@@ -184,6 +186,7 @@
 
 // == Vector notations
 
+/// A row-vector.
 #let vecrow(..args, delim: "(") = {
   let (ldelim, rdelim) = if delim == "(" {
     (math.paren.l, math.paren.r)
@@ -237,15 +240,18 @@
 }
 
 #let vectorbold(symbol) = __vector(symbol, none, true)
+/// A vector symbol with a bold letter: vb(a)
 #let vb = vectorbold
 
 #let vectorunit(symbol) = __vector(symbol, math.hat, true)
+/// A vector symbol with an hat on the top, usually for unit vectors: vu(a)
 #let vu = vectorunit
 
 // According to "ISO 80000-2:2019 Quantities and units — Part 2: Mathematics"
 // the vector notation should be either bold italic or non-bold italic accented
 // by a right arrow
 #let vectorarrow(symbol) = __vector(symbol, math.arrow, false)
+/// A vector symbol with an arrow on the top: va(a)
 #let va = vectorarrow
 
 #let grad = $bold(nabla)$
@@ -258,9 +264,11 @@
 #let crossproduct = $times$
 #let cprod = crossproduct
 
+/// Inner product: iprod(u, v)
 #let innerproduct(u, v) = {
   $lr(chevron.l #u, #v chevron.r)$
 }
+/// Inner product: iprod(u, v)
 #let iprod = innerproduct
 
 // == Matrices
@@ -277,11 +285,14 @@
   }
 }
 
+/// Matrix determinant: mdet(a, b; c, d)
 #let matrixdet(..content) = {
   math.mat(..content, delim: "|")
 }
+/// Matrix determinant: mdet(a, b; c, d)
 #let mdet = matrixdet
 
+/// Diagonal matrix, e.g. dmat(a, b, c)
 #let diagonalmatrix(..args, delim: "(", fill: none) = {
   let arrays = () // array of arrays
   let n = args.pos().len()
@@ -294,8 +305,10 @@
   }
   math.mat(delim: delim, ..arrays)
 }
+/// Diagonal matrix, e.g. dmat(a, b, c)
 #let dmat = diagonalmatrix
 
+/// Anti-diagonal matrix, e.g. admat(a, b, c)
 #let antidiagonalmatrix(..args, delim: "(", fill: none) = {
   let arrays = () // array of arrays
   let n = args.pos().len()
@@ -309,8 +322,10 @@
   }
   math.mat(delim: delim, ..arrays)
 }
+/// Anti-diagonal matrix, e.g. admat(a, b, c)
 #let admat = antidiagonalmatrix
 
+/// Identity matrix, e.g. imat(3) is of order 3.
 #let identitymatrix(order, delim: "(", fill: none) = {
   let order_num = if type(order) == content and __content_holds_number(order) {
     int(order.text)
@@ -323,8 +338,10 @@
   let ones = range(order_num).map(i => 1)
   diagonalmatrix(..ones, delim: delim, fill: fill)
 }
+/// Identity matrix, e.g. imat(3) is of order 3.
 #let imat = identitymatrix
 
+/// Zero matrix, e.g. zmat(3) is of order 3.
 #let zeromatrix(order, delim: "(") = {
   let order_num = if type(order) == content and __content_holds_number(order) {
     int(order.text)
@@ -337,8 +354,10 @@
   let ones = range(order_num).map(i => 0)
   diagonalmatrix(..ones, delim: delim, fill: 0)
 }
+/// Zero matrix, e.g. zmat(3) is of order 3.
 #let zmat = zeromatrix
 
+/// Jacoboan matrix: jmat(f, g; x, y, z)
 #let jacobianmatrix(funcs, args, delim: "(", big: false) = {
   assert(type(funcs) == array, message: "expecting an array of function names")
   assert(type(args) == array, message: "expecting an array of variable names")
@@ -348,8 +367,10 @@
   }
   math.mat(delim: delim, ..arrays)
 }
+/// Jacoboan matrix: jmat(f, g; x, y, z)
 #let jmat = jacobianmatrix
 
+/// Hessian matrix: hmax(f; x, y), hmax(; x, y)
 #let hessianmatrix(func, args, delim: "(", big: false) = {
   assert(type(func) == array, message: "usage: hessianmatrix(f; x, y...)")
   assert(func.len() == 1, message: "usage: hessianmatrix(f; x, y...)")
@@ -374,8 +395,10 @@
   }
   math.mat(delim: delim, ..row_arrays)
 }
+/// Hessian matrix: hmax(f; x, y), hmax(; x, y)
 #let hmat = hessianmatrix
 
+/// Matrix with an element builder.  xmat(2, 2, [...a function...])
 #let xmatrix(row, col, func, delim: "(") = {
   let row_count = if type(row) == content and __content_holds_number(row) {
     int(row.text)
@@ -407,8 +430,10 @@
   }
   math.mat(delim: delim, ..row_arrays)
 }
+/// Matrix with an element builder.  xmat(2, 2, [...a function...])
 #let xmat = xmatrix
 
+/// 2D rotation matrix: rot2mat(alpha)
 #let rot2mat(angle, delim: "(") = {
   let operand = if type(angle) == content and __is_add_sub_sequence(angle) {
     $(angle)$
@@ -419,6 +444,7 @@
   )$
 }
 
+/// 3D rotation matrix, X-axis: rot3xmat(alpha)
 #let rot3xmat(angle, delim: "(") = {
   let operand = if type(angle) == content and __is_add_sub_sequence(angle) {
     $(angle)$
@@ -430,6 +456,7 @@
   )$
 }
 
+/// 3D rotation matrix, Y-axis: rot3ymat(alpha)
 #let rot3ymat(angle, delim: "(") = {
   let operand = if type(angle) == content and __is_add_sub_sequence(angle) {
     $(angle)$
@@ -441,6 +468,7 @@
   )$
 }
 
+/// 3D rotation matrix, Z-axis: rot3zmat(alpha)
 #let rot3zmat(angle, delim: "(") = {
   let operand = if type(angle) == content and __is_add_sub_sequence(angle) {
     $(angle)$
@@ -452,6 +480,7 @@
   )$
 }
 
+/// Gram matrix. Examples: grammat(u, v), grammat(v_1, v_2, v_3)
 #let grammat(..args, delim: "(", norm: false) = {
   xmat(
     args.pos().len(),
@@ -470,9 +499,15 @@
 
 // == Dirac braket notations
 
+/// Dirac bra: bra(u)
 #let bra(content) = $lr(chevron.l #content|)$
+/// Dirac ket: ket(v)
 #let ket(content) = $lr(|#content chevron.r)$
 
+/// Dirac braket. Examples:
+/// - braket(a)
+/// - braket(u, v)
+/// - braket(u, A, v)
 #let braket(..args) = {
   let bra = args.pos().at(0, default: none)
   let ket = args.pos().at(-1, default: bra)
@@ -485,6 +520,9 @@
   }
 }
 
+/// Dirac ketbra. Examples:
+/// - ketbra(a)
+/// - ketbra(u, v)
 #let ketbra(..args) = {
   assert(args.pos().len() == 1 or args.pos().len() == 2, message: "expecting 1 or 2 args")
 
@@ -494,10 +532,11 @@
   $ lr(|ket#h(0pt)mid(chevron.r#h(0pt)chevron.l)#h(0pt)bra|) $
 }
 
+/// Dirac notation's matrix element: mel(n, M, m).
 #let matrixelement(n, M, m) = {
   $ lr(chevron.l #n#h(0pt)mid(|)#h(0pt)#M#h(0pt)mid(|)#h(0pt)#m chevron.r) $
 }
-
+/// Dirac notation's matrix element: mel(n, M, m).
 #let mel = matrixelement
 
 // == Math functions
@@ -552,14 +591,26 @@
 
 // == Differentials
 
+/// Differential. Examples:
+/// - dd(x)
+/// - dd(x, y)
+/// - dd(x, y, 2)
+/// - dd(x, y, [2, 3])
+/// - dd(x, y, d: Delta)
+/// - dd(x, y, prod: and)
 #let differential(..args, d: none, prod: none, compact: false) = {
   let orders = ()
   let var_num = args.pos().len()
+  assert(args.pos().len() >= 1, message: "expecting at least one argument")
   let default_order = [1] // a Content holding "1"
-  let last = args.pos().at(args.pos().len() - 1)
+  let last = args.pos().at(-1)
   if type(last) == content {
     if last.func() == math.lr and last.at("body").at("children").at(0) == [\[] {
       var_num -= 1
+      assert(
+        var_num >= 1,
+        message: "got an array of differential orders, but expecting at least one variable name. Hint: if your variable name is '[..]', write '\[..\]'",
+      )
       orders = __extract_array_contents(last) // array
     } else if __content_holds_number(last) {
       var_num -= 1
@@ -582,6 +633,10 @@
   } else { prod }
 
   let difference = var_num - orders.len()
+  assert(
+    difference >= 0,
+    message: "got more differential orders than variable names: " + str(orders.len()) + " > " + str(var_num),
+  )
   while difference > 0 {
     orders.push(default_order)
     difference -= 1
@@ -601,6 +656,13 @@
   // $#arr.join(prodsym)$
   $#h(0.16em, weak: true)#arr.join(prod)$
 }
+/// Differential. Examples:
+/// - dd(x)
+/// - dd(x, y)
+/// - dd(x, y, 2)
+/// - dd(x, y, [2, 3])
+/// - dd(x, y, d: Delta)
+/// - dd(x, y, prod: and)
 #let dd = differential
 
 #let variation = dd.with(d: sym.delta)
@@ -648,7 +710,12 @@
   }
 }
 
-// Ordinary derivative.
+/// Ordinary derivative.
+/// Examples:
+/// - dv(f, x)
+/// - dv(f, x, 2)
+/// - dv(f, x, d: Delta)
+/// - dv(f, x, k, style: "horizontal")
 #let derivative(f, ..args, d: none, style: none) = {
   if f == [] { f = none } // Convert empty content to none
   assert(args.pos().len() >= 1, message: "expecting at least one argument")
@@ -667,9 +734,23 @@
     __derivative_display(upper, f, $#d#var$, style)
   }
 }
+/// Ordinary derivative.
+/// Examples:
+/// - dv(f, x, y)
+/// - dv(f, x, y, 2)
+/// - dv(f, x, y, [2, n+1])
+/// - dv(f, x, y, d: Delta)
+/// - dv(f, x, y, style: "horizontal")
 #let dv = derivative
 
-// Partial derivative, with automatic order summation.
+/// Partial derivative, with automatic order summation.
+/// Examples:
+/// - pdv(f, x, y)
+/// - pdv(f, x, y, 2)
+/// - pdv(f, x, y, 2, d: Delta)
+/// - pdv(f, x, y, 2, style: "horizontal")
+/// - pdv(f, x, y, [2, n+1])
+/// - pdv(f, x, y, [2, n+1], total: N), overriding the auto order summation
 #let partialderivative(f, ..args, total: none, d: none, style: none) = {
   if f == [] { f = none } // Convert empty content to none
   let args = args.pos()
@@ -681,10 +762,14 @@
   let default_order = [1] // a Content holding "1"
 
   // The last argument might be the order numbers, let's check.
-  let last = args.at(args.len() - 1)
+  let last = args.at(-1)
   if type(last) == content {
     if last.func() == math.lr and last.at("body").at("children").at(0) == [\[] {
       var_num -= 1
+      assert(
+        var_num >= 1,
+        message: "got an array of differential orders, but expecting at least one variable name. Hint: if your variable name is '[..]', write '\[..\]'",
+      )
       orders = __extract_array_contents(last) // array
     } else if __content_holds_number(last) {
       var_num -= 1
@@ -698,6 +783,10 @@
   }
 
   let difference = var_num - orders.len()
+  assert(
+    difference >= 0,
+    message: "got more differential orders than variable names: " + str(orders.len()) + " > " + str(var_num),
+  )
   while difference > 0 {
     orders.push(default_order)
     difference -= 1
@@ -731,6 +820,14 @@
 
   __derivative_display(upper, f, lowers.join(), style)
 }
+/// Partial derivative, with automatic order summation.
+/// Examples:
+/// - pdv(f, x, y)
+/// - pdv(f, x, y, 2)
+/// - pdv(f, x, y, 2, d: Delta)
+/// - pdv(f, x, y, 2, style: "horizontal")
+/// - pdv(f, x, y, [2, n+1])
+/// - pdv(f, x, y, [2, n+1], total: N), overriding the auto order summation
 #let pdv = partialderivative
 
 // == Miscellaneous
@@ -755,14 +852,14 @@
 // Credit: Enivex in https://github.com/typst/typst/issues/355 was very helpful.
 #let hbar = (sym.wj, strike(offset: -0.55em, extent: -0.05em, "ℎ"), sym.wj).join()
 
-// A show rule, should be used like:
-//   #show: super-T-as-transpose
-//   (A B)^T = B^T A^T
-// or in scope:
-//   #[
-//     #show: super-T-as-transpose
-//     (A B)^T = B^T A^T
-//   ]
+/// A show rule, should be used like:
+///   #show: super-T-as-transpose
+///   (A B)^T = B^T A^T
+/// or in scope:
+///   #[
+///     #show: super-T-as-transpose
+///     (A B)^T = B^T A^T
+///   ]
 #let super-T-as-transpose(document) = {
   show math.attach: elem => {
     let __eligible(e) = {
@@ -793,14 +890,14 @@
   document
 }
 
-// A show rule, should be used like:
-//   #show: super-plus-as-dagger
-//   U^+U = U U^+ = I
-// or in scope:
-//   #[
-//     #show: super-plus-as-dagger
-//     U^+U = U U^+ = I
-//   ]
+/// A show rule, should be used like:
+///   #show: super-plus-as-dagger
+///   U^+U = U U^+ = I
+/// or in scope:
+///   #[
+///     #show: super-plus-as-dagger
+///     U^+U = U U^+ = I
+///   ]
 #let super-plus-as-dagger(document) = {
   show math.attach: elem => {
     let __eligible(e) = {
@@ -825,6 +922,9 @@
   document
 }
 
+/// Tensor with abstract index notation. Examples:
+/// - tensor(T, +a, -b, -c)
+/// - tensor(g, -mu, -nu)
 #let tensor(symbol, ..args) = {
   let (uppers, lowers) = ((), ()) // array, array
   let hphantom(s) = { hide($#s$) } // Like Latex's \hphantom
@@ -865,6 +965,9 @@
   math.attach((symbol, hphantom(sym.zws)).join(), t: uppers.join(), b: lowers.join())
 }
 
+/// Taylor expansion. Examples:
+/// - taylorterm(f, x, x0, 0), the 0-th term i.e. the function value at x0
+/// - taylorterm(f, x, x0, 2), the 2-nd term
 #let taylorterm(func, x, x0, idx) = {
   let maybeparen(expr) = {
     if __is_add_sub_sequence(expr) { $(expr)$ } else { expr }
@@ -879,12 +982,13 @@
   }
 }
 
-// Proud to document that Typst merged the author Leedehai's pull request
-// https://github.com/typst/typst/pull/825, a feature to make this function
-// appropriately, without a ton of acrobatics.
+/// isotope(element, a: [A, mass number], z: [Z, atomic number])
 #let isotope(element, /*atomic mass*/ a: none, /*atomic number*/ z: none) = {
   let a_content = if type(a) == int { [#a] } else { a }
   let z_content = if type(z) == int { [#z] } else { z }
+  // Proud to document that Typst merged the author Leedehai's pull request
+  // https://github.com/typst/typst/pull/825, a feature to make this function
+  // appropriately, without a ton of acrobatics.
   $attach(upright(element), tl: #a_content, bl: #z_content)$
 }
 

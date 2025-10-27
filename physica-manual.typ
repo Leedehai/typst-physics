@@ -539,7 +539,7 @@ Typst built-in math operators: #linkurl(`math.op`, "https://typst.app/docs/refer
   [`differential(`...`)`],
   [`dd`],
   [
-    e.g. $dd(f), dd(x, y), dd(x, 3), dd(x, y, p: and)$ \
+    e.g. $dd(f), dd(x, y), dd(x, 3), dd(x, y, prod: and)$ \
     See @differentials
   ],
   [differential],
@@ -638,8 +638,8 @@ pass a `compact:#true` argument: $dd(r, theta) "vs." dd(r, theta, compact: #true
   ],
 
   [
-    *(7)* #hl(`dd(t,x_1,x_2,x_3,p:and)`) \
-    $ dd(t, x_1, x_2, x_3, p: and) $
+    *(7)* #hl(`dd(t,x_1,x_2,x_3,prod:and)`) \
+    $ dd(t, x_1, x_2, x_3, prod: and) $
   ],
   [
     *(7)* #hl(`dd(t,x_1,x_2,x_3,d:upright(D))`) \

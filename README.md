@@ -1,4 +1,4 @@
-:green_book: [manual (0.9.7)](https://github.com/Leedehai/typst-physics/blob/v0.9.7/physica-manual.pdf) | [manual (HEAD)](https://github.com/Leedehai/typst-physics/blob/master/physica-manual.pdf)
+:green_book: [manual (HEAD)](https://github.com/Leedehai/typst-physics/blob/master/physica-manual.pdf)
 <p align="center">
 <img width="545" alt="logo" src="https://github.com/Leedehai/typst-physics/assets/18319900/ed86198a-8ddb-4473-aed3-8111d5ecde60">
 </p>
