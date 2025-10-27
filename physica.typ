@@ -166,7 +166,7 @@
 #let order(content) = $cal(o)(content)$
 
 #let evaluated(content) = {
-  $lr(zwj#content|)$
+  $lr(zws#content|)$
 }
 
 #let expectationvalue(..sink) = {
@@ -887,11 +887,11 @@
 
   // Do not use "...^..._...", because the lower indices appear to be placed
   // slightly lower than a normal subscript.
-  // Use a phantom with zwj (zero-width word joiner) to vertically align the
+  // Use a phantom with zws (zero-width space) to vertically align the
   // starting points of the upper and lower indices. Also, we put T inside
   // the first argument of attach(), so that the indices' vertical position
   // auto-adjusts with T's height.
-  math.attach((T, hphantom(sym.zwj)).join(), t: uppers.join(), b: lowers.join())
+  math.attach((T, hphantom(sym.zws)).join(), t: uppers.join(), b: lowers.join())
 }
 
 #let taylorterm(fn, xv, x0, idx) = {
