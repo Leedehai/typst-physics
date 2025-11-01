@@ -21,7 +21,7 @@ jobs:
         run: |
           typst compile physica-manual.typ
           typst compile demo.typ
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: PDF
           path: '*.pdf'
