@@ -539,55 +539,18 @@
 /// Dirac notation's matrix element: mel(n, M, m).
 #let mel = matrixelement
 
-// == Math functions
-
-#let sin = math.op("sin")
-#let sinh = math.op("sinh")
-#let arcsin = math.op("arcsin")
-#let asin = math.op("asin")
-
-#let cos = math.op("cos")
-#let cosh = math.op("cosh")
-#let arccos = math.op("arccos")
-#let acos = math.op("acos")
-
-#let tan = math.op("tan")
-#let tanh = math.op("tanh")
-#let arctan = math.op("arctan")
-#let atan = math.op("atan")
-
-#let sec = math.op("sec")
-#let sech = math.op("sech")
-#let arcsec = math.op("arcsec")
-#let asec = math.op("asec")
-
-#let csc = math.op("csc")
-#let csch = math.op("csch")
-#let arccsc = math.op("arccsc")
-#let acsc = math.op("acsc")
-
-#let cot = math.op("cot")
-#let coth = math.op("coth")
-#let arccot = math.op("arccot")
-#let acot = math.op("acot")
+// == Math text operators
 
 #let diag = math.op("diag")
-
-#let trace = math.op("trace")
-#let tr = math.op("tr")
-#let Trace = math.op("Trace")
-#let Tr = math.op("Tr")
-
 #let rank = math.op("rank")
-#let erf = math.op("erf")
-#let Res = math.op("Res")
+// Note Typst already provides "tr" for trace.
+#let trace = math.op("trace")
+#let Trace = math.op("Trace")
 
+#let Res = math.op("Res")
 #let Re = math.op("Re")
 #let Im = math.op("Im")
-
 #let sgn = math.op("sgn")
-
-#let lb = math.op("lb")
 
 // == Differentials
 

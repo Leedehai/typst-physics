@@ -467,64 +467,18 @@ $ bra(vec(1, 2)), braket(psi, A/N, phi) $
 instead of `$bra(vec(1,2)), braket(psi, A/N, phi)$`, which leads to an inline form
 $bra(vec(1, 2)), braket(psi, A/N, phi)$.
 
-== Math functions
+== Math text operators
 
 #v(1em)
 
-Typst built-in math operators: #linkurl(`math.op`, "https://typst.app/docs/reference/math/op/").
+On top of Typst built-in math text operators (see "Predefined Operators" in
+#linkurl(`math.op`, "https://typst.app/docs/reference/math/op/")),
+this package adds the following:
 
-#table(
-  columns: (auto, auto),
-  align: left,
-  stroke: none,
-  column-gutter: 25pt,
-  [*Expressions*], [*Results*],
+`diag`, `rank`, `trace`, `Trace`, `Res`, `Re`, `Im`, `sgn`.
 
-  [`sin(x), sinh(x), arcsin(x), asin(x)`], [$sin(x), sinh(x), arcsin(x), asin(x)$],
-
-  [`cos(x), cosh(x), arccos(x), acos(x)`], [$cos(x), cosh(x), arccos(x), acos(x)$],
-
-  [`tan(x), tanh(x), arctan(x), atan(x)`], [$tan(x), tanh(x), arctan(x), atan(x)$],
-
-  [`sec(x), sech(x), arcsec(x), asec(x)`], [$sec(x), sech(x), arcsec(x), asec(x)$],
-
-  [`csc(x), csch(x), arccsc(x), acsc(x)`], [$csc(x), csch(x), arccsc(x), acsc(x)$],
-
-  [`cot(x), coth(x), arccot(x), acot(x)`], [$cot(x), coth(x), arccot(x), acot(x)$],
-)
-
-#table(
-  columns: (3fr, 3fr, 4fr),
-  align: left,
-  stroke: none,
-  [*Expressions*], [*Results*], [*Notes*],
-
-  [#builtin([`Pr(x)`])], [$Pr(x)$], [probability],
-
-  [#builtin([`exp x`])], [$exp x$], [exponential],
-
-  [#builtin([`log x, lg x, ln x`])], [$log x, lg x, ln x$], [logarithmic],
-
-  [`lb x`], [$lb x$], [binary logarithm],
-
-  [#builtin([`det A`])], [$det A$], [matrix determinant],
-
-  [`diag(-1,1,1,1)`], [$diag(-1, 1, 1, 1)$], [diagonal matrix, compact form (use `dmat` for the "real" matrix form)],
-
-  [`trace A, tr A`], [$trace A, tr A$], [matrix trace],
-
-  [`Trace A, Tr A`], [$Trace A, Tr A$], [matrix trace, alt.],
-
-  [`rank A`], [$rank A$], [matrix rank],
-
-  [`erf(x)`], [$erf(x)$], [Gauss error function],
-
-  [`Res A`], [$Res A$], [residue (complex analysis)],
-
-  [`Re z, Im z `], [$Re z, Im z$], [real, imaginary (complex analysis)],
-
-  [`sgn x`], [$sgn x$], [sign function],
-)
+Also see show rule `super-T-as-transpose` (@matrix-transpose) to see how to add
+a matrix transpose operator more properly and smartly ($A^TT$, not $A^T$).
 
 == Differentials and derivatives
 
