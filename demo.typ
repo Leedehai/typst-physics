@@ -15,7 +15,7 @@ f(x,y) dd(x,y),
 quad
 dd(vb(x),y,[3]),
 quad
-dd(x,y,2,d:Delta,p:and),
+dd(x,y,2,d:Delta,prod:and),
 quad
 dv(phi,t,d:upright(D)) = pdv(phi,t) + vb(u) grad phi \
 
