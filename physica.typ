@@ -500,9 +500,15 @@
 // == Dirac braket notations
 
 /// Dirac bra: bra(u)
-#let bra(content) = $lr(chevron.l #content|)$
+#let bra(..args) = {
+  let contents = args.pos().join($,$)
+  $lr(chevron.l contents|)$
+}
 /// Dirac ket: ket(v)
-#let ket(content) = $lr(|#content chevron.r)$
+#let ket(..args) = {
+  let contents = args.pos().join($,$)
+  $lr(|contents chevron.r)$
+}
 
 /// Dirac braket. Examples:
 /// - braket(a)
