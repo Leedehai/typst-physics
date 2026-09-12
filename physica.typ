@@ -840,7 +840,13 @@
     }
 
     if __eligible(elem.base) and elem.at("t", default: none) == $T$.body {
-      $attach(elem.base, t: TT, b: elem.at("b", default: #none))$
+      let fields = elem.fields()
+      let base = fields.remove("base")
+      $attach(
+        base, 
+        ..fields,
+        t: sans("T"), 
+      )$
     } else {
       elem
     }
@@ -872,7 +878,13 @@
     }
 
     if __eligible(elem.base) and elem.at("t", default: none) == [#math.plus] {
-      $attach(elem.base, t: dagger, b: elem.at("b", default: #none))$
+      let fields = elem.fields()
+      let base = fields.remove("base")
+      $attach(
+        base, 
+        ..fields,
+        t: dagger, 
+      )$
     } else {
       elem
     }
