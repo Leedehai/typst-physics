@@ -3,6 +3,7 @@
 ## 0.9.8
 
 * Fix `hbar` since the behavior change in Typst 0.14.1 (#82)
+* **(breaking)** Remove  redundant/rarely-used math text operators. If they are needed, users can conveniently make them with Typst's `math.op()`, e.g. `#let Tr = math.op("Tr")`. (https://github.com/Leedehai/typst-physics/commit/e1488e44dd047a79f35592f75affcb99948d39f1)
 
 ## 0.9.7
 
