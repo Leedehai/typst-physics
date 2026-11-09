@@ -811,6 +811,28 @@
 // font (not just "New Computer Modern").
 #let hbar = math.class("normal", strike(offset: -0.55em, extent: -0.05em, "ℎ"))
 
+/// Feynman slash notation, e.g. slashed(p) = gamma^mu p_mu.
+/// A forward slash is drawn over the body using `math.cancel`, so it scales
+/// with the math size (e.g. in subscripts and fractions).
+/// Examples:
+/// - slashed(p)
+/// - slashed(D)
+/// - slashed(partial)
+/// - slashed(k, angle: #30deg, length: #1.3em, stroke: #red)  (in math mode)
+///
+/// Arguments:
+/// - body: the content to be slashed
+/// - angle: tilt of the slash, clockwise from the vertical [default: 20deg]
+/// - length: length of the slash [default: 1.1em]. A fixed length (like the
+///   "/" glyph used by LaTeX's \slashed) keeps short glyphs such as epsilon or
+///   eta from getting a stubby slash. Prefer absolute lengths such as 1.3em:
+///   with a custom angle, `math.cancel` draws no line for percentages below
+///   100% (Typst 0.14/0.15 behavior).
+/// - stroke: stroke of the slash [default: 0.04em]
+#let slashed(body, angle: 20deg, length: 1.1em, stroke: 0.04em) = {
+  math.class("normal", math.cancel(body, angle: angle, length: length, stroke: stroke))
+}
+
 /// A show rule, should be used like:
 ///   #show: super-T-as-transpose
 ///   (A B)^T = B^T A^T

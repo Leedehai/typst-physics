@@ -942,6 +942,32 @@ Therefore, you may have to revert your show rules for `hbar`. The following is a
   lang: "typst",
 )
 
+#v(1em)
+
+=== Feynman slash notation
+
+#v(1em)
+
+Function: `slashed(`_content_`, angle: `_angle_`, length: `_length_`, stroke: `_stroke_`)`.
+Draws a forward slash over the content, i.e. Feynman slash notation $slashed(a) equiv gamma^mu a_mu$. The slash scales with the math size, so it also works in scripts and fractions.
+
+- `angle`: tilt of the slash, clockwise from the vertical [default: `20deg`].
+- `length`: length of the slash [default: `1.1em`]. The fixed length mimics the `/` glyph of LaTeX's `\slashed`, so short glyphs like $slashed(epsilon)$ get a full-size slash. Prefer an absolute length such as `1.3em`: with a custom angle, Typst's `cancel` draws no line for percentages below `100%`.
+- `stroke`: stroke of the slash [default: `0.04em`].
+
+#table(
+  columns: (auto, auto),
+  align: (left, horizon),
+  stroke: none,
+  [```typ $(i slashed(partial) - m) psi = 0$```], [$(i slashed(partial) - m) psi = 0$],
+  [```typ $overline(psi) i slashed(D) psi$```], [$overline(psi) i slashed(D) psi$],
+  [```typ $(slashed(p) + m)/(p^2 - m^2)$```], [$(slashed(p) + m)/(p^2 - m^2)$],
+  [```typ $e^(slashed(k))$```], [$e^(slashed(k))$],
+  [```typ $slashed(A, angle: #30deg, stroke: #red)$```], [$slashed(A, angle: #30deg, stroke: #red)$],
+)
+
+*Known limitation*: `slashed` uses the `cancel` function, and show rules of `cancel` will affect `slashed`.
+
 === Tensors
 
 #v(1em)
